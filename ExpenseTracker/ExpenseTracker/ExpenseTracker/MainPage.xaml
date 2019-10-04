@@ -13,10 +13,25 @@
         <Label Text="{Binding ValueTemp}"
                HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
-        <ListView ItemsSource="{Binding ItemList}" RowHeight="30" BackgroundColor="White">
+        <ListView ItemsSource="{Binding ItemList}" HasUnevenRows="True" BackgroundColor="White">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="{Binding TestValue1}"></Label>
+                    <ViewCell>
+                        <StackLayout
+                         Padding="10">
+                            <Label
+                            Text="{Binding TestValue1}"
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemTextStyle}"
+                            FontSize="16" />
+                            <Label
+                            Text="{Binding TestValue2}"
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemDetailTextStyle}"
+                            FontSize="13" />
+                            <Button Text="{Binding TestValue3}" Command="{Binding TestButton}"></Button>
+                        </StackLayout>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
