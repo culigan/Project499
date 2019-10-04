@@ -9,9 +9,19 @@ namespace ExpenseTracker
 {
    public partial class MainPage : ContentPage
    {
+
+      List<string> _ExpenseList;
+      List<string> ExpenseList
+      {
+         get { return _ExpenseList; }
+         set { _ExpenseList = value; }
+      }
+
       public MainPage()
       {
          InitializeComponent();
+         BindingContext = new RunProgram();
+         
       }
    }
 }
