@@ -51,7 +51,7 @@ namespace ExpenseTracker
 
       public void ButtonClick()
       {
-         var connection = 
+         
       }
 
       public event PropertyChangedEventHandler PropertyChanged;
