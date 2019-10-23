@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ExpenseTracker"
+             x:Class="ExpenseTracker.MainPage"
+             BackgroundColor="Blue">
+
+    <StackLayout>
+        <!-- Place new controls here -->
+        <Label Text="Expense Tracker!" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+        <Label Text="{Binding ValueTemp}"
+               HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+        <ListView ItemsSource="{Binding ItemList}" HasUnevenRows="True" BackgroundColor="White">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout
+                         Padding="10">
+                            <Label
+                            Text="{Binding TestValue1}"
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemTextStyle}"
+                            FontSize="16" />
+                            <Label
+                            Text="{Binding TestValue2}"
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemDetailTextStyle}"
+                            FontSize="13" />
+                            <Button Text="{Binding TestValue3}" Command="{Binding TestButton}"></Button>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </StackLayout>
+
+</ContentPage>
