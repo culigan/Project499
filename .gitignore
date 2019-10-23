@@ -1,0 +1,9 @@
+obj
+bin
+*.suo
+*.props
+*.targets
+*.stamp
+*.pdb
+*.dll
+*.cache
