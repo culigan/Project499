@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ExpenseTracker.LoginPage"
+             Title="LoginPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Expense Tracker"
+                HorizontalOptions="Center"
+                FontSize="22" />
+            <Entry Margin="20,175,20,0"
+                Placeholder="User Name"
+                IsSpellCheckEnabled="false" />
+            <Entry Margin="20"
+                Placeholder="Password"
+                MaxLength="30"
+                IsSpellCheckEnabled="false"
+                IsTextPredictionEnabled="false"
+                IsPassword="true" />
+            <Grid Margin="20,30,20,20">
+                <Button Margin="20"
+                    Clicked="OnLoginButtonClicked"
+                    Text="Login"/>
+                <Button Grid.Column="1"
+                    Margin="20"
+                    Clicked="OnNewUserButtonClicked"
+                    Text="New User"/>
+            </Grid>
+            
+        </StackLayout>
+        
+        
+    </ContentPage.Content>
+</ContentPage>
