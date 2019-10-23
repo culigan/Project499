@@ -3,6 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>Pixel_XL_API_23</SelectedDevice>
     <DefaultDevice>Pixel_XL_API_23</DefaultDevice>
-    <AndroidDesignerPreferredTheme>Theme.DeviceDefault.NoActionBar.Fullscreen</AndroidDesignerPreferredTheme>
+    <AndroidDesignerPreferredTheme>Theme.AppCompat.Light.NoActionBar</AndroidDesignerPreferredTheme>
   </PropertyGroup>
 </Project>

@@ -25,7 +25,7 @@ namespace ExpenseTracker.UWP
         public MainPage()
         {
             this.InitializeComponent();
-         LoadApplication(new ExpenseTracker.App());
+            LoadApplication(new ExpenseTracker.App());
         }
     }
 }
