@@ -16,15 +16,16 @@ namespace ExpenseTracker
         public LoginPage()
         {
             InitializeComponent();
+            
         }
 
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-         Model.DataQuery_Mod.CreateCommand("Select * from users", "Server=tcp:" +
+         List<string> userData = Model.DataQuery_Mod.CreateCommand("Select * from users", "Server=tcp:" +
             "sqlexpensetracker.database.windows.net,1433;Initial Catalog=ExpenseTracker" +
             ";Persist Security Info=False;User ID=TeamAdmin;Password=\"Gy773Hv123;b\";" +
             "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            await Navigation.PushAsync(new MainPage { });
+            await Navigation.PushAsync(new MainPage(userData));
         }
 
         async void OnNewUserButtonClicked(object sender, EventArgs e)

@@ -48,6 +48,34 @@ namespace ExpenseTracker
          ItemList.Add(expenseList);
          ItemList.Add(expenseList);
       }
+      public RunProgram(List<string> DataValue)
+      {
+         ItemList = new ObservableCollection<ExpenseList>();
+
+         foreach (string s in DataValue)
+         {
+            ExpenseList expenseList = new ExpenseList();
+            string[] userInfo = s.Split(',');
+            for (int i = 0; i < 3; i++)
+            {
+               switch (i) {
+                  case 0:
+                     expenseList.TestValue1 = userInfo[i];
+                     break;
+                  case 1:
+                     expenseList.TestValue2 = userInfo[i];
+                     break;
+                  case 2:
+                     expenseList.TestValue3 = userInfo[i];
+                     break;
+                  default:
+                     break;
+                    
+            }
+            }
+            ItemList.Add(expenseList);
+         }
+      }
 
       public void ButtonClick()
       {

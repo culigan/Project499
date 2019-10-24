@@ -23,6 +23,12 @@ namespace ExpenseTracker
       {
          InitializeComponent();
          BindingContext = new RunProgram();
+
+      }
+      public MainPage(List<string>DisplayData)
+      {
+         InitializeComponent();
+         BindingContext = new RunProgram(DisplayData);
          
       }
    }
