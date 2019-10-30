@@ -21,14 +21,13 @@ namespace ExpenseTracker
         }
 
         async void OnLoginButtonClicked(object sender, EventArgs e)
-        {
-         
-            await Navigation.PushAsync(new MainPage(userData));
+        {         
+            await Navigation.PushAsync(new MainPage());
         }
 
         async void OnNewUserButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MainPage { });
+            await Navigation.PushAsync(new MainPage());
         }
     }
     

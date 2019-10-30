@@ -61,6 +61,15 @@ namespace ExpenseTracker {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Server=tcp:sqlexpensetracker.database.windows.net,1433;Initial Catalog=ExpenseTracker;Persist Security Info=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;.
+        /// </summary>
+        internal static string connections {
+            get {
+                return ResourceManager.GetString("connections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TeamAdmin.
         /// </summary>
         internal static string value1 {

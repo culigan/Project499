@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace ExpenseTracker.Model
 {
@@ -16,55 +19,62 @@ namespace ExpenseTracker.Model
          set { _IsConnected = value; }
       }
 
-      private string _QueryString;
-      public string QuerySTring
+      private List<string> _QueryResults;
+      public List<string> QueryResults
       {
-         get { return _QueryString; }
-         set { _QueryString = value; }
+         get { return _QueryResults; }
+         set { _QueryResults = value; }
       }
 
       public DataQuery_Mod()
       {
-         connectionString = "Server=tcp:sqlexpensetracker.database.windows.net,1433;Initial Catalog=ExpenseTracker" +
-            ";Persist Security Info=False;User ID=" + Resource1.ResourceManager.GetString("value1") +
-            "; Password=\"" + Resource1.ResourceManager.GetString("value2") +
-            "\";MultipleActiveResultSets=False;Encrypt=True;" +
-            "TrustServerCertificate=False;Connection Timeout=30;";
+         connectionString = Resource1.ResourceManager.GetString("connections") + "User ID=" + Resource1.ResourceManager.GetString("value1") +
+            "; Password=\"" + Resource1.ResourceManager.GetString("value2") + "\";";
       }
 
-      private void ConnectToDatabase()
+      public void ExecuteAQuery(string queryString)
       {
-         
+         Task.Run(() =>
+         {
+            QueryResults = new List<string>();
+            using (SqlConnection connection = new SqlConnection(
+                  connectionString))
+            {
+               connection.Open();
 
-         Model.DataQuery_Mod.CreateCommand("Select * from users", );
+               SqlCommand command = new SqlCommand(queryString, connection);
+               SqlDataReader reader = command.ExecuteReader();
 
-         
+               while (reader.Read())
+               {
+                  string rows = "";
+                  for (int i = 0; i < reader.FieldCount; i++)
+                  {
+                     rows += reader[i].ToString() + ",";
+                  }
+                  QueryResults.Add(rows.ToString());
+               }
+               reader.Close();
+               connection.Close();
+            }
+         });
       }
 
-      public static List<string> CreateCommand(string queryString,  string connectionString)
+      public int AlterDataQuery(string queryString)
       {
-         List<string> returnData = new List<string>();
+         int rowAffected = 0;
          using (SqlConnection connection = new SqlConnection(
                connectionString))
          {
             connection.Open();
 
             SqlCommand command = new SqlCommand(queryString, connection);
-            SqlDataReader reader = command.ExecuteReader();
+            rowAffected = command.ExecuteNonQuery();
+
             
-            while (reader.Read())
-            {
-               string rows = "";
-               for(int i = 0; i < reader.FieldCount; i++)
-               {
-                  rows += reader[i].ToString() + ",";
-               }
-               returnData.Add(rows.ToString());
-            }
-            reader.Close();
             connection.Close();
          }
-         return returnData;
+         return rowAffected;
       }
 
    }
