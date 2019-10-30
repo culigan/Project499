@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
 namespace ExpenseTracker
 {
@@ -16,15 +17,12 @@ namespace ExpenseTracker
         public LoginPage()
         {
             InitializeComponent();
-            
+         string ID = Preferences.Get("ExpenseT_UserID", "didn'tWork");//this works for local storage
         }
 
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-         List<string> userData = Model.DataQuery_Mod.CreateCommand("Select * from users", "Server=tcp:" +
-            "sqlexpensetracker.database.windows.net,1433;Initial Catalog=ExpenseTracker" +
-            ";Persist Security Info=False;User ID=TeamAdmin;Password=\"Gy773Hv123;b\";" +
-            "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+         
             await Navigation.PushAsync(new MainPage(userData));
         }
 

@@ -2,6 +2,7 @@
 using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace ExpenseTracker
@@ -13,6 +14,7 @@ namespace ExpenseTracker
       {
          InitializeComponent();
          FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
+         Preferences.Set("ExpenseT_UserID", "123456");
          MainPage = new NavigationPage(new LoginPage());
       }
 

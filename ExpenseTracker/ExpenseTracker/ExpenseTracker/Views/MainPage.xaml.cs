@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 //Testing to make sure I can update the repository. -JS
 
@@ -22,6 +23,7 @@ namespace ExpenseTracker
       public MainPage()
       {
          InitializeComponent();
+         Preferences.Set("ExpenseT_UserID", "123456");//this works for local storage
          BindingContext = new RunProgram();
 
       }
