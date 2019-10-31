@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ExpenseTracker.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
@@ -22,6 +22,13 @@ namespace ExpenseTracker
 
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {         
+         
+            DataQuery_Mod dataQuery = new DataQuery_Mod();
+         for (int i = 0; i < 15; i++)
+         {
+            string insertString = "Insert into ";
+            dataQuery.AlterDataQuery(insertString);
+         }
             await Navigation.PushAsync(new MainPage());
         }
 
