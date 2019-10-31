@@ -26,7 +26,7 @@ namespace ExpenseTracker
             DataQuery_Mod dataQuery = new DataQuery_Mod();
          for (int i = 0; i < 15; i++)
          {
-            string insertString = "Insert into ";
+            string insertString = "Insert into Expenses ";
             dataQuery.AlterDataQuery(insertString);
          }
             await Navigation.PushAsync(new MainPage());
