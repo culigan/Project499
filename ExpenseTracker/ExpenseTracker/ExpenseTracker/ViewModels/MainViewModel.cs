@@ -16,14 +16,14 @@ namespace ExpenseTracker
       public ICommand TestButton
       {
          get { return _TestButton; }
-         set { _TestButton = value; OnPropertyChanged(); }
+         set { _TestButton = value;  }
       }
 
       private ObservableCollection<ExpenseList> _ExpenseList;
       public ObservableCollection<ExpenseList> ItemList
       {
          get { return _ExpenseList; }
-         set { _ExpenseList = value; OnPropertyChanged(); }
+         set { _ExpenseList = value; OnPropertyChanged(nameof(ItemList)); }
       }
 
       private string _ValueTemp = "Test";

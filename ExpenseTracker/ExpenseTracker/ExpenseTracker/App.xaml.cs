@@ -14,7 +14,7 @@ namespace ExpenseTracker
       {
          InitializeComponent();
          FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
-         Preferences.Set("ExpenseT_UserID", "123456");
+         Preferences.Clear();
          MainPage = new NavigationPage(new LoginPage());
       }
 

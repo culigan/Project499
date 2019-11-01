@@ -34,7 +34,7 @@ namespace ExpenseTracker.Model
 
       public void ExecuteAQuery(string queryString)
       {
-         Task.Run(() =>
+         try
          {
             QueryResults = new List<string>();
             using (SqlConnection connection = new SqlConnection(
@@ -52,12 +52,17 @@ namespace ExpenseTracker.Model
                   {
                      rows += reader[i].ToString() + ",";
                   }
+                  rows.Remove(rows.Length - 1);
                   QueryResults.Add(rows.ToString());
                }
                reader.Close();
                connection.Close();
             }
-         });
+         }
+         catch(Exception ex)
+         {
+            QueryResults = new List<string>() { ex.Message };
+         }
       }
 
       public int AlterDataQuery(string queryString)

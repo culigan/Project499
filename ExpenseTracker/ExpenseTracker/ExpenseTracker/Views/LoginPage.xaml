@@ -13,13 +13,15 @@
                 FontSize="22" />
             <Entry Margin="20,175,20,0"
                 Placeholder="User Name"
-                IsSpellCheckEnabled="false" />
+                IsSpellCheckEnabled="false" 
+                Text="{Binding Username}"/>
             <Entry Margin="20"
                 Placeholder="Password"
                 MaxLength="30"
                 IsSpellCheckEnabled="false"
                 IsTextPredictionEnabled="false"
-                IsPassword="true" />
+                IsPassword="true"
+                Text="{Binding Password}"/>
             <Grid Margin="20,30,20,20">
                 <Button Margin="20"
                     Clicked="OnLoginButtonClicked"
@@ -28,6 +30,7 @@
                     Margin="20"
                     Clicked="OnNewUserButtonClicked"
                     Text="New User"/>
+                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
             </Grid>
             
         </StackLayout>

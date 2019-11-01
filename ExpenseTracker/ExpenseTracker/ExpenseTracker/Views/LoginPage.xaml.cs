@@ -8,28 +8,41 @@ using ExpenseTracker.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
+using ExpenseTracker.ViewModels;
 
 namespace ExpenseTracker
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+      LoginViewModel viewModel;
+      
         public LoginPage()
         {
             InitializeComponent();
-         string ID = Preferences.Get("ExpenseT_UserID", "didn'tWork");//this works for local storage
+         BindingContext = viewModel = new LoginViewModel();
+            viewModel.User_ID = int.Parse(Preferences.Get("ExpenseT_UserID", "-1"));//this works for local storage
         }
 
         async void OnLoginButtonClicked(object sender, EventArgs e)
-        {         
-         
-            DataQuery_Mod dataQuery = new DataQuery_Mod();
-         for (int i = 0; i < 15; i++)
+        {
+         try
          {
-            string insertString = "Insert into Expenses ";
-            dataQuery.AlterDataQuery(insertString);
+            IsBusy = true;
+            viewModel.DataQuery.ExecuteAQuery("Select ID From Users where Username = '" + viewModel.Username + "'");
+            if (viewModel.DataQuery.QueryResults.Count > 1)
+               viewModel.DataQuery.ExecuteAQuery("Select ID From Users where Username = '" + viewModel.Username + "' and Password = '" + viewModel.Password + "'");
+            IsBusy = false;
+            if (viewModel.DataQuery.QueryResults.Count == 1)
+            {
+               viewModel.User_ID = int.Parse(viewModel.DataQuery.QueryResults[0]);
+               await Navigation.PushAsync(new MainPage());
+            }
          }
-            await Navigation.PushAsync(new MainPage());
+         catch(Exception ex)
+         {
+            await DisplayAlert("Login Failed!", ex.Message, "OK");
+         }
         }
 
         async void OnNewUserButtonClicked(object sender, EventArgs e)
