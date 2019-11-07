@@ -50,9 +50,10 @@ namespace ExpenseTracker.Model
                   string rows = "";
                   for (int i = 0; i < reader.FieldCount; i++)
                   {
-                     rows += reader[i].ToString() + ",";
+                     rows += reader[i].ToString();
+                     if(i != (reader.FieldCount - 1))
+                        rows += ", ";
                   }
-                  rows.Remove(rows.Length - 1);
                   QueryResults.Add(rows.ToString());
                }
                reader.Close();

@@ -22,24 +22,29 @@ namespace ExpenseTracker
             InitializeComponent();
          BindingContext = viewModel = new LoginViewModel();
             viewModel.User_ID = int.Parse(Preferences.Get("ExpenseT_UserID", "-1"));//this works for local storage
-        }
 
-        async void OnLoginButtonClicked(object sender, EventArgs e)
+      }
+
+      async void OnLoginButtonClicked(object sender, EventArgs e)
         {
          try
-         {
-            IsBusy = true;
+         {      
+            viewModel.IsBusy = true;
             viewModel.DataQuery.ExecuteAQuery("Select ID From Users where Username = '" + viewModel.Username + "'");
-            if (viewModel.DataQuery.QueryResults.Count > 1)
-               viewModel.DataQuery.ExecuteAQuery("Select ID From Users where Username = '" + viewModel.Username + "' and Password = '" + viewModel.Password + "'");
-            IsBusy = false;
             if (viewModel.DataQuery.QueryResults.Count == 1)
             {
-               viewModel.User_ID = int.Parse(viewModel.DataQuery.QueryResults[0]);
-               await Navigation.PushAsync(new MainPage());
+               viewModel.DataQuery.ExecuteAQuery("Select ID From Users where Username = '" + viewModel.Username + "' and Password = '" + viewModel.PasswordHash + "'");
+               if (viewModel.DataQuery.QueryResults.Count == 1)
+               {
+                  Preferences.Set("ExpenseT_UserID", viewModel.DataQuery.QueryResults[0].ToString());
+                  viewModel.User_ID = int.Parse(viewModel.DataQuery.QueryResults[0]);
+                  await Navigation.PushAsync(new MainPage());
+               }
             }
+            viewModel.IsBusy = false;
+
          }
-         catch(Exception ex)
+         catch (Exception ex)
          {
             await DisplayAlert("Login Failed!", ex.Message, "OK");
          }

@@ -7,33 +7,40 @@
              x:Class="ExpenseTracker.LoginPage"
              Title="LoginPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Expense Tracker"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="1" Text="Welcome to Expense Tracker"
                 HorizontalOptions="Center"
                 FontSize="22" />
-            <Entry Margin="20,175,20,0"
+            <Entry Grid.Row="2" Margin="20,175,20,0"
                 Placeholder="User Name"
                 IsSpellCheckEnabled="false" 
                 Text="{Binding Username}"/>
-            <Entry Margin="20"
+            <Entry Grid.Row="3" Margin="20"
                 Placeholder="Password"
                 MaxLength="30"
                 IsSpellCheckEnabled="false"
                 IsTextPredictionEnabled="false"
                 IsPassword="true"
                 Text="{Binding Password}"/>
-            <Grid Margin="20,30,20,20">
-                <Button Margin="20"
+            <Grid Grid.Row="4" Margin="20,30,20,20">
+                <Button Grid.Column="0" Margin="20"
                     Clicked="OnLoginButtonClicked"
                     Text="Login"/>
                 <Button Grid.Column="1"
                     Margin="20"
                     Clicked="OnNewUserButtonClicked"
                     Text="New User"/>
-                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
             </Grid>
-            
-        </StackLayout>
+            <ActivityIndicator Grid.Row="3"  Scale="3" Color="Black" IsEnabled="{Binding IsBusy}" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
+
+        </Grid>
         
         
     </ContentPage.Content>
