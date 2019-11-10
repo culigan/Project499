@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ExpenseTracker.NewUser">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="1" Text="Please Enter your new user information"
+                HorizontalOptions="Center"
+                FontSize="22" />
+            <Entry Grid.Row="2" Margin="20,80,20,0"
+                Placeholder="User Name"
+                IsSpellCheckEnabled="false" 
+                HorizontalOptions="Center"
+                WidthRequest="250"
+                Text="{Binding Username}"/>
+            <Entry Grid.Row="3" Margin="20"
+                Placeholder="First Name"
+                IsSpellCheckEnabled="false" 
+                HorizontalOptions="Center"
+                WidthRequest="250"
+                Text="{Binding Firstname}"/>
+            <Entry Grid.Row="4" Margin="20"
+                Placeholder="Last Name"
+                IsSpellCheckEnabled="false" 
+                HorizontalOptions="Center"
+                WidthRequest="250"
+                Text="{Binding Lastname}"/>
+            <Entry Grid.Row="5" Margin="20"
+                Placeholder="Password"
+                MaxLength="30"
+                IsSpellCheckEnabled="false"
+                IsTextPredictionEnabled="false"
+                HorizontalOptions="Center"
+                WidthRequest="250"
+                IsPassword="true"
+                Text="{Binding Password1}"/>
+            <Entry Grid.Row="6" Margin="20"
+                Placeholder="Verify Password"
+                MaxLength="30"
+                IsSpellCheckEnabled="false"
+                IsTextPredictionEnabled="false"
+                HorizontalOptions="Center"
+                WidthRequest="250"
+                IsPassword="true"
+                Text="{Binding Password2}"/>
+            <Grid Grid.Row="7" Margin="20,30,20,20">
+                <Button Grid.Column="0" Margin="20"               
+                    HorizontalOptions="End"
+                    WidthRequest="200"
+                    Text="Submit"/>
+                <Button Grid.Column="1"
+                    Margin="20"                   
+                    HorizontalOptions="Start"
+                    WidthRequest="200"
+                    Text="Cancel"/>
+            </Grid>
+            <ActivityIndicator Grid.Row="3"  Scale="3" Color="Black" IsEnabled="{Binding IsBusy}" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

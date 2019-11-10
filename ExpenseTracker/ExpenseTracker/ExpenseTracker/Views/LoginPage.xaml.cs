@@ -52,7 +52,7 @@ namespace ExpenseTracker
 
         async void OnNewUserButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MainPage());
+            await Navigation.PushAsync(new NewUser());
         }
     }
     
