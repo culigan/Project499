@@ -32,6 +32,11 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <RelativeLayout HorizontalOptions="End" VerticalOptions="Center" Padding="50">                
+                <Button CornerRadius="50" BackgroundColor="Yellow" HeightRequest="30" Clicked="OnAddClick"
+                        WidthRequest="30"  HorizontalOptions="End" VerticalOptions="End" Text="+" 
+                        AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1,1,AutoSize,AutoSize"/>
+            </RelativeLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -30,14 +30,21 @@ namespace ExpenseTracker
          try
          {
             viewModel.IsBusy = true;
-            viewModel.DataQuery.expenseSelect = "Select ID From Users ";
+            viewModel.DataQuery.expenseSelect = "Select * From Users ";
             viewModel.DataQuery.expenseWhere = "where Username = '" + viewModel.Username + "' and Password = '" + viewModel.PasswordHash + "'";
             viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
             if (viewModel.UsersInfo.Count == 1)
             {
-               Preferences.Set("ExpenseT_UserID", viewModel.UsersInfo[0].ID);
+               Preferences.Set("ExpenseT_UserID", viewModel.UsersInfo[0].ID.ToString());
                viewModel.User_ID = viewModel.UsersInfo[0].ID;
-               await Navigation.PushAsync(new MainPage());
+               App.Current.MainPage = new Views.AccountsPage
+               {
+                  Title = "Accounts",
+                  Children = {
+                     new Views.ExpIncAccPage("ExpenseAccount"),
+                     new Views.ExpIncAccPage("IncomeAccount")
+                  }
+               };
             }
             viewModel.IsBusy = false;
 
@@ -45,6 +52,7 @@ namespace ExpenseTracker
          catch (Exception ex)
          {
             await DisplayAlert("Login Failed!", ex.Message, "OK");
+            viewModel.IsBusy = false;
          }
       }
 

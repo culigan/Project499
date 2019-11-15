@@ -13,6 +13,7 @@ namespace ExpenseTracker
       public string IncomeAccountName { get; set; }
       private string _ExpenseDate;
       public string ExpenseDate { get { return _ExpenseDate; } set { _ExpenseDate = value; } }
+      public string ExpenseCategory { get; set; }
       public Boolean Repeat { get; set; }
       public string RepeatPeriod { get; set; }
    }

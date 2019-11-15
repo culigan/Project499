@@ -27,5 +27,10 @@ namespace ExpenseTracker.Views
             this.Title = "Income";
          }
       }
+
+      async public void OnAddClick(object sender, EventArgs e)
+      {
+         //await Navigation.PushAsync(new Add_Edit());
+      }
    }
 }
