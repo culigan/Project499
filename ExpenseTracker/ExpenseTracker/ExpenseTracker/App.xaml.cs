@@ -4,18 +4,31 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 
+
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace ExpenseTracker
 {
    public partial class App : Application
    {
         public static string FolderPath { get; private set; }
-        public App()
+      public App()
       {
          InitializeComponent();
          FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
-         Preferences.Clear();
-         MainPage = new NavigationPage(new LoginPage());
+         
+         if (Preferences.Get("ExpenseT_UserID", "NotFound") != "NotFound")
+         {
+            MainPage = new Views.AccountsPage
+            {
+               Title = "Accounts",
+               Children = {
+                  new Views.ExpIncAccPage("ExpenseAccount"),
+                  new Views.ExpIncAccPage("IncomeAccount")
+               }
+            };
+         }
+         else 
+            MainPage = new NavigationPage(new LoginPage());
       }
 
       protected override void OnStart()

@@ -23,7 +23,6 @@ namespace ExpenseTracker
       public MainPage()
       {
          InitializeComponent();
-         Preferences.Set("ExpenseT_UserID", "123456");//this works for local storage
          BindingContext = new RunProgram();
 
       }

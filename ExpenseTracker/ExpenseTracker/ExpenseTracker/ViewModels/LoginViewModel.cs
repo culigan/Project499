@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Security.Cryptography;
 using ExpenseTracker.Model;
@@ -14,8 +14,28 @@ namespace ExpenseTracker.ViewModels
       private bool _IsBusy = false;
       public bool IsBusy { get { return _IsBusy; } set { _IsBusy = value; OnPropertyChanged(nameof(IsBusy)); } }
       public int User_ID { get; set; }
+      private ObservableCollection<Users> _UsersInfo;
+      public ObservableCollection<Users> UsersInfo 
+      {
+         get { return _UsersInfo; }
+         set 
+         {
+            _UsersInfo = value;
+            OnPropertyChanged(nameof(UsersInfo));
+         }
+      }
+
       private string _Username;
-      public string Username { get { return _Username; }  set { _Username = value; OnPropertyChanged(nameof(Username)); } }
+      public string Username
+      {
+         get { return _Username; }
+         set
+         {
+            _Username = value;
+            
+            OnPropertyChanged(nameof(Username));
+         }
+      }
       public string PasswordHash;
       private string _Password;
       public string Password 
@@ -28,7 +48,8 @@ namespace ExpenseTracker.ViewModels
             {
                PasswordHash = HashClass.GetMd5Hash(md5Hash, value);               
             }
-            OnPropertyChanged(nameof(Password)); } }
+            OnPropertyChanged(nameof(Password)); } 
+      }
       public LoginViewModel()
       {
          DataQuery = new DataQuery_Mod();

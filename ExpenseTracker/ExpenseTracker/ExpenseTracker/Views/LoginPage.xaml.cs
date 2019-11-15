@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,34 +12,32 @@ using ExpenseTracker.ViewModels;
 
 namespace ExpenseTracker
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : ContentPage
-    {
+   [XamlCompilation(XamlCompilationOptions.Compile)]
+   public partial class LoginPage : ContentPage
+   {
       LoginViewModel viewModel;
-      
-        public LoginPage()
-        {
-            InitializeComponent();
+
+
+      public LoginPage()
+      {
+         InitializeComponent();
          BindingContext = viewModel = new LoginViewModel();
-            viewModel.User_ID = int.Parse(Preferences.Get("ExpenseT_UserID", "-1"));//this works for local storage
 
       }
 
       async void OnLoginButtonClicked(object sender, EventArgs e)
-        {
+      {
          try
-         {      
+         {
             viewModel.IsBusy = true;
-            viewModel.DataQuery.ExecuteAQuery("Select ID From Users where Username = '" + viewModel.Username + "'");
-            if (viewModel.DataQuery.QueryResults.Count == 1)
+            viewModel.DataQuery.expenseSelect = "Select ID From Users ";
+            viewModel.DataQuery.expenseWhere = "where Username = '" + viewModel.Username + "' and Password = '" + viewModel.PasswordHash + "'";
+            viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
+            if (viewModel.UsersInfo.Count == 1)
             {
-               viewModel.DataQuery.ExecuteAQuery("Select ID From Users where Username = '" + viewModel.Username + "' and Password = '" + viewModel.PasswordHash + "'");
-               if (viewModel.DataQuery.QueryResults.Count == 1)
-               {
-                  Preferences.Set("ExpenseT_UserID", viewModel.DataQuery.QueryResults[0].ToString());
-                  viewModel.User_ID = int.Parse(viewModel.DataQuery.QueryResults[0]);
-                  await Navigation.PushAsync(new MainPage());
-               }
+               Preferences.Set("ExpenseT_UserID", viewModel.UsersInfo[0].ID);
+               viewModel.User_ID = viewModel.UsersInfo[0].ID;
+               await Navigation.PushAsync(new MainPage());
             }
             viewModel.IsBusy = false;
 
@@ -48,14 +46,13 @@ namespace ExpenseTracker
          {
             await DisplayAlert("Login Failed!", ex.Message, "OK");
          }
-        }
+      }
 
+      
         async void OnNewUserButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new NewUser());
         }
     }
-    
-
-    
+  
 }
