@@ -4,39 +4,40 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="ExpenseTracker.Views.ExpIncAccPage">
+             x:Class="ExpenseTracker.Views.ExpIncAccPage"
+             Title="Accounts"
+             NavigationPage.HasNavigationBar="True">
+    
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="listView" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="White">
-                <ListView.ItemTemplate>
+            <ListView x:Name="listView" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="LightGray">
+                <ListView.ItemTemplate> 
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="10">
+                            <Frame BorderColor="black" HasShadow="True" Margin="5,3,5,3">
+                            <Grid >
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" 
-                                    Text="{Binding AccountType_ID}"
-                                    FontSize="50" />
-                                <Label Grid.Row="1"
-                                    Text="{Binding AccountName}"
-                                    FontSize="50" />
-                                <Label Text="{Binding DateCreated}" Grid.Row="1" Grid.Column="1"/>
+                                    <Label Grid.Row="0" Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding DateCreated}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Grid.Row="1" Text="{Binding AccountBalance}" TextColor="Red" FontAttributes="Bold"/>
                             </Grid>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <RelativeLayout HorizontalOptions="End" VerticalOptions="Center" Padding="50">                
+            <AbsoluteLayout HorizontalOptions="End" VerticalOptions="Center" Padding="10">                
                 <Button CornerRadius="50" BackgroundColor="Yellow" HeightRequest="30" Clicked="OnAddClick"
                         WidthRequest="30"  HorizontalOptions="End" VerticalOptions="End" Text="+" 
                         AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1,1,AutoSize,AutoSize"/>
-            </RelativeLayout>
+            </AbsoluteLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

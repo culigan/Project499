@@ -5,6 +5,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="ExpenseTracker.Views.AccountsPage"
-            Title="ExpenseTracker">
-  <!--Pages can be added as references or inline-->
+            Title="ExpenseTracker" NavigationPage.HasNavigationBar="True"
+            BarBackgroundColor="Green"
+            >
+    <TabbedPage.BackgroundColor>
+        <OnPlatform x:TypeArguments="Color"
+                    iOS="Navy"
+                    Android="Green"
+                    />
+    </TabbedPage.BackgroundColor>
+    <!--Pages can be added as references or inline-->
 </TabbedPage>

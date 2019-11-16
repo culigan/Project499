@@ -78,8 +78,38 @@ namespace ExpenseTracker.Model
             throw new Exception(ex.Message);
          }
       }
-      
-      
+
+      public string ExecuteAQuery()
+      {
+         try
+         {
+            string queryString = expenseSelect + " " + expenseWhere;
+
+            using (SqlConnection connection = new SqlConnection(
+                  connectionString))
+            {
+               connection.Open();
+
+               SqlCommand command = new SqlCommand(queryString, connection);
+               SqlDataReader reader = command.ExecuteReader();
+               List<string> returnString = new List<string>();
+               while (reader.Read())
+               {
+                  returnString.Add(reader.GetValue(0).ToString());
+               }
+               reader.Close();
+               connection.Close();
+
+               return string.Join(",", returnString);
+            }
+
+         }
+         catch (Exception ex)
+         {
+            throw new Exception(ex.Message);
+         }
+      }
+
 
       public int AlterDataQuery(string queryString)
       {

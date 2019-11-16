@@ -12,5 +12,6 @@ namespace ExpenseTracker
       public string Description { get; set; }
       public DateTime DateCreated { get; set; }
       public int User_ID { get; set; }
+      public double AccountBalance { get; set; } = 0.00;
    }
 }
