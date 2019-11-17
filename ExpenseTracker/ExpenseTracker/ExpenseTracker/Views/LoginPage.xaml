@@ -7,8 +7,11 @@
              x:Class="ExpenseTracker.LoginPage"
              Title="LoginPage">
     <ContentPage.Content>
-        <Grid>
+        <ScrollView>
+            <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -34,22 +37,34 @@
                 IsPassword="true"
                 Text="{Binding Password}"/>
             <Grid Grid.Row="4" Margin="20,30,20,20">
-                <Button Grid.Column="0" Margin="20"
+                <Button Grid.Column="0" Margin="20,20,20,0"
                     Clicked="OnLoginButtonClicked"
                     HorizontalOptions="End"
                     WidthRequest="200"
                     Text="Login"/>
                 <Button Grid.Column="1"
-                    Margin="20"
+                    Margin="20,20,20,0"
                     Clicked="OnNewUserButtonClicked"
                     HorizontalOptions="Start"
                     WidthRequest="200"
                     Text="New User"/>
             </Grid>
+            <Button Grid.Row="5"
+                    Margin="20,20,20,0"
+                    Clicked="OnAddItemButtonClicked"
+                    HorizontalOptions="Center"
+                    WidthRequest="200"
+                    Text="Temp AddItem"/>
+            <Button Grid.Row="6"
+                    Margin="20,20,20,0"
+                    Clicked="OnAddAccountButtonClicked"
+                    HorizontalOptions="Center"
+                    WidthRequest="200"
+                    Text="Temp AddAccount"/>
             <ActivityIndicator Grid.Row="3"  Scale="3" Color="Black" IsEnabled="{Binding IsBusy}" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
 
         </Grid>
-        
-        
+
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
