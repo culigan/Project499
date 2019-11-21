@@ -6,6 +6,7 @@ using System.Text;
 //using Plugin.Toast;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 
 namespace ExpenseTracker.ViewModels
@@ -54,6 +55,8 @@ namespace ExpenseTracker.ViewModels
             {
                //if(Xamarin.Forms.Device.RuntimePlatform != "UWP")
               //    CrossToastPopUp.Current.ShowToastMessage(ex.Message);
+               DependencyService.Get<IToast>().Show(ex.Message);
+
                return null;
                
             }
@@ -90,6 +93,7 @@ namespace ExpenseTracker.ViewModels
             {
                //if (Xamarin.Forms.Device.RuntimePlatform != "UWP")
               //    CrossToastPopUp.Current.ShowToastMessage(ex.Message);
+               DependencyService.Get<IToast>().Show(ex.Message);
                return null;
             }
          }

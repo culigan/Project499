@@ -30,7 +30,9 @@ namespace ExpenseTracker
       {
          InitializeComponent();
          BindingContext = new RunProgram(DisplayData);
-         
+         DependencyService.Get<IToast>().Show("Toast Message");
       }
+
+      
    }
 }

@@ -75,6 +75,7 @@ namespace ExpenseTracker.Model
          }
          catch (Exception ex)
          {
+            DependencyService.Get<IToast>().Show(ex.Message);
             throw new Exception(ex.Message);
          }
       }
