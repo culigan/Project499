@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ExpenseTracker.AddItem">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" 
+                    Text="Add/Edit Transactions"
+                    HorizontalOptions="Center"
+                    FontSize="22" />
+                <Picker Grid.Row="2" 
+                     x:Name="TransTypePicker"
+                     Margin="20,20,20,0"
+                     Title="Select a Transaction Type"
+                     HorizontalOptions="Center"
+                     WidthRequest="250"
+                     TitleColor="Black">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Income</x:String>
+                            <x:String>Expenses</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Picker Grid.Row="3" 
+                     x:Name="AccountPicker"
+                     Margin="20,20,20,0"
+                     Title="Select an Account Type"
+                     HorizontalOptions="Center"
+                     WidthRequest="250"
+                     TitleColor="Black">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Motgage</x:String>
+                            <x:String>Food</x:String>
+                            <x:String>Entertainment</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Label Grid.Row="4"
+                    Margin="20,20,20,0"
+                    Text="Transaction Amount"
+                    HorizontalOptions="CenterAndExpand"
+                    WidthRequest="250"
+                    FontSize="16"
+                    />
+                <Entry Grid.Row="5" 
+                    Margin="20,0,20,0"
+                    IsSpellCheckEnabled="false" 
+                    Keyboard="Numeric"
+                    HorizontalOptions="Center"
+                    WidthRequest="250" />
+                <Grid Grid.Row="6" Margin="20,20,20,20">
+                    <Button Grid.Column="0" Margin="20"               
+                    HorizontalOptions="End"
+                    Clicked="OnSaveButtonClicked"
+                    WidthRequest="200"
+                    Text="Save"/>
+                    <Button Grid.Column="1"
+                    Margin="20"                   
+                    HorizontalOptions="Start"
+                    Clicked="OnDeleteButtonClicked"
+                    WidthRequest="200"
+                    Text="Delete"/>
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

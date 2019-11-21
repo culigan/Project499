@@ -61,6 +61,16 @@ namespace ExpenseTracker
         {
             await Navigation.PushAsync(new NewUser());
         }
+
+        async void OnAddItemButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AddItem());
+        }
+
+        async void OnAddAccountButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AddAccount());
+        }
     }
   
 }
