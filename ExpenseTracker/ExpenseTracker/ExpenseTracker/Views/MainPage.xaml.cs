@@ -33,6 +33,10 @@ namespace ExpenseTracker
          DependencyService.Get<IToast>().Show("Toast Message");
       }
 
-      
+      async public void OnLogOut(object sender, EventArgs e)
+      {
+         Preferences.Clear();
+         await Navigation.PopAsync();
+      }
    }
 }

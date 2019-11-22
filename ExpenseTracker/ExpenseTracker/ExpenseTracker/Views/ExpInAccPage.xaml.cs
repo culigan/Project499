@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,24 +14,30 @@ namespace ExpenseTracker.Views
    [XamlCompilation(XamlCompilationOptions.Compile)]
    public partial class ExpIncAccPage : ContentPage
    {
-      
+      ViewModels.ExpIncAccViewModel viewModel;
       public ExpIncAccPage(string accountType)
       {
          InitializeComponent();
-         BindingContext = new ViewModels.ExpIncAccViewModel(accountType);
-         if (accountType.ToUpper() == "EXPENSEACCOUNT")
+         BindingContext = viewModel = new ViewModels.ExpIncAccViewModel(accountType);
+
+
+         this.ToolbarItems.Add(new ToolbarItem("LogOut", "menu-button.png", () =>
          {
-            this.Title = "Expenses";
-         }
-         else if (accountType.ToUpper() == "INCOMEACCOUNT")
-         {
-            this.Title = "Income";
-         }
+            OnLogOut();
+         }));
+
+         this.Title = "Accounts";
       }
 
       async public void OnAddClick(object sender, EventArgs e)
       {
          await Navigation.PushModalAsync(new AddAccount());
+      }
+
+      public void OnLogOut()
+      {
+         Preferences.Clear();
+         Application.Current.MainPage = new LoginPage();
       }
    }
 }

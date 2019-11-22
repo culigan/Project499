@@ -37,14 +37,7 @@ namespace ExpenseTracker
             {
                Preferences.Set("ExpenseT_UserID", viewModel.UsersInfo[0].ID.ToString());
                viewModel.User_ID = viewModel.UsersInfo[0].ID;
-               App.Current.MainPage = new Views.AccountsPage
-               {
-                  Title = "Accounts",
-                  Children = {
-                     new Views.ExpIncAccPage("ExpenseAccount"),
-                     new Views.ExpIncAccPage("IncomeAccount")
-                  }
-               };
+               App.Current.MainPage = new Views.AccountsPage();
             }
             viewModel.IsBusy = false;
 
@@ -60,16 +53,6 @@ namespace ExpenseTracker
         async void OnNewUserButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new NewUser());
-        }
-
-        async void OnAddItemButtonClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AddItem());
-        }
-
-        async void OnAddAccountButtonClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AddAccount());
         }
     }
   

@@ -5,9 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="ExpenseTracker.Views.ExpIncAccPage"
-             Title="Accounts"
-             NavigationPage.HasNavigationBar="True">
-    
+             NavigationPage.HasNavigationBar="True"             
+              >
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -20,31 +19,37 @@
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="LightGray">
+            <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="White">
                 <ListView.ItemTemplate> 
                     <DataTemplate>
                         <ViewCell>
                             <Frame BorderColor="black" HasShadow="True" Margin="5,3,5,3" BackgroundColor="White">
-                            <Grid >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                    <Label Grid.Row="0" Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
-                                <Label Text="{Binding DateCreated}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
-                                <Label Grid.Row="1" Text="{Binding AccountBalance}" TextColor="Red" FontAttributes="Bold"/>
-                            </Grid>
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Orientation="Horizontal" Grid.Row="0">
+                                        <Label Text="Account: " FontAttributes="Bold" TextColor="Black"/>
+                                        <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding DateCreated}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
+                                    <StackLayout Orientation="Horizontal" Grid.Row="1">
+                                        <Label Text="Total:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
+                                        <Label Grid.Row="1" Text="{Binding AccountBalance}" TextColor="Red" FontAttributes="Bold"/>
+                                    </StackLayout>
+                               </Grid>
                             </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ImageButton Grid.Column="1" Grid.Row="1" CornerRadius="60" HeightRequest="60" Clicked="OnAddClick" 
-                WidthRequest="60"  HorizontalOptions="End" VerticalOptions="End" Source="@drawable/plus.png"/>
+            <Button Grid.Column="1" Grid.Row="1" CornerRadius="60" HeightRequest="60" Clicked="OnAddClick" 
+                WidthRequest="60"  HorizontalOptions="End" VerticalOptions="End" BackgroundColor="Yellow"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

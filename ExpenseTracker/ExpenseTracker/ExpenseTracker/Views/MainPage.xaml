@@ -3,7 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ExpenseTracker"
              x:Class="ExpenseTracker.MainPage"
-             BackgroundColor="Blue">
+             BackgroundColor="Blue"
+             NavigationPage.HasBackButton="True"
+             
+             >
+    <NavigationPage.TitleView>
+        <Button Text="LogOut" BackgroundColor="Transparent" Clicked="OnLogOut" HorizontalOptions="End"/>
+    </NavigationPage.TitleView>
 
     <StackLayout>
         <!-- Place new controls here -->

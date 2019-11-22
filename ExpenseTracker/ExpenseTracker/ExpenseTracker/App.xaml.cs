@@ -18,14 +18,7 @@ namespace ExpenseTracker
          
          if (Preferences.Get("ExpenseT_UserID", "NotFound") != "NotFound")
          {
-            MainPage = new Views.AccountsPage
-            {
-               Title = "Accounts",
-               Children = {
-                  new Views.ExpIncAccPage("ExpenseAccount"),
-                  new Views.ExpIncAccPage("IncomeAccount")
-               }
-            };
+            MainPage = new Views.AccountsPage();            
          }
          else 
             MainPage = new NavigationPage(new LoginPage());
