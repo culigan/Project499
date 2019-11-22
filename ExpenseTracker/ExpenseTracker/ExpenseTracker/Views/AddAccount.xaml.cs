@@ -19,12 +19,12 @@ namespace ExpenseTracker
 
         async void OnSaveAccountButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MainPage());
+            await Navigation.PopModalAsync();
         }
 
         async void OnDeleteAccountButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MainPage());
+            await Navigation.PopModalAsync();
         }
     }
 }

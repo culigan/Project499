@@ -9,12 +9,22 @@
              NavigationPage.HasNavigationBar="True">
     
     <ContentPage.Content>
-        <StackLayout>
-            <ListView x:Name="listView" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="LightGray">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="LightGray">
                 <ListView.ItemTemplate> 
                     <DataTemplate>
                         <ViewCell>
-                            <Frame BorderColor="black" HasShadow="True" Margin="5,3,5,3">
+                            <Frame BorderColor="black" HasShadow="True" Margin="5,3,5,3" BackgroundColor="White">
                             <Grid >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
@@ -33,11 +43,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <AbsoluteLayout HorizontalOptions="End" VerticalOptions="Center" Padding="10">                
-                <Button CornerRadius="50" BackgroundColor="Yellow" HeightRequest="30" Clicked="OnAddClick"
-                        WidthRequest="30"  HorizontalOptions="End" VerticalOptions="End" Text="+" 
-                        AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1,1,AutoSize,AutoSize"/>
-            </AbsoluteLayout>
-        </StackLayout>
+            <ImageButton Grid.Column="1" Grid.Row="1" CornerRadius="60" HeightRequest="60" Clicked="OnAddClick" 
+                WidthRequest="60"  HorizontalOptions="End" VerticalOptions="End" Source="@drawable/plus.png"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

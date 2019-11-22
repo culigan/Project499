@@ -30,7 +30,7 @@ namespace ExpenseTracker.Views
 
       async public void OnAddClick(object sender, EventArgs e)
       {
-         //await Navigation.PushAsync(new Add_Edit());
+         await Navigation.PushModalAsync(new AddAccount());
       }
    }
 }

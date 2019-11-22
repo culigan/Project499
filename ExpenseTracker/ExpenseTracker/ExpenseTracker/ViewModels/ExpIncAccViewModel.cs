@@ -25,7 +25,7 @@ namespace ExpenseTracker.ViewModels
                DataQuery.expenseSelect = "SELECT acc.[ID], [AccountType_ID], [AccountName], [Description], [DateCreated], [User_ID], " +
                         "(SELECT ExpenseAmount FROM[dbo].[Expense] where ID = 9) as AccountBalance FROM [dbo].[Account] acc inner join " + 
                         "AccountType acct on acc.AccountType_ID = acct.ID ";
-               DataQuery.expenseWhere = "WHere User_ID = " + Preferences.Get("ExpenseT_UserID", " - 1");
+               DataQuery.expenseWhere = "WHere User_ID = " + Preferences.Get("ExpenseT_UserID", " -1");
 
                if (accountType.ToUpper() == "EXPENSEACCOUNT")
                {

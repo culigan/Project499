@@ -23,9 +23,7 @@ namespace ExpenseTracker.Model
       }
 
       public string expenseWhere = "";
-      public string expenseSelect = "SELECT ex.[ID], ex.[ExpenseAmount], ex.[User_ID], ac.AccountName, Ac1.AccountName, " +
-	      "ex.[ExpenseDate], ex.[Repeat], Rp.RepeatPeriod FROM[dbo].[Expense] ex join Account Ac on Ex.Account_ID = Ac.ID " +
-         "inner join Account Ac1 on ex.IncomeAccount_ID = Ac1.ID inner join RepeatPeriod Rp on ex.RepeatPeriod_ID = Rp.ID";
+      public string expenseSelect = "";
      
       public DataQuery_Mod()
       {
