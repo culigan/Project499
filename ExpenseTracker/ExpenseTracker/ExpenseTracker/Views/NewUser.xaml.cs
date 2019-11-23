@@ -123,6 +123,7 @@ namespace ExpenseTracker
                 if (viewModel.FirstPasswordHash == viewModel.SecondPasswordHash)
                 {
                   viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
+                  await Navigation.PopAsync();
                 }
 
                 
