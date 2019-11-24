@@ -139,12 +139,12 @@ namespace ExpenseTracker
 
                 else if (viewModel.Firstname == null)
                 {
-                    DependencyService.Get<IToast>().Show("Firstname cannot be blank");
+                    DependencyService.Get<IToast>().Show("First name cannot be blank");
                 }
 
                 else if (viewModel.Lastname == null)
                 {
-                    DependencyService.Get<IToast>().Show("Lastname cannot be blank");
+                    DependencyService.Get<IToast>().Show("Last name cannot be blank");
                 }
 
                 else if (viewModel.FirstPassword == null)
