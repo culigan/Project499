@@ -120,14 +120,38 @@ namespace ExpenseTracker
                 viewModel.IsBusy = true;
                 viewModel.DataQuery.expenseSelect = "INSERT INTO users VALUES ";
                 viewModel.DataQuery.expenseWhere = "('" + viewModel.Username + "', '" + viewModel.Firstname + "', '" + viewModel.Lastname + "', '" + viewModel.SecondPasswordHash + "', '" + sqlFormattedDate + "')";
-                if (viewModel.FirstPasswordHash == viewModel.SecondPasswordHash)
+                if ((viewModel.FirstPasswordHash == viewModel.SecondPasswordHash) && (viewModel.Username != null) && (viewModel.Firstname != null) && (viewModel.Lastname != null)  && (viewModel.FirstPassword != null))
                 {
-                  viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
-                  await Navigation.PopAsync();
+                    viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
+                    DependencyService.Get<IToast>().Show("New User " + viewModel.Username + " Created");
+                    await Navigation.PopAsync();
                 }
 
-                
-                
+                else if (viewModel.FirstPasswordHash != viewModel.SecondPasswordHash)
+                {
+                    DependencyService.Get<IToast>().Show("Passwords much match");
+                }
+
+                else if (viewModel.Username == null)
+                {
+                    DependencyService.Get<IToast>().Show("Username cannot be blank");
+                }
+
+                else if (viewModel.Firstname == null)
+                {
+                    DependencyService.Get<IToast>().Show("Firstname cannot be blank");
+                }
+
+                else if (viewModel.Lastname == null)
+                {
+                    DependencyService.Get<IToast>().Show("Lastname cannot be blank");
+                }
+
+                else if (viewModel.FirstPassword == null)
+                {
+                    DependencyService.Get<IToast>().Show("Password cannot be blank");
+                }
+
                 viewModel.IsBusy = false;
 
             }
