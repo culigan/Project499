@@ -4,8 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="ExpenseTracker.Views.ExpIncAccPage"
-             NavigationPage.HasNavigationBar="True"             
+             x:Class="ExpenseTracker.Views.ExpenseEntriesPage"
+             NavigationPage.HasNavigationBar="True" NavigationPage.BackButtonTitle="Accounts" NavigationPage.HasBackButton="True"          
               >
     <ContentPage.Content>
         <Grid>
@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="White">
+            <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListE}" HasUnevenRows="True" BackgroundColor="White">
                 <ListView.ItemTemplate> 
                     <DataTemplate>
                         <ViewCell>
@@ -37,13 +37,13 @@
                                         <Label Text="Account: " FontAttributes="Bold" TextColor="Black"/>
                                         <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
                                     </StackLayout>
-                                    <Label Text="{Binding DateCreated}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
+                                    <Label Text="{Binding ExpenseDate}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
                                     <StackLayout Orientation="Horizontal" Grid.Row="1">
                                         <Label Text="Total:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
-                                        <Label Grid.Row="1" Text="{Binding AccountBalance}" TextColor="Red" FontAttributes="Bold"/>
+                                        <Label Grid.Row="1" Text="{Binding ExpenseAmount}" TextColor="Red" FontAttributes="Bold"/>
                                     </StackLayout>
                                     <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnAccountTap" CommandParameter="{Binding .}"/>
+                                        <TapGestureRecognizer Tapped="OnExpenseTap" CommandParameter="{Binding .}"/>
                                     </Grid.GestureRecognizers>
                                </Grid>
                             </Frame>

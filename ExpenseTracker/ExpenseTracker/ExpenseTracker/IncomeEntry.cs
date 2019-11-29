@@ -8,11 +8,11 @@ namespace ExpenseTracker
    {
       public int ID { get; set; }
       public int User_ID { get; set; }
-      public int Account_ID { get; set; }
-      public float IncomeAmount { get; set; }
-      public int IncomeCategory_ID { get; set; }
-      public DateTime ExpenseDate { get; set; }
+      public string AccountName { get; set; }
+      public double IncomeAmount { get; set; }
+      public string IncomeCategory { get; set; }
+      public DateTime IncomeDate { get; set; }
       public Boolean Repeat { get; set; }
-      public int RepeatPeriod_ID { get; set; }
+      public string RepeatPeriod { get; set; }
    }
 }

@@ -26,6 +26,12 @@
     <Compile Update="Views\AccountsPage.xaml.cs">
       <DependentUpon>AccountsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\IncomeEntriesPage.xaml.cs">
+      <DependentUpon>IncomeEntriesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ExpenseEntriesPage.xaml.cs">
+      <DependentUpon>ExpenseEntriesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ExpInAccPage.xaml.cs">
       <DependentUpon>ExpInAccPage.xaml</DependentUpon>
     </Compile>
