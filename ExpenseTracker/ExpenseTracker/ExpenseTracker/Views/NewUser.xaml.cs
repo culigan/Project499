@@ -117,12 +117,20 @@ namespace ExpenseTracker
 
             try
             {
+                UserEntry.BackgroundColor = Color.Transparent;
+                FirstNameEntry.BackgroundColor = Color.Transparent;
+                LastNameEntry.BackgroundColor = Color.Transparent;
+                FirstPasswordEntry.BackgroundColor = Color.Transparent;
+                SecondPasswordEntry.BackgroundColor = Color.Transparent;
+
                 viewModel.IsBusy = true;
                 viewModel.DataQuery.expenseSelect = "SELECT * FROM Users ";
                 viewModel.DataQuery.expenseWhere = "WHERE Username = '" + viewModel.Username + "'";
                 viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
+
                 if (viewModel.UsersInfo.Count >= 1)
                 {
+                    UserEntry.BackgroundColor = Color.Red;
                     DependencyService.Get<IToast>().Show("Username is not unique");
                 }
                 else if ((viewModel.FirstPasswordHash == viewModel.SecondPasswordHash) && (viewModel.Username != null) && (viewModel.Firstname != null) && (viewModel.Lastname != null)  && (viewModel.FirstPassword != null))
@@ -136,26 +144,32 @@ namespace ExpenseTracker
 
                 else if (viewModel.FirstPasswordHash != viewModel.SecondPasswordHash)
                 {
+                    SecondPasswordEntry.BackgroundColor = Color.Red;
                     DependencyService.Get<IToast>().Show("Passwords do not match");
                 }
 
                 else if (viewModel.Username == null)
                 {
+                    UserEntry.BackgroundColor = Color.Red;
                     DependencyService.Get<IToast>().Show("Username cannot be blank");
                 }
 
                 else if (viewModel.Firstname == null)
                 {
+                    FirstNameEntry.BackgroundColor = Color.Red;
                     DependencyService.Get<IToast>().Show("First name cannot be blank");
                 }
 
                 else if (viewModel.Lastname == null)
                 {
+                    LastNameEntry.BackgroundColor = Color.Red;
                     DependencyService.Get<IToast>().Show("Last name cannot be blank");
                 }
 
                 else if (viewModel.FirstPassword == null)
                 {
+                    FirstPasswordEntry.BackgroundColor = Color.Red;
+                    SecondPasswordEntry.BackgroundColor = Color.Red;
                     DependencyService.Get<IToast>().Show("Password cannot be blank");
                 }
 
