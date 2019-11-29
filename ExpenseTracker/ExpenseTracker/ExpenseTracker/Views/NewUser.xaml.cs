@@ -118,10 +118,17 @@ namespace ExpenseTracker
             try
             {
                 viewModel.IsBusy = true;
-                viewModel.DataQuery.expenseSelect = "INSERT INTO users VALUES ";
-                viewModel.DataQuery.expenseWhere = "('" + viewModel.Username + "', '" + viewModel.Firstname + "', '" + viewModel.Lastname + "', '" + viewModel.SecondPasswordHash + "', '" + sqlFormattedDate + "')";
-                if ((viewModel.FirstPasswordHash == viewModel.SecondPasswordHash) && (viewModel.Username != null) && (viewModel.Firstname != null) && (viewModel.Lastname != null)  && (viewModel.FirstPassword != null))
+                viewModel.DataQuery.expenseSelect = "SELECT * FROM Users ";
+                viewModel.DataQuery.expenseWhere = "WHERE Username = '" + viewModel.Username + "'";
+                viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
+                if (viewModel.UsersInfo.Count >= 1)
                 {
+                    DependencyService.Get<IToast>().Show("Username is not unique");
+                }
+                else if ((viewModel.FirstPasswordHash == viewModel.SecondPasswordHash) && (viewModel.Username != null) && (viewModel.Firstname != null) && (viewModel.Lastname != null)  && (viewModel.FirstPassword != null))
+                {
+                    viewModel.DataQuery.expenseSelect = "INSERT INTO users VALUES ";
+                    viewModel.DataQuery.expenseWhere = "('" + viewModel.Username + "', '" + viewModel.Firstname + "', '" + viewModel.Lastname + "', '" + viewModel.SecondPasswordHash + "', '" + sqlFormattedDate + "')";
                     viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
                     DependencyService.Get<IToast>().Show("New User " + viewModel.Username + " Created");
                     await Navigation.PopAsync();
@@ -129,7 +136,7 @@ namespace ExpenseTracker
 
                 else if (viewModel.FirstPasswordHash != viewModel.SecondPasswordHash)
                 {
-                    DependencyService.Get<IToast>().Show("Passwords much match");
+                    DependencyService.Get<IToast>().Show("Passwords do not match");
                 }
 
                 else if (viewModel.Username == null)

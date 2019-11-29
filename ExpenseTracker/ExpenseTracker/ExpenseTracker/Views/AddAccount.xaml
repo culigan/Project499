@@ -47,7 +47,6 @@
                     x:Name="AccountName"
                     Margin="20,0,20,0"
                     IsSpellCheckEnabled="false" 
-                    Keyboard="Numeric"
                     HorizontalOptions="Center"
                     WidthRequest="250"                         
                     />

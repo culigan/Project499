@@ -13,8 +13,8 @@ namespace ExpenseTracker.ViewModels
         private bool _IsBusy = false;
         public bool IsBusy { get { return _IsBusy; } set { _IsBusy = value; OnPropertyChanged(nameof(IsBusy)); } }
         public int User_ID { get; set; }
-        private ObservableCollection<Users> _UsersInfo;
-        public ObservableCollection<Users> UsersInfo
+        private ObservableCollection<Account> _UsersInfo;
+        public ObservableCollection<Account> UsersInfo
         {
             get { return _UsersInfo; }
             set
@@ -40,15 +40,39 @@ namespace ExpenseTracker.ViewModels
             }
         }
 
-        private string _Username;
-        public string Username
+        private string _AccountTypePicker;
+        public string AccountTypePicker
         {
-            get { return _Username; }
+            get { return _AccountTypePicker; }
             set
             {
-                _Username = value;
+                _AccountTypePicker = value;
 
-                OnPropertyChanged(nameof(Username));
+                OnPropertyChanged(nameof(AccountTypePicker));
+            }
+        }
+
+        private string _AccountName;
+        public string AccountName
+        {
+            get { return _AccountName; }
+            set
+            {
+                _AccountName = value;
+
+                OnPropertyChanged(nameof(AccountName));
+            }
+        }
+
+        private string _AccountDesc;
+        public string AccountDesc
+        {
+            get { return _AccountDesc; }
+            set
+            {
+                _AccountDesc = value;
+
+                OnPropertyChanged(nameof(AccountDesc));
             }
         }
     }
