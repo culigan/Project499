@@ -51,8 +51,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Grid.Column="1" Grid.Row="1" CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
-                    WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />            
+            <AbsoluteLayout Grid.Column="1" Grid.Row="1" >
+                <Button CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
+                    WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />
+            </AbsoluteLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

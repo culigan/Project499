@@ -29,13 +29,13 @@ namespace ExpenseTracker.ViewModels
 
                if (accountType.ToUpper() == "EXPENSEACCOUNT")
                {
-                  DataQuery.expenseWhere = " and acc.AccountType_ID = 2";
+                  DataQuery.expenseWhere += " and acc.AccountType_ID = 2";
                   idString = "Select SUM(ExpenseAmount) From Expense ";
                   _ItemListA =  DataQuery.ExecuteAQuery<Account>();
                }
                else if (accountType.ToUpper() == "INCOMEACCOUNT")
                {
-                  DataQuery.expenseWhere = " and acc.AccountType_ID = 1";
+                  DataQuery.expenseWhere += " and acc.AccountType_ID = 1";
                   idString = "Select SUM(IncomeAmount) From Income ";
                   _ItemListA = DataQuery.ExecuteAQuery<Account>();
 
