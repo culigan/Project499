@@ -50,9 +50,12 @@ namespace ExpenseTracker
       }
 
       
+
+
+
         async void OnNewUserButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NewUser());
+            await Navigation.PushModalAsync(new NewUser());
         }
     }
   

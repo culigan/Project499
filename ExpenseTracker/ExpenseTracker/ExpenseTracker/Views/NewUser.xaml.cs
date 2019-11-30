@@ -139,7 +139,7 @@ namespace ExpenseTracker
                     viewModel.DataQuery.expenseWhere = "('" + viewModel.Username + "', '" + viewModel.Firstname + "', '" + viewModel.Lastname + "', '" + viewModel.SecondPasswordHash + "', '" + sqlFormattedDate + "')";
                     viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
                     DependencyService.Get<IToast>().Show("New User " + viewModel.Username + " Created");
-                    await Navigation.PopAsync();
+                    await Navigation.PopModalAsync();
                 }
 
                 else if (viewModel.FirstPasswordHash != viewModel.SecondPasswordHash)
@@ -185,7 +185,7 @@ namespace ExpenseTracker
 
         async void OnCancelButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            await Navigation.PopModalAsync();
         }
     }
 }
