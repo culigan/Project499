@@ -52,7 +52,9 @@ namespace ExpenseTracker
       
         async void OnNewUserButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NewUser());
+            NavigationPage navigationPage = new NavigationPage(new NewUser());
+            navigationPage.Title = "Create New User";
+            await Navigation.PushModalAsync(navigationPage);
         }
     }
   
