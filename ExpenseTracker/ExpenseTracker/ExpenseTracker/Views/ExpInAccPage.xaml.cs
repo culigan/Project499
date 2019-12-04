@@ -46,7 +46,9 @@ namespace ExpenseTracker.Views
 
       async public void OnAddClick(object sender, EventArgs e)
       {
-         await Navigation.PushModalAsync(new AddAccount());
+         var parent = this.Parent.Parent as NavigationPage;
+
+         await parent.PushAsync(new AddAccount());
       }
 
       async public void OnAccountTap(object sender, EventArgs e)

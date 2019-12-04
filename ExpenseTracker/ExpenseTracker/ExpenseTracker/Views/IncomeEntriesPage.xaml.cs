@@ -31,12 +31,14 @@ namespace ExpenseTracker.Views
 
       async public void OnAddClick(object sender, EventArgs e)
       {
-         await Navigation.PushModalAsync(new AddAccount());
+         
       }
 
-      async public void OnExpenseTap(object sender, EventArgs e)
+      async public void OnIncomeTap(object sender, EventArgs e)
       {
-         
+         var parent = this.Parent as NavigationPage;
+
+         await parent.PushAsync(new AddItem() { Title = "Edit Income" });
       }
 
       public void OnLogOut()

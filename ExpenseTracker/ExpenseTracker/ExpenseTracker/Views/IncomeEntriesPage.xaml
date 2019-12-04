@@ -43,7 +43,7 @@
                                         <Label Grid.Row="1" Text="{Binding IncomeAmount}" TextColor="Red" FontAttributes="Bold"/>
                                     </StackLayout>
                                     <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnExpenseTap" CommandParameter="{Binding .}"/>
+                                        <TapGestureRecognizer Tapped="OnIncomeTap" CommandParameter="{Binding .}"/>
                                     </Grid.GestureRecognizers>
                                </Grid>
                             </Frame>
