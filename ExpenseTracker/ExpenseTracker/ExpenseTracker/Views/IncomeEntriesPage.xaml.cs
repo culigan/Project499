@@ -42,7 +42,9 @@ namespace ExpenseTracker.Views
       public void OnLogOut()
       {
          Preferences.Clear();
-         Application.Current.MainPage = new LoginPage();
+         var accountsPage = new NavigationPage(new LoginPage() { Title = "Login" });
+         NavigationPage.SetHasBackButton(accountsPage, true);
+         App.Current.MainPage = accountsPage;
       }
    }
 }

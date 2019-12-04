@@ -31,7 +31,9 @@ namespace ExpenseTracker.Views
       async public void OnLogOut(object sender, EventArgs e)
       {
          Preferences.Clear();
-         await Navigation.PopAsync();
+         var accountsPage = new NavigationPage(new LoginPage() { Title = "Login" });
+         NavigationPage.SetHasBackButton(accountsPage, true);
+         App.Current.MainPage = accountsPage;
       }
    }
 
