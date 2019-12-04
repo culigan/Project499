@@ -185,7 +185,7 @@ namespace ExpenseTracker
 
         async void OnCancelButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
     }
 }

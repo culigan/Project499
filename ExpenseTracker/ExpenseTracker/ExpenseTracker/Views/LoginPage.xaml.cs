@@ -37,7 +37,9 @@ namespace ExpenseTracker
             {
                Preferences.Set("ExpenseT_UserID", viewModel.UsersInfo[0].ID.ToString());
                viewModel.User_ID = viewModel.UsersInfo[0].ID;
-               App.Current.MainPage = new Views.AccountsPage();
+               var accountsPage = new NavigationPage(new Views.AccountsPage() { Title = "Accounts Page" });
+               NavigationPage.SetHasBackButton(accountsPage, true);
+               App.Current.MainPage = accountsPage;
             }
             viewModel.IsBusy = false;
 
@@ -55,17 +57,9 @@ namespace ExpenseTracker
 
         async void OnNewUserButtonClicked(object sender, EventArgs e)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            await Navigation.PushModalAsync(new NewUser());
-=======
-            NavigationPage navigationPage = new NavigationPage(new NewUser());
-            navigationPage.Title = "Create New User";
-            await Navigation.PushModalAsync(navigationPage);
->>>>>>> 59f541e009b931c1ba70fd1b8cbc4cfabd5ae3f8
-=======
-            await Navigation.PushAsync(new NewUser());
->>>>>>> f45da95e4e3c170e78a92cbc665807773adf263e
+            var parent = this.Parent as NavigationPage;
+            await parent.PushAsync(new NewUser() { Title = "Create New User" });
+
         }
     }
   

@@ -15,10 +15,9 @@ namespace ExpenseTracker.Views
    [XamlCompilation(XamlCompilationOptions.Compile)]
    public partial class IncomeEntriesPage : ContentPage
    {
-      string accountType = "";
       ViewModels.IncomeEntriesViewModel viewModel;
       
-      public IncomeEntriesPage(int accountID, string accountName)
+      public IncomeEntriesPage(int accountID)
       {
          InitializeComponent();
          BindingContext = viewModel = new ViewModels.IncomeEntriesViewModel(accountID);
@@ -28,7 +27,6 @@ namespace ExpenseTracker.Views
             OnLogOut();
          }));
 
-         this.Title = accountName;
       }
 
       async public void OnAddClick(object sender, EventArgs e)

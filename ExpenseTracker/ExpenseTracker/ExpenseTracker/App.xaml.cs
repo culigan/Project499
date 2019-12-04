@@ -18,10 +18,16 @@ namespace ExpenseTracker
          
          if (Preferences.Get("ExpenseT_UserID", "NotFound") != "NotFound")
          {
-            MainPage = new Views.AccountsPage();            
+            var accountsPage = new NavigationPage(new Views.AccountsPage() { Title = "Accounts Page" });
+            NavigationPage.SetHasBackButton(accountsPage, true);
+            MainPage = accountsPage; 
          }
-         else 
-            MainPage = new NavigationPage(new LoginPage());
+         else
+         {
+            var accountsPage = new NavigationPage(new LoginPage() { Title = "Login" });
+            NavigationPage.SetHasBackButton(accountsPage, true);
+            MainPage = accountsPage;
+         }
       }
 
       protected override void OnStart()

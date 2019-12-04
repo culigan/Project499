@@ -51,30 +51,39 @@ namespace ExpenseTracker.Views
 
       async public void OnAccountTap(object sender, EventArgs e)
       {
-         var grid = sender as Grid;
+         var grid = sender as Grid;      
          var account = (Account)((TapGestureRecognizer)grid.GestureRecognizers[0]).CommandParameter;
-         NavigationPage navigationPage = new NavigationPage();
-         navigationPage.Title = account.AccountName;
+         
          if (account.AccountType_ID == 1)
          {
-            await navigationPage.PushAsync(new IncomeEntriesPage(account.ID, account.AccountName));
+            var parent = this.Parent.Parent as NavigationPage;
+            
+            await parent.PushAsync(new IncomeEntriesPage(account.ID)
+            { Title = account.AccountName + " $" + account.AccountBalance.ToString("0.00") });
+            //await Navigation.PushModalAsync(new NavigationPage(new IncomeEntriesPage(account.ID, account.AccountName, account.AccountBalance)));
          }
          else if (account.AccountType_ID == 2)
          {
-            await navigationPage.PushAsync(new ExpenseEntriesPage(account.ID, account.AccountName));
+            var parent = this.Parent.Parent as NavigationPage;
+
+            await parent.PushAsync(new ExpenseEntriesPage(account.ID) 
+            { Title = account.AccountName + " $" + account.AccountBalance.ToString("0.00") });
          }
          else
          {
-            await navigationPage.PushAsync(new ExpenseEntriesPage(0, "ERROR"));
+            var parent = this.Parent.Parent as NavigationPage;
+
+            await parent.PushAsync(new ExpenseEntriesPage(0) { Title = "ERROR" });
          }
          
-         await Navigation.PushModalAsync(navigationPage);
       }
 
       public void OnLogOut()
       {
          Preferences.Clear();
-         Application.Current.MainPage = new LoginPage();
+         var accountsPage = new NavigationPage(new LoginPage() { Title = "Login" });
+         NavigationPage.SetHasBackButton(accountsPage, true);
+         App.Current.MainPage = accountsPage;
       }
    }
 }

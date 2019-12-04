@@ -14,7 +14,8 @@ namespace ExpenseTracker.ViewModels
    public class ExpenseEntriesViewModel : INotifyPropertyChanged
    {
       Model.DataQuery_Mod DataQuery;
-      
+
+      public double AccountBalance { get; set; }
       private ObservableCollection<ExpenseEntry> _ItemListE;
       public ObservableCollection<ExpenseEntry> ItemListE
       {

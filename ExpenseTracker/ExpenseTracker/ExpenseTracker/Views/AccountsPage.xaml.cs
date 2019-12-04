@@ -18,14 +18,14 @@ namespace ExpenseTracker.Views
       {
          InitializeComponent();
          BindingContext = viewModel = new ViewModels.AccountsViewModel();
-         NavigationPage navigationPage = new NavigationPage(new ExpIncAccPage("ExpenseAccount"));
+         /*NavigationPage navigationPage = new NavigationPage();
          navigationPage.Title = "Expenses";
 
-         NavigationPage navigationPage1 = new NavigationPage(new ExpIncAccPage("IncomeAccount"));
+         NavigationPage navigationPage1 = new NavigationPage();
          navigationPage1.Title = "Income";
-
-         Children.Add(navigationPage);
-         Children.Add(navigationPage1);
+         */
+         Children.Add(new ExpIncAccPage("ExpenseAccount") { Title = "Expenses" });
+         Children.Add(new ExpIncAccPage("IncomeAccount") { Title = "Income" });
       }
 
       async public void OnLogOut(object sender, EventArgs e)

@@ -14,6 +14,11 @@ namespace ExpenseTracker.ViewModels
    public class ExpIncAccViewModel : INotifyPropertyChanged
    {
       Model.DataQuery_Mod DataQuery;
+      ObservableCollection<Account> incomeSum = new ObservableCollection<Account>();
+
+      private bool _Busy = true;
+      public bool Busy { get { return _Busy; } set { _Busy = value; OnPropertyChanged(nameof(Busy)); } }
+
       private ObservableCollection<Account> _ItemListA;
       public ObservableCollection<Account> ItemListA
       {
@@ -21,39 +26,42 @@ namespace ExpenseTracker.ViewModels
          {
             try
             {
+               Busy = true;
                string idString = "";
                DataQuery.expenseSelect = "SELECT acc.[ID], [AccountType_ID], [AccountName], [Description], [DateCreated], [User_ID], " +
                         "(SELECT ExpenseAmount FROM[dbo].[Expense] where ID = 9) as AccountBalance FROM [dbo].[Account] acc inner join " + 
                         "AccountType acct on acc.AccountType_ID = acct.ID ";
                DataQuery.expenseWhere = "WHere User_ID = " + Preferences.Get("ExpenseT_UserID", " -1");
 
+               
                if (accountType.ToUpper() == "EXPENSEACCOUNT")
                {
                   DataQuery.expenseWhere += " and acc.AccountType_ID = 2";
-                  idString = "Select SUM(ExpenseAmount) From Expense ";
-                  _ItemListA =  DataQuery.ExecuteAQuery<Account>();
-               }
-               else if (accountType.ToUpper() == "INCOMEACCOUNT")
-               {
-                  DataQuery.expenseWhere += " and acc.AccountType_ID = 1";
-                  idString = "Select SUM(IncomeAmount) From Income ";
                   _ItemListA = DataQuery.ExecuteAQuery<Account>();
 
-               }
-               
-
-
-               if (accountType.ToUpper() == "INCOMEACCOUNT" || accountType.ToUpper() == "EXPENSEACCOUNT")
-               {
-                  string[] item = new string[_ItemListA.Count];
                   for (int i = 0; i < _ItemListA.Count; i++)
                   {
                      DataQuery.expenseWhere = "Where Account_id = " + _ItemListA[i].ID;
-                     DataQuery.expenseSelect = idString;
+                     DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense ";
                      _ItemListA[i].AccountBalance = double.Parse(DataQuery.ExecuteAQuery());
-
                   }
                }
+               else if(accountType.ToUpper() == "INCOMEACCOUNT")
+               {
+                  DataQuery.expenseWhere += " and acc.AccountType_ID = 1";
+                  _ItemListA = DataQuery.ExecuteAQuery<Account>();
+
+                  for (int i = 0; i < _ItemListA.Count; i++)
+                  {
+                     DataQuery.expenseWhere = "Where IncomeAccount_id = " + _ItemListA[i].ID;
+                     DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense "; 
+                     double expenseSum = double.Parse(DataQuery.ExecuteAQuery());
+                     DataQuery.expenseWhere = "Where Account_id = " + _ItemListA[i].ID;
+                     DataQuery.expenseSelect = "Select SUM(IncomeAmount) From Income ";
+                     _ItemListA[i].AccountBalance = double.Parse(DataQuery.ExecuteAQuery()) - expenseSum;
+                  }
+               }
+
                return _ItemListA;
             }
             catch(Exception ex)
@@ -65,6 +73,7 @@ namespace ExpenseTracker.ViewModels
                return null;
                
             }
+            Busy = false;
          }
          set { _ItemListA = value; OnPropertyChanged(nameof(ItemListA)); }
       }

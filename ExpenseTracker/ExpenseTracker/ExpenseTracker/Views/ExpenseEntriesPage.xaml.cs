@@ -15,20 +15,18 @@ namespace ExpenseTracker.Views
    [XamlCompilation(XamlCompilationOptions.Compile)]
    public partial class ExpenseEntriesPage : ContentPage
    {
-      string accountType = "";
       ViewModels.ExpenseEntriesViewModel viewModel;
       
-      public ExpenseEntriesPage(int accountID, string accountName)
+      public ExpenseEntriesPage(int accountID)
       {
          InitializeComponent();
          BindingContext = viewModel = new ViewModels.ExpenseEntriesViewModel(accountID);
-
-         this.ToolbarItems.Add(new ToolbarItem("LogOut", "menu-button.png", () =>
+         
+         this.ToolbarItems.Add(new ToolbarItem("LogOut", "", () =>
          {
             OnLogOut();
          }));
 
-         this.Title = accountName;
       }
 
       async public void OnAddClick(object sender, EventArgs e)
