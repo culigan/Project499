@@ -53,12 +53,12 @@ namespace ExpenseTracker
                 await DisplayAlert("Adding account failed", ex.Message, "OK");
                 viewModel.IsBusy = false;
             }
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         async void OnDeleteAccountButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
     }
 }

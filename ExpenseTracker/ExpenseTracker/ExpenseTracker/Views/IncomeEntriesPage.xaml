@@ -52,7 +52,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <AbsoluteLayout Grid.Column="1" Grid.Row="1" >
-                <Button CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
+                <Button CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+"  FontSize="Large" FontAttributes="Bold"
                     WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />
             </AbsoluteLayout>
         </Grid>

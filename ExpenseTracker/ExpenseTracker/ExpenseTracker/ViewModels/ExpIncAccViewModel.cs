@@ -43,7 +43,8 @@ namespace ExpenseTracker.ViewModels
                   {
                      DataQuery.expenseWhere = "Where Account_id = " + _ItemListA[i].ID;
                      DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense ";
-                     _ItemListA[i].AccountBalance = double.Parse(DataQuery.ExecuteAQuery());
+                     string accountB = DataQuery.ExecuteAQuery();
+                     _ItemListA[i].AccountBalance = accountB == "" ? 0.00 : (double.Parse(accountB));
                   }
                }
                else if(accountType.ToUpper() == "INCOMEACCOUNT")
@@ -54,11 +55,13 @@ namespace ExpenseTracker.ViewModels
                   for (int i = 0; i < _ItemListA.Count; i++)
                   {
                      DataQuery.expenseWhere = "Where IncomeAccount_id = " + _ItemListA[i].ID;
-                     DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense "; 
-                     double expenseSum = double.Parse(DataQuery.ExecuteAQuery());
+                     DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense ";
+                     string accountB = DataQuery.ExecuteAQuery();
+                     double expenseSum = accountB == "" ? 0.00 : (double.Parse(accountB));
                      DataQuery.expenseWhere = "Where Account_id = " + _ItemListA[i].ID;
                      DataQuery.expenseSelect = "Select SUM(IncomeAmount) From Income ";
-                     _ItemListA[i].AccountBalance = double.Parse(DataQuery.ExecuteAQuery()) - expenseSum;
+                     accountB = DataQuery.ExecuteAQuery();
+                     _ItemListA[i].AccountBalance = accountB == "" ? 0.00 : (double.Parse(accountB) - expenseSum);
                   }
                }
 
