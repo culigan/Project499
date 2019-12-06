@@ -28,7 +28,8 @@
                      Title="Select an Account Type"
                      HorizontalOptions="Center"
                      WidthRequest="250"
-                     TitleColor="Black">
+                     TitleColor="Black"
+                     SelectedItem="{Binding AccountTypePicker}">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Income</x:String>
@@ -48,7 +49,8 @@
                     Margin="20,0,20,0"
                     IsSpellCheckEnabled="false" 
                     HorizontalOptions="Center"
-                    WidthRequest="250"                         
+                    WidthRequest="250"
+                    Text="{Binding AccountName}"
                     />
                 <Label Grid.Row="5"
                     Margin="20,20,20,0"
@@ -62,7 +64,8 @@
                     AutoSize="TextChanges"
                     Margin="20,0,20,0"
                     HorizontalOptions="Center"
-                    WidthRequest="250"/>
+                    WidthRequest="250"
+                    Text="{Binding AccountDesc}"/>
                 <Grid Grid.Row="7" Margin="20,20,20,20">
                     <Button Grid.Column="0" Margin="20"               
                     HorizontalOptions="End"
