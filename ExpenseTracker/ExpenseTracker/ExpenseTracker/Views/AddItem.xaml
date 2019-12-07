@@ -25,10 +25,12 @@
                 <Picker Grid.Row="2" 
                      x:Name="TransTypePicker"
                      Margin="20,20,20,0"
-                     Title="Select a Transaction Type"
+                     Title="Transaction Type"
                      HorizontalOptions="Center"
                      WidthRequest="250"
-                     TitleColor="Black">
+                     TitleColor="Black"
+                     IsEnabled="True"
+                     SelectedItem="{Binding TransType}">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Income</x:String>
@@ -39,10 +41,12 @@
                 <Picker Grid.Row="3" 
                      x:Name="AccountPicker"
                      Margin="20,20,20,0"
-                     Title="Select an Account Type"
+                     Title="Account Type"
                      HorizontalOptions="Center"
                      WidthRequest="250"
-                     TitleColor="Black">
+                     TitleColor="Black"
+                     IsEnabled="True"
+                     SelectedItem="{Binding Account}">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Motgage</x:String>
@@ -53,6 +57,7 @@
                 </Picker>
                 <Label Grid.Row="4"
                     Margin="20,20,20,0"
+                    x:Name="TransAmountEntry"
                     Text="Transaction Amount"
                     HorizontalOptions="CenterAndExpand"
                     WidthRequest="250"
@@ -63,7 +68,9 @@
                     IsSpellCheckEnabled="false" 
                     Keyboard="Numeric"
                     HorizontalOptions="Center"
-                    WidthRequest="250" />
+                    WidthRequest="250"
+                    Placeholder="0.00"
+                    Text="{Binding AccountName}"/>
                 <Grid Grid.Row="6" Margin="20,20,20,20">
                     <Button Grid.Column="0" Margin="20"               
                     HorizontalOptions="End"
@@ -73,9 +80,9 @@
                     <Button Grid.Column="1"
                     Margin="20"                   
                     HorizontalOptions="Start"
-                    Clicked="OnDeleteButtonClicked"
+                    Clicked="OnCancelButtonClicked"
                     WidthRequest="200"
-                    Text="Delete"/>
+                    Text="Cancel"/>
                 </Grid>
             </Grid>
         </ScrollView>
