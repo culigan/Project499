@@ -24,6 +24,18 @@ namespace ExpenseTracker.ViewModels
             }
         }
 
+        public int Account_ID { get; set; }
+        private ObservableCollection<Users> _AccountInfo;
+        public ObservableCollection<Users> AccountInfo
+        {
+            get { return _AccountInfo; }
+            set
+            {
+                _AccountInfo = value;
+                OnPropertyChanged(nameof(AccountInfo));
+            }
+        }
+
         private string _TransType;
         public string TransType
         {
