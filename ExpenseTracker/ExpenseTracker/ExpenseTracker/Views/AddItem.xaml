@@ -17,53 +17,47 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="1" 
                     Text="Add/Edit Transactions"
                     HorizontalOptions="Center"
                     FontSize="22" />
-                <Picker Grid.Row="2" 
-                     x:Name="TransTypePicker"
+                <Label Grid.Row="2" 
                      Margin="20,20,20,0"
-                     Title="Transaction Type"
                      HorizontalOptions="Center"
                      WidthRequest="250"
-                     TitleColor="Black"
                      IsEnabled="True"
-                     SelectedItem="{Binding TransType}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Income</x:String>
-                            <x:String>Expenses</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-                <Picker Grid.Row="3" 
-                     x:Name="AccountPicker"
-                     Margin="20,20,20,0"
-                     Title="Account Type"
+                     Text="Account Type:"/>
+                <Label Grid.Row="3" 
+                     x:Name="AccountTypeLabel"
+                     Margin="20,0,20,0"
+                     Text="{Binding TransType}"
                      HorizontalOptions="Center"
                      WidthRequest="250"
-                     TitleColor="Black"
-                     IsEnabled="True"
-                     SelectedItem="{Binding Account}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Motgage</x:String>
-                            <x:String>Food</x:String>
-                            <x:String>Entertainment</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
+                     IsEnabled="True"/>
                 <Label Grid.Row="4"
+                    Margin="20,20,20,0"
+                    Text="Account Name:"
+                    HorizontalOptions="CenterAndExpand"
+                    WidthRequest="250"
+                    FontSize="16" />
+                <Label Grid.Row="5" 
+                     x:Name="AccountPicker"
+                     Margin="20,0,20,0"
+                     Text="{Binding Account}"
+                     HorizontalOptions="Center"
+                     WidthRequest="250"
+                     IsEnabled="True"/>
+                <Label Grid.Row="6"
                     Margin="20,20,20,0"
                     x:Name="TransAmountEntry"
                     Text="Transaction Amount"
                     HorizontalOptions="CenterAndExpand"
                     WidthRequest="250"
-                    FontSize="16"
-                    />
-                <Entry Grid.Row="5" 
+                    FontSize="16"/>
+                <Entry Grid.Row="7" 
                     Margin="20,0,20,0"
                     IsSpellCheckEnabled="false" 
                     Keyboard="Numeric"
@@ -71,7 +65,7 @@
                     WidthRequest="250"
                     Placeholder="0.00"
                     Text="{Binding AccountName}"/>
-                <Grid Grid.Row="6" Margin="20,20,20,20">
+                <Grid Grid.Row="8" Margin="20,20,20,20">
                     <Button Grid.Column="0" Margin="20"               
                     HorizontalOptions="End"
                     Clicked="OnSaveButtonClicked"
