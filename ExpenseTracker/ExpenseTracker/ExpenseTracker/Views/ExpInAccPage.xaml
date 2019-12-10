@@ -23,30 +23,47 @@
                 <ListView.ItemTemplate> 
                     <DataTemplate>
                         <ViewCell>
-                            <Frame BorderColor="black" HasShadow="True" Margin="5,3,5,3" BackgroundColor="White">
-                                <Grid >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackLayout Orientation="Horizontal" Grid.Row="0">
-                                        <Label Text="Account: " FontAttributes="Bold" TextColor="Black"/>
-                                        <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
-                                    </StackLayout>
-                                    <Label Text="{Binding DateCreated}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
-                                    <StackLayout Orientation="Horizontal" Grid.Row="1">
-                                        <Label Text="Total:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
-                                        <Label Grid.Row="1" Text="{Binding AccountBalance}" TextColor="Red" FontAttributes="Bold"/>
-                                    </StackLayout>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnAccountTap" CommandParameter="{Binding .}"/>
-                                    </Grid.GestureRecognizers>
-                               </Grid>
-                            </Frame>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Frame Grid.Column="0" Grid.ColumnSpan="2" BorderColor="black" HasShadow="True" Margin="10,3,0,3" BackgroundColor="White" Padding="0">
+                                    <Grid Padding="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout Orientation="Horizontal" Grid.Row="0" Padding="5,10,0,0">
+                                            <Label Text="Account: " FontAttributes="Bold" TextColor="Black" Padding="0"/>
+                                            <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black" Padding="0"/>
+                                        </StackLayout>
+                                        <Label Text="{Binding DateCreated}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
+                                        <StackLayout Orientation="Horizontal" Grid.Row="1" Padding="5,0,0,10">
+                                            <Label Text="Total:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
+                                            <Label Grid.Row="1" Text="{Binding AccountBalance}" TextColor="Red" FontAttributes="Bold"/>
+                                        </StackLayout>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnAccountTap" CommandParameter="{Binding .}"/>
+                                            <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
+                                            <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" CommandParameter="{Binding .}"/>
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </Frame>
+                                <Button Grid.Column="2" Text="Edit" Clicked="OnEditClick" BackgroundColor="Lime" BorderColor="Black" BorderWidth="1" 
+                                        Margin="0,3,0,3" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                                        IsVisible="False"  CommandParameter="{Binding .}"/>
+                                <Button Grid.Column="3" Text="Delete" BackgroundColor="Red" Clicked="OnDeleteClick" BorderColor="Black" BorderWidth="1" 
+                                        Margin="0,3,10,3" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                                        IsVisible="False"  CommandParameter="{Binding .}"/>
+                                
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

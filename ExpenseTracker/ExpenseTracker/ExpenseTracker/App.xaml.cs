@@ -16,6 +16,7 @@ namespace ExpenseTracker
          InitializeComponent();
          FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
          
+         
          if (Preferences.Get("ExpenseT_UserID", "NotFound") != "NotFound")
          {
             var accountsPage = new NavigationPage(new Views.AccountsPage() { Title = "Accounts Page" });

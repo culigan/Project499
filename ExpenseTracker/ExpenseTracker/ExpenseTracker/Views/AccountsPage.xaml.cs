@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace ExpenseTracker.Views
 {
    [XamlCompilation(XamlCompilationOptions.Compile)]
-   public partial class AccountsPage : TabbedPage
+   public partial class AccountsPage : Xamarin.Forms.TabbedPage
    {
       ViewModels.AccountsViewModel viewModel;
       public AccountsPage()
@@ -26,6 +28,8 @@ namespace ExpenseTracker.Views
          */
          Children.Add(new ExpIncAccPage("ExpenseAccount") { Title = "Expenses" });
          Children.Add(new ExpIncAccPage("IncomeAccount") { Title = "Income" });
+         this.On<Android>().DisableSwipePaging();
+
       }
 
       async public void OnLogOut(object sender, EventArgs e)

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ExpenseTracker.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 
@@ -18,9 +19,11 @@ namespace ExpenseTracker
         {
             InitializeComponent();
             BindingContext = viewModel = new AddAccountViewModel();
+            
+
         }
 
-        async void OnSaveAccountButtonClicked(object sender, EventArgs e)
+      async void OnSaveAccountButtonClicked(object sender, EventArgs e)
         {
             String userID = Preferences.Get("ExpenseT_UserID", "NULL");
             

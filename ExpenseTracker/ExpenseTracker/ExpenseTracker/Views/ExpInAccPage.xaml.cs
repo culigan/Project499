@@ -15,6 +15,7 @@ namespace ExpenseTracker.Views
    [XamlCompilation(XamlCompilationOptions.Compile)]
    public partial class ExpIncAccPage : ContentPage
    {
+      Model.DataQuery_Mod DataQuery;
       string accountType = "";
       ViewModels.ExpIncAccViewModel viewModel;
       public ExpIncAccPage(string accountType)
@@ -27,6 +28,7 @@ namespace ExpenseTracker.Views
          {
             OnLogOut();
          }));
+         DataQuery = new Model.DataQuery_Mod();
 
          this.Title = "Accounts";
       }
@@ -40,6 +42,7 @@ namespace ExpenseTracker.Views
          {
             OnLogOut();
          }));
+         DataQuery = new Model.DataQuery_Mod();
 
          this.Title = "Accounts";
       }
@@ -86,6 +89,74 @@ namespace ExpenseTracker.Views
          var accountsPage = new NavigationPage(new LoginPage() { Title = "Login" });
          NavigationPage.SetHasBackButton(accountsPage, true);
          App.Current.MainPage = accountsPage;
+      }
+
+      async public void OnDeleteClick (object sender, EventArgs e)
+      {
+         try
+         {
+            bool choice = await DisplayAlert("ALERT", "This will delete all entries for this account. Are you sure you want to delete?", "Delete", "Cancel");
+            if (choice)
+            {
+               var deleteID = (Account)((sender as Button).CommandParameter);
+               if (deleteID.AccountType_ID == 1)
+               {
+                  DataQuery.expenseSelect = "Delete From Expense";
+                  DataQuery.expenseWhere = "where incomeaccount_id = " + deleteID.ID;
+                  int results = DataQuery.AlterDataQuery();
+                  DataQuery.expenseSelect = "Delete From Income";
+                  DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
+                  results = DataQuery.AlterDataQuery();
+                  DataQuery.expenseSelect = "Delete From Account";
+                  DataQuery.expenseWhere = "where id = " + deleteID.ID;
+                  results = DataQuery.AlterDataQuery();
+               }
+               else if (deleteID.AccountType_ID == 2)
+               {
+                  DataQuery.expenseSelect = "Delete From Expense";
+                  DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
+                  int results = DataQuery.AlterDataQuery();
+                  DataQuery.expenseSelect = "Delete From Account";
+                  DataQuery.expenseWhere = "where id = " + deleteID.ID;
+                  results = DataQuery.AlterDataQuery();
+               }
+
+               
+               
+            }
+         }
+         catch (Exception ex)
+         {
+            DependencyService.Get<IToast>().Show(ex.Message);
+         }
+      }
+
+      public void OnEditClick (object sender, EventArgs e)
+      {
+
+      }
+
+      public void OnSwipeLeft(object sender, SwipedEventArgs e)
+      {
+         var grid = sender as Grid;
+         grid.Children[1].IsVisible = false;
+
+         var slide = grid.Parent.Parent as Grid;
+         var button1 = slide.Children[1] as Button;
+         button1.IsVisible = true;
+         var button2 = slide.Children[2] as Button;
+         button2.IsVisible = true;
+      }
+      public void OnSwipeRight(object sender, SwipedEventArgs e)
+      {
+         var grid = sender as Grid;
+         grid.Children[1].IsVisible = true;
+
+         var slide = grid.Parent.Parent as Grid;
+         var button1 = slide.Children[1] as Button;
+         button1.IsVisible = false;
+         var button2 = slide.Children[2] as Button;
+         button2.IsVisible = false;
       }
    }
 }

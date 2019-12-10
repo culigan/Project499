@@ -110,21 +110,29 @@ namespace ExpenseTracker.Model
       }
 
 
-      public int AlterDataQuery(string queryString)
+      public int AlterDataQuery()
       {
-         int rowAffected = 0;
-         using (SqlConnection connection = new SqlConnection(
-               connectionString))
+         try
          {
-            connection.Open();
+            string queryString = expenseSelect + " " + expenseWhere;
+            int rowAffected = 0;
+            using (SqlConnection connection = new SqlConnection(
+                  connectionString))
+            {
+               connection.Open();
 
-            SqlCommand command = new SqlCommand(queryString, connection);
-            rowAffected = command.ExecuteNonQuery();
+               SqlCommand command = new SqlCommand(queryString, connection);
+               rowAffected = command.ExecuteNonQuery();
 
-            
-            connection.Close();
+
+               connection.Close();
+            }
+            return rowAffected;
          }
-         return rowAffected;
+         catch (Exception ex)
+         {
+            throw new Exception(ex.Message);
+         }
       }
 
    }
