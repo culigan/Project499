@@ -4,7 +4,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 
-
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace ExpenseTracker
 {
@@ -15,8 +14,7 @@ namespace ExpenseTracker
       {
          InitializeComponent();
          FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
-         
-         
+
          if (Preferences.Get("ExpenseT_UserID", "NotFound") != "NotFound")
          {
             var accountsPage = new NavigationPage(new Views.AccountsPage() { Title = "Accounts Page" });

@@ -9,6 +9,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
+using Xamarin.Forms.PlatformConfiguration.WindowsSpecific;
 
 namespace ExpenseTracker.Views
 {
@@ -29,10 +30,10 @@ namespace ExpenseTracker.Views
          Children.Add(new ExpIncAccPage("ExpenseAccount") { Title = "Expenses" });
          Children.Add(new ExpIncAccPage("IncomeAccount") { Title = "Income" });
          this.On<Android>().DisableSwipePaging();
-
+         
       }
 
-      async public void OnLogOut(object sender, EventArgs e)
+      public void OnLogOut(object sender, EventArgs e)
       {
          Preferences.Clear();
          var accountsPage = new NavigationPage(new LoginPage() { Title = "Login" });

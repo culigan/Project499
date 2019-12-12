@@ -19,10 +19,14 @@
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="White">
+            <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="White">               
                 <ListView.ItemTemplate> 
                     <DataTemplate>
                         <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Edit" Clicked="OnEditClick" CommandParameter="{Binding .}"/>
+                                <MenuItem Text="Delete" Clicked="OnDeleteClick" CommandParameter="{Binding .}"/>
+                            </ViewCell.ContextActions>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -56,12 +60,6 @@
                                         </Grid.GestureRecognizers>
                                     </Grid>
                                 </Frame>
-                                <Button Grid.Column="2" Text="Edit" Clicked="OnEditClick" BackgroundColor="Lime" BorderColor="Black" BorderWidth="1" 
-                                        Margin="0,3,0,3" HorizontalOptions="Fill" VerticalOptions="Fill" 
-                                        IsVisible="False"  CommandParameter="{Binding .}"/>
-                                <Button Grid.Column="3" Text="Delete" BackgroundColor="Red" Clicked="OnDeleteClick" BorderColor="Black" BorderWidth="1" 
-                                        Margin="0,3,10,3" HorizontalOptions="Fill" VerticalOptions="Fill" 
-                                        IsVisible="False"  CommandParameter="{Binding .}"/>
                                 
                             </Grid>
                         </ViewCell>

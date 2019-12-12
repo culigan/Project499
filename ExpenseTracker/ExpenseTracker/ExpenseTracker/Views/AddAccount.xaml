@@ -29,13 +29,8 @@
                      HorizontalOptions="Center"
                      WidthRequest="250"
                      TitleColor="Black"
-                     SelectedItem="{Binding AccountTypePicker}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Income</x:String>
-                            <x:String>Expenses</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
+                     SelectedItem="{Binding AccountTypePicker, Mode=TwoWay}" >
+                     
                 </Picker>
                 <Label Grid.Row="3"
                     Margin="20,20,20,0"
@@ -50,7 +45,7 @@
                     IsSpellCheckEnabled="false" 
                     HorizontalOptions="Center"
                     WidthRequest="250"
-                    Text="{Binding AccountName}"
+                    Text="{Binding AccountName, Mode=TwoWay}"
                     />
                 <Label Grid.Row="5"
                     Margin="20,20,20,0"
@@ -65,9 +60,9 @@
                     Margin="20,0,20,0"
                     HorizontalOptions="Center"
                     WidthRequest="250"
-                    Text="{Binding AccountDesc}"/>
+                    Text="{Binding AccountDesc, Mode=TwoWay}"/>
                 <Grid Grid.Row="7" Margin="20,20,20,20">
-                    <Button Grid.Column="0" Margin="20"               
+                    <Button x:Name="saveButton" Grid.Column="0" Margin="20"               
                     HorizontalOptions="End"
                     Clicked="OnSaveAccountButtonClicked"
                     WidthRequest="200"
@@ -75,9 +70,9 @@
                     <Button Grid.Column="1"
                     Margin="20"                   
                     HorizontalOptions="Start"
-                    Clicked="OnDeleteAccountButtonClicked"
+                    Clicked="OnCancelButtonClicked"
                     WidthRequest="200"
-                    Text="Delete"/>
+                    Text="Cancel"/>
                 </Grid>
             </Grid>
         </ScrollView>

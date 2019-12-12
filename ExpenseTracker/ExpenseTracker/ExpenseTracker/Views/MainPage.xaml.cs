@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Essentials;
-
 //Testing to make sure I can update the repository. -JS
 
 namespace ExpenseTracker
@@ -24,7 +23,7 @@ namespace ExpenseTracker
       {
          InitializeComponent();
          BindingContext = new RunProgram();
-
+         
          
       }
       public MainPage(List<string>DisplayData)

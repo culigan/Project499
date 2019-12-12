@@ -24,13 +24,18 @@ namespace ExpenseTracker.Views
          BindingContext = viewModel = new ViewModels.ExpIncAccViewModel(accountType);
          this.accountType = accountType;
 
-         this.ToolbarItems.Add(new ToolbarItem("LogOut", "menu-button.png", () =>
+         this.ToolbarItems.Add(new ToolbarItem("LogOut", "", () =>
          {
             OnLogOut();
          }));
          DataQuery = new Model.DataQuery_Mod();
 
          this.Title = "Accounts";
+
+         if(Device.RuntimePlatform == Device.UWP)
+         {
+              
+         }
       }
 
       public ExpIncAccPage(int accountID)
@@ -45,13 +50,15 @@ namespace ExpenseTracker.Views
          DataQuery = new Model.DataQuery_Mod();
 
          this.Title = "Accounts";
+
+         
       }
 
       async public void OnAddClick(object sender, EventArgs e)
       {
          var parent = this.Parent.Parent as NavigationPage;
 
-         await parent.PushAsync(new AddAccount());
+         await parent.PushAsync(new AddAccount());         
       }
 
       async public void OnAccountTap(object sender, EventArgs e)
@@ -133,7 +140,21 @@ namespace ExpenseTracker.Views
 
       public void OnEditClick (object sender, EventArgs e)
       {
+         try
+         {
 
+            Account deleteID = null;
+            if(sender is MenuItem)
+               deleteID = (Account)((sender as MenuItem).CommandParameter);
+            else if (sender is Button)
+               deleteID = (Account)((sender as Button).CommandParameter);
+            Navigation.PushAsync(new AddAccount(deleteID.ID) { Title = "Edit " + deleteID.AccountName + " Account" });
+
+         }
+         catch (Exception ex)
+         {
+            DependencyService.Get<IToast>().Show(ex.Message);
+         }
       }
 
       public void OnSwipeLeft(object sender, SwipedEventArgs e)
