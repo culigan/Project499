@@ -31,8 +31,9 @@ namespace ExpenseTracker.Views
 
       async public void OnAddClick(object sender, EventArgs e)
       {
+         
             var parent = this.Parent as NavigationPage;
-            await parent.PushAsync(new AddItem() { Title = "Add Expense" });
+            await parent.PushAsync(new AddItem("Expense", this.Title.Remove(this.Title.IndexOf("$") - 1)) { Title = "Add Expense" });
 
         }
 

@@ -13,50 +13,50 @@ namespace ExpenseTracker.ViewModels
         private bool _IsBusy = false;
         public bool IsBusy { get { return _IsBusy; } set { _IsBusy = value; OnPropertyChanged(nameof(IsBusy)); } }
         public int User_ID { get; set; }
-        private ObservableCollection<Users> _UsersInfo;
-        public ObservableCollection<Users> UsersInfo
-        {
-            get { return _UsersInfo; }
-            set
-            {
-                _UsersInfo = value;
-                OnPropertyChanged(nameof(UsersInfo));
-            }
-        }
-
         public int Account_ID { get; set; }
-        private ObservableCollection<Users> _AccountInfo;
-        public ObservableCollection<Users> AccountInfo
+
+      private bool _InAccVisible;
+      public bool InAccVisible
+      {
+         get { return _InAccVisible; }
+         set { _InAccVisible = value; OnPropertyChanged(nameof(InAccVisible)); }
+      }
+
+      private string _TransName;
+      public string TransName
+      {
+         get { return _TransName; }
+         set { _TransName = value; OnPropertyChanged(nameof(TransName)); }
+      }
+
+      private string _IncomeAccount;
+      public string IncomeAccount
+      {
+         get { return _IncomeAccount; }
+         set { _IncomeAccount = value; OnPropertyChanged(nameof(IncomeAccount)); }
+      }
+
+        private string _AccountType;
+        public string AccountType
         {
-            get { return _AccountInfo; }
+            get { return _AccountType; }
             set
             {
-                _AccountInfo = value;
-                OnPropertyChanged(nameof(AccountInfo));
+            _AccountType = value;
+
+                OnPropertyChanged(nameof(AccountType));
             }
         }
 
-        private string _TransType;
-        public string TransType
+        private string _AccountName;
+        public string AccountName
         {
-            get { return _TransType; }
+            get { return _AccountName; }
             set
             {
-                _TransType = value;
+               _AccountName = value;
 
-                OnPropertyChanged(nameof(TransType));
-            }
-        }
-
-        private string _Account;
-        public string Account
-        {
-            get { return _Account; }
-            set
-            {
-                _Account = value;
-
-                OnPropertyChanged(nameof(Account));
+                OnPropertyChanged(nameof(AccountName));
             }
         }
 
@@ -72,12 +72,25 @@ namespace ExpenseTracker.ViewModels
             }
         }
 
-        public AddItemViewModel()
+      private ObservableCollection<string> _Category;
+      public ObservableCollection<string> Category
+      {
+         get { return _Category; }
+         set
+         {
+            _Category = value;
+
+            OnPropertyChanged(nameof(Category));
+         }
+      }
+
+      public AddItemViewModel()
         {
             DataQuery = new DataQuery_Mod();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+      
+      public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string name = "")
         {
