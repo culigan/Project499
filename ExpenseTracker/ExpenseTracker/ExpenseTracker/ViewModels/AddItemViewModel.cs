@@ -72,6 +72,18 @@ namespace ExpenseTracker.ViewModels
             }
         }
 
+        private string _TransName;
+        public string TransName
+        {
+            get { return _TransName; }
+            set
+            {
+                _TransName = value;
+
+                OnPropertyChanged(nameof(TransName));
+            }
+        }
+
         public AddItemViewModel()
         {
             DataQuery = new DataQuery_Mod();
