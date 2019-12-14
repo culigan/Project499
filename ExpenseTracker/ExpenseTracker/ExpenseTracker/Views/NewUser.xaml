@@ -81,7 +81,7 @@
                     HorizontalOptions="End"
                     Clicked="OnSubmitButtonClicked"
                     WidthRequest="200"
-                    Text="Submit"/>
+                    Text="Create User"/>
                 <Button Grid.Column="1"
                     Margin="20"                   
                     HorizontalOptions="Start"

@@ -83,7 +83,7 @@ namespace ExpenseTracker.ViewModels
             OnPropertyChanged(nameof(Category));
          }
       }
-
+            
       public AddItemViewModel()
         {
             DataQuery = new DataQuery_Mod();
