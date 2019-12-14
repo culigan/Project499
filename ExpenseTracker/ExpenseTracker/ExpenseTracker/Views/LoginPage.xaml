@@ -44,7 +44,7 @@
                     Clicked="OnNewUserButtonClicked"
                     HorizontalOptions="Start"
                     WidthRequest="200"
-                    Text="New User"/>
+                    Text="Create New User"/>
             </Grid>
             <ActivityIndicator Grid.Row="3"  Scale="3" Color="Black" IsEnabled="{Binding IsBusy}" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
 
