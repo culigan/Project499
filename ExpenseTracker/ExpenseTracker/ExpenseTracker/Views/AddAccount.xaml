@@ -54,9 +54,8 @@
                     WidthRequest="250"
                     FontSize="16"
                     />
-                <Editor Grid.Row="6"
+                <Entry Grid.Row="6"
                     x:Name="AccountDesc"
-                    AutoSize="TextChanges"
                     Margin="20,0,20,0"
                     HorizontalOptions="Center"
                     WidthRequest="250"
