@@ -29,6 +29,13 @@ namespace ExpenseTracker.ViewModels
          set { _TransName = value; OnPropertyChanged(nameof(TransName)); }
       }
 
+      private ObservableCollection<string> _IncomeAccountList;
+      public ObservableCollection<string> IncomeAccountList
+      {
+         get { return _IncomeAccountList; }
+         set { _IncomeAccountList = value; OnPropertyChanged(nameof(IncomeAccountList)); }
+      }
+      
       private string _IncomeAccount;
       public string IncomeAccount
       {
@@ -72,8 +79,20 @@ namespace ExpenseTracker.ViewModels
             }
         }
 
-      private ObservableCollection<string> _Category;
-      public ObservableCollection<string> Category
+      private ObservableCollection<string> _CategoryList;
+      public ObservableCollection<string> CategoryList
+      {
+         get { return _CategoryList; }
+         set
+         {
+            _CategoryList = value;
+
+            OnPropertyChanged(nameof(CategoryList));
+         }
+      }
+
+      private string _Category;
+      public string Category
       {
          get { return _Category; }
          set
@@ -83,7 +102,7 @@ namespace ExpenseTracker.ViewModels
             OnPropertyChanged(nameof(Category));
          }
       }
-            
+
       public AddItemViewModel()
         {
             DataQuery = new DataQuery_Mod();

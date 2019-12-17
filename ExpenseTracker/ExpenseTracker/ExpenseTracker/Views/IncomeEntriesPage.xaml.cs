@@ -38,8 +38,10 @@ namespace ExpenseTracker.Views
       async public void OnIncomeTap(object sender, EventArgs e)
       {
          var parent = this.Parent as NavigationPage;
+         var grid = (sender as Grid);
+         var account = (IncomeEntry)((TapGestureRecognizer)grid.GestureRecognizers[0]).CommandParameter;
+         await parent.PushAsync(new AddItem(null, account) { Title = "Edit Income" });
 
-         await parent.PushAsync(new AddItem("Income", this.Title.Remove(this.Title.IndexOf("$") - 1)) { Title = "Edit Income" });
       }
 
       public void OnLogOut()

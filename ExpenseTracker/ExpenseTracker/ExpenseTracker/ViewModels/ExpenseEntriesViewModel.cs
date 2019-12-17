@@ -24,7 +24,7 @@ namespace ExpenseTracker.ViewModels
             try
             {               
                   DataQuery.expenseSelect = "SELECT ex.[ID], ex.[User_ID], acc1.AccountName, ex.[ExpenseAmount], acc2.AccountName as IncomeAccountName, ex.[ExpenseDate]"
-                     + " ,ec.CategoryName as ExpenseCategory, ex.[Repeat], rp.RepeatPeriod FROM[dbo].[Expense] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
+                     + " ,ec.CategoryName as ExpenseCategory, ex.[Repeat], rp.RepeatPeriod, ex.expenseName FROM[dbo].[Expense] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
                      + " inner join Account acc2 on ex.IncomeAccount_ID = acc2.ID inner join ExpenseCategory ec on ex.ExpenseCategory_ID = ec.ID"
                      + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
 

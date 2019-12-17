@@ -16,5 +16,6 @@ namespace ExpenseTracker
       public string ExpenseCategory { get; set; }
       public Boolean Repeat { get; set; }
       public string RepeatPeriod { get; set; }
+      public string ExpenseName { get; set; }
    }
 }

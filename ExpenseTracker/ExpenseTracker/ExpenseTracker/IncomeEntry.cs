@@ -14,5 +14,6 @@ namespace ExpenseTracker
       public DateTime IncomeDate { get; set; }
       public Boolean Repeat { get; set; }
       public string RepeatPeriod { get; set; }
+      public string IncomeName { get; set; }
    }
 }

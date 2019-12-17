@@ -40,8 +40,10 @@ namespace ExpenseTracker.Views
       async public void OnExpenseTap(object sender, EventArgs e)
       {
          var parent = this.Parent as NavigationPage;
+         var grid = (sender as Grid);
+         var account = (ExpenseEntry)((TapGestureRecognizer)grid.GestureRecognizers[0]).CommandParameter;
+         await parent.PushAsync(new AddItem(account, null) { Title = "Edit Expense" });
 
-         await parent.PushAsync(new AddItem() { Title = "Edit Expense" });
       }
 
       public void OnLogOut()
