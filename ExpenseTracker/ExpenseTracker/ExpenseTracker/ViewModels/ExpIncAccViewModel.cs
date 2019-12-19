@@ -44,7 +44,7 @@ namespace ExpenseTracker.ViewModels
 
                   for (int i = 0; i < _ItemListA.Count; i++)
                   {
-                     DataQuery.expenseWhere = "Where Account_id = " + _ItemListA[i].ID;
+                     DataQuery.expenseWhere = "Where user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and Account_id = " + _ItemListA[i].ID;
                      DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense ";
                      string accountB = DataQuery.ExecuteAQuery();
                      _ItemListA[i].AccountBalance = accountB == "" ? 0.00 : (double.Parse(accountB));
@@ -57,11 +57,11 @@ namespace ExpenseTracker.ViewModels
 
                   for (int i = 0; i < _ItemListA.Count; i++)
                   {
-                     DataQuery.expenseWhere = "Where IncomeAccount_id = " + _ItemListA[i].ID;
+                     DataQuery.expenseWhere = "Where user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and IncomeAccount_id = " + _ItemListA[i].ID;
                      DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense ";
                      string accountB = DataQuery.ExecuteAQuery();
                      double expenseSum = accountB == "" ? 0.00 : (double.Parse(accountB));
-                     DataQuery.expenseWhere = "Where Account_id = " + _ItemListA[i].ID;
+                     DataQuery.expenseWhere = "Where user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and Account_id = " + _ItemListA[i].ID;
                      DataQuery.expenseSelect = "Select SUM(IncomeAmount) From Income ";
                      accountB = DataQuery.ExecuteAQuery();
                      _ItemListA[i].AccountBalance = accountB == "" ? 0.00 : (double.Parse(accountB) - expenseSum);
@@ -97,7 +97,7 @@ namespace ExpenseTracker.ViewModels
                      + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
 
 
-                  DataQuery.expenseWhere = " where Account_ID = " + accountID;
+                  DataQuery.expenseWhere = " where user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and Account_ID = " + accountID;
                   _ItemListE = DataQuery.ExecuteAQuery<ExpenseEntry>();
 
                

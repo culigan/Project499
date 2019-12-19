@@ -12,7 +12,9 @@ namespace ExpenseTracker.ViewModels
         public DataQuery_Mod DataQuery;
         private bool _IsBusy = false;
         public bool IsBusy { get { return _IsBusy; } set { _IsBusy = value; OnPropertyChanged(nameof(IsBusy)); } }
-        public int User_ID { get; set; }
+      private string _AddNameButton = "Add";
+      public string AddNameButton { get { return _AddNameButton; } set { _AddNameButton = value; OnPropertyChanged(nameof(AddNameButton)); } }
+      public int User_ID { get; set; }
         private ObservableCollection<Account> _UsersInfo;
         public ObservableCollection<Account> UsersInfo
         {
@@ -40,7 +42,43 @@ namespace ExpenseTracker.ViewModels
             }
         }
 
-        private string _AccountTypePicker;
+      private bool _PickerVisible;
+      public bool PickerVisible
+      {
+         get { return _PickerVisible; }
+         set
+         {
+            _PickerVisible = value;
+
+            OnPropertyChanged(nameof(PickerVisible));
+         }
+      }
+
+      private bool _EntryVisible;
+      public bool EntryVisible
+      {
+         get { return _EntryVisible; }
+         set
+         {
+            _EntryVisible = value;
+
+            OnPropertyChanged(nameof(EntryVisible));
+         }
+      }
+
+      private string _AccountNameP;
+      public string AccountNameP
+      {
+         get { return _AccountNameP; }
+         set
+         {
+            _AccountNameP = value;
+
+            OnPropertyChanged(nameof(AccountNameP));
+         }
+      }
+
+      private string _AccountTypePicker;
         public string AccountTypePicker
         {
             get { return _AccountTypePicker; }

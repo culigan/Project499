@@ -28,7 +28,7 @@ namespace ExpenseTracker.ViewModels
                      + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
 
 
-                  DataQuery.expenseWhere = " where Account_ID = " + accountID;
+                  DataQuery.expenseWhere = " where ex.user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and ex.Account_ID = " + accountID;
                   _ItemListE = DataQuery.ExecuteAQuery<IncomeEntry>();
 
                

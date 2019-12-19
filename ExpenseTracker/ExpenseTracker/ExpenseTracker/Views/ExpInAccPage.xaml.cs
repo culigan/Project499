@@ -15,6 +15,7 @@ namespace ExpenseTracker.Views
    [XamlCompilation(XamlCompilationOptions.Compile)]
    public partial class ExpIncAccPage : ContentPage
    {
+      bool focusFlag = false;
       Model.DataQuery_Mod DataQuery;
       string accountType = "";
       ViewModels.ExpIncAccViewModel viewModel;
@@ -36,6 +37,7 @@ namespace ExpenseTracker.Views
          {
               
          }
+         base.Appearing += ExpIncAccPage_Appearing;
       }
 
       public ExpIncAccPage(int accountID)
@@ -51,13 +53,24 @@ namespace ExpenseTracker.Views
 
          this.Title = "Accounts";
 
-         
+         base.Appearing += ExpIncAccPage_Appearing; ;
+      }
+
+      private void ExpIncAccPage_Appearing(object sender, EventArgs e)
+      {
+         if (focusFlag)
+         {
+            focusFlag = false;
+            List<Account> tempList = viewModel.ItemListA.ToList();
+            viewModel.ItemListA = null;
+            viewModel.ItemListA = new ObservableCollection<Account>(tempList);
+         }
       }
 
       async public void OnAddClick(object sender, EventArgs e)
       {
          var parent = this.Parent.Parent as NavigationPage;
-
+         focusFlag = true;
          await parent.PushAsync(new AddAccount());         
       }
 
@@ -65,7 +78,9 @@ namespace ExpenseTracker.Views
       {
          var grid = sender as Grid;      
          var account = (Account)((TapGestureRecognizer)grid.GestureRecognizers[0]).CommandParameter;
-         
+
+         focusFlag = true;
+
          if (account.AccountType_ID == 1)
          {
             var parent = this.Parent.Parent as NavigationPage;
@@ -105,7 +120,7 @@ namespace ExpenseTracker.Views
             bool choice = await DisplayAlert("ALERT", "This will delete all entries for this account. Are you sure you want to delete?", "Delete", "Cancel");
             if (choice)
             {
-               var deleteID = (Account)((sender as Button).CommandParameter);
+               var deleteID = (Account)((sender as MenuItem).CommandParameter);
                if (deleteID.AccountType_ID == 1)
                {
                   DataQuery.expenseSelect = "Delete From Expense";
@@ -128,8 +143,8 @@ namespace ExpenseTracker.Views
                   results = DataQuery.AlterDataQuery();
                }
 
-               
-               
+               focusFlag = true;
+               ExpIncAccPage_Appearing(sender, e);
             }
          }
          catch (Exception ex)
@@ -149,7 +164,7 @@ namespace ExpenseTracker.Views
             else if (sender is Button)
                deleteID = (Account)((sender as Button).CommandParameter);
             Navigation.PushAsync(new AddAccount(deleteID.ID) { Title = "Edit " + deleteID.AccountName + " Account" });
-
+            focusFlag = true;
          }
          catch (Exception ex)
          {

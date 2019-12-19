@@ -53,11 +53,11 @@
                                             <Label Text="Total:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
                                             <Label Grid.Row="1" Text="{Binding AccountBalance}" TextColor="Red" FontAttributes="Bold"/>
                                         </StackLayout>
-                                        <Grid.GestureRecognizers>
+                                        <!--Grid.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnAccountTap" CommandParameter="{Binding .}"/>
                                             <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
                                             <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" CommandParameter="{Binding .}"/>
-                                        </Grid.GestureRecognizers>
+                                        </-->
                                     </Grid>
                                 </Frame>
                                 

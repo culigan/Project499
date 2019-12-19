@@ -36,6 +36,7 @@ namespace ExpenseTracker
          PopulateOnEdit();
          saveButton.Text = "Update";
       }
+
       
       private void PopulatePicker()
       {
@@ -49,6 +50,7 @@ namespace ExpenseTracker
             pickerList.Add(accType.TypeName);
          }
          AccountTypePicker.ItemsSource = pickerList;
+         AccountTypePicker.SelectedIndex = 0;
          viewModel.IsBusy = false;
       }
       private void PopulateOnEdit()
@@ -120,6 +122,7 @@ namespace ExpenseTracker
                   DependencyService.Get<IToast>().Show(viewModel.AccountName + " was successfully updated.");
 
             }
+            
          }
             catch (Exception ex)
             {
@@ -130,7 +133,7 @@ namespace ExpenseTracker
             await Navigation.PopAsync();
         }
 
-        async void OnCancelButtonClicked(object sender, EventArgs e)
+       async void OnCancelButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
         }

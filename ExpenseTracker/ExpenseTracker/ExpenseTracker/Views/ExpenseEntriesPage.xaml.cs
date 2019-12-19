@@ -16,7 +16,7 @@ namespace ExpenseTracker.Views
    public partial class ExpenseEntriesPage : ContentPage
    {
       ViewModels.ExpenseEntriesViewModel viewModel;
-      
+      bool focusFlag = false;
       public ExpenseEntriesPage(int accountID)
       {
          InitializeComponent();
@@ -27,14 +27,27 @@ namespace ExpenseTracker.Views
             OnLogOut();
          }));
 
+         base.Appearing += ExpenseEntriesPage_Appearing; ;
+      }
+
+      private void ExpenseEntriesPage_Appearing(object sender, EventArgs e)
+      {
+         if(focusFlag)
+         {
+            focusFlag = false;
+            List<ExpenseEntry> tempList = viewModel.ItemListE.ToList();
+            viewModel.ItemListE = null;
+            viewModel.ItemListE = new ObservableCollection<ExpenseEntry>(tempList);
+         }
       }
 
       async public void OnAddClick(object sender, EventArgs e)
       {
-         
-            var parent = this.Parent as NavigationPage;
-            await parent.PushAsync(new AddItem("Expense", this.Title.Remove(this.Title.IndexOf("$") - 1)) { Title = "Add Expense" });
 
+         var parent = this.Parent as NavigationPage;
+         focusFlag = true;
+         await parent.PushAsync(new AddItem("Expense", this.Title.Remove(this.Title.IndexOf("$") - 1)) { Title = "Add Expense" });
+            
         }
 
       async public void OnExpenseTap(object sender, EventArgs e)
@@ -42,6 +55,7 @@ namespace ExpenseTracker.Views
          var parent = this.Parent as NavigationPage;
          var grid = (sender as Grid);
          var account = (ExpenseEntry)((TapGestureRecognizer)grid.GestureRecognizers[0]).CommandParameter;
+         focusFlag = true;
          await parent.PushAsync(new AddItem(account, null) { Title = "Edit Expense" });
 
       }

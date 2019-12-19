@@ -65,7 +65,7 @@
                      x:Name="IncomePicker"
                      Margin="20,0,20,0"
                      ItemsSource="{Binding IncomeAccountList}"
-                     SelectedItem="{Binding IncomeAccount}"
+                     SelectedItem="{Binding IncomeAccount, Mode=TwoWay}"
                      IsVisible="{Binding InAccVisible}"
                      HorizontalOptions="Center"
                      WidthRequest="250"

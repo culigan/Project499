@@ -38,6 +38,7 @@ namespace ExpenseTracker
             viewModel.AccountName = expenseEntry.AccountName;
             viewModel.TransAmount = expenseEntry.ExpenseAmount.ToString("0.00");
             viewModel.TransName = expenseEntry.ExpenseName;
+            viewModel.IncomeAccount = expenseEntry.IncomeAccountName;
             viewModel.InAccVisible = true;
             catPick = expenseEntry.ExpenseCategory;
             incPick = expenseEntry.IncomeAccountName;

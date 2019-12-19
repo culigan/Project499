@@ -12,7 +12,7 @@ namespace ExpenseTracker.ViewModels
         public DataQuery_Mod DataQuery;
         private bool _IsBusy = false;
         public bool IsBusy { get { return _IsBusy; } set { _IsBusy = value; OnPropertyChanged(nameof(IsBusy)); } }
-        public int User_ID { get; set; }
+       public int User_ID { get; set; }
         public int Account_ID { get; set; }
 
       private bool _InAccVisible;

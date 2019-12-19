@@ -15,6 +15,7 @@ namespace ExpenseTracker.Views
    [XamlCompilation(XamlCompilationOptions.Compile)]
    public partial class IncomeEntriesPage : ContentPage
    {
+      bool focusFlag = false;
       ViewModels.IncomeEntriesViewModel viewModel;
       
       public IncomeEntriesPage(int accountID)
@@ -27,11 +28,24 @@ namespace ExpenseTracker.Views
             OnLogOut();
          }));
 
+         base.Appearing += IncomeEntriesPage_Appearing;
       }
 
-      async public void OnAddClick(object sender, EventArgs e)
+      private void IncomeEntriesPage_Appearing(object sender, EventArgs e)
+      {
+         if (focusFlag)
+         {
+            focusFlag = false;
+            List<IncomeEntry> tempList = viewModel.ItemListE.ToList();
+            viewModel.ItemListE = null;
+            viewModel.ItemListE = new ObservableCollection<IncomeEntry>(tempList);
+         }
+      }
+
+         async public void OnAddClick(object sender, EventArgs e)
       {
             var parent = this.Parent as NavigationPage;
+         focusFlag = true;
             await parent.PushAsync(new AddItem("Income", this.Title.Remove(this.Title.IndexOf("$") - 1)) { Title = "Add Income" });
         }
 
@@ -40,6 +54,7 @@ namespace ExpenseTracker.Views
          var parent = this.Parent as NavigationPage;
          var grid = (sender as Grid);
          var account = (IncomeEntry)((TapGestureRecognizer)grid.GestureRecognizers[0]).CommandParameter;
+         focusFlag = true;
          await parent.PushAsync(new AddItem(null, account) { Title = "Edit Income" });
 
       }
