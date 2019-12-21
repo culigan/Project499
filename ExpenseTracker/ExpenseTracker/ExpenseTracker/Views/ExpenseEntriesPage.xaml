@@ -37,6 +37,7 @@
                                         <Label Text="Account: " FontAttributes="Bold" TextColor="Black"/>
                                         <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
                                     </StackLayout>
+                                    <Label Text="{Binding ExpenseName}" Grid.Row="0" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
                                     <Label Text="{Binding ExpenseDate}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
                                     <StackLayout Orientation="Horizontal" Grid.Row="1">
                                         <Label Text="Total:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
