@@ -41,6 +41,10 @@ namespace ExpenseTracker
                NavigationPage.SetHasBackButton(accountsPage, true);
                App.Current.MainPage = accountsPage;
             }
+            else
+            {
+               DependencyService.Get<IToast>().Show("Username with that password not found.");
+            }
             viewModel.IsBusy = false;
 
          }
