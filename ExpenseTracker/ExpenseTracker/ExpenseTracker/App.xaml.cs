@@ -27,6 +27,8 @@ namespace ExpenseTracker
             NavigationPage.SetHasBackButton(accountsPage, true);
             MainPage = accountsPage;
          }
+
+         
       }
 
       protected override void OnStart()

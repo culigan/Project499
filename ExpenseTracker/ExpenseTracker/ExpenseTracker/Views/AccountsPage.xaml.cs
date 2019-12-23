@@ -17,6 +17,7 @@ namespace ExpenseTracker.Views
    public partial class AccountsPage : Xamarin.Forms.TabbedPage
    {
       ViewModels.AccountsViewModel viewModel;
+      public bool pageChanged = false;
       public AccountsPage()
       {
          InitializeComponent();
@@ -30,7 +31,13 @@ namespace ExpenseTracker.Views
          Children.Add(new ExpIncAccPage("ExpenseAccount") { Title = "Expenses" });
          Children.Add(new ExpIncAccPage("IncomeAccount") { Title = "Income" });
          this.On<Android>().DisableSwipePaging();
-         
+
+         this.CurrentPageChanged += AccountsPage_CurrentPageChanged;
+      }
+
+      private void AccountsPage_CurrentPageChanged(object sender, EventArgs e)
+      {
+         pageChanged = true;
       }
 
       public void OnLogOut(object sender, EventArgs e)

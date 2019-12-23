@@ -83,7 +83,8 @@ namespace ExpenseTracker
       async void OnSaveAccountButtonClicked(object sender, EventArgs e)
         {
             String userID = Preferences.Get("ExpenseT_UserID", "NULL");
-            
+               viewModel.IsBusy = true;
+
 
             int AccountSelect = 0;
             DateTime myDateTime = DateTime.Now;
@@ -103,14 +104,12 @@ namespace ExpenseTracker
             try
             {
             
-               viewModel.IsBusy = true;
             if (saveButton.Text == "Save")
             {
                viewModel.DataQuery.expenseSelect = "INSERT INTO account VALUES ";
                viewModel.DataQuery.expenseWhere = "(" + AccountSelect + ", '" + viewModel.AccountName + "', '" + viewModel.AccountDesc + "', '" + sqlFormattedDate + "', " + userID + ")";
                viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Account>();
 
-               viewModel.IsBusy = false;
             }
             else if(saveButton.Text == "Update")
             {
@@ -122,14 +121,16 @@ namespace ExpenseTracker
                   DependencyService.Get<IToast>().Show(viewModel.AccountName + " was successfully updated.");
 
             }
-            
+               viewModel.IsBusy = false;
+
          }
-            catch (Exception ex)
+         catch (Exception ex)
             {
                 await DisplayAlert("Adding account failed", ex.Message, "OK");
                 viewModel.IsBusy = false;
             }
-            
+
+         while (viewModel.IsBusy) ;
             await Navigation.PopAsync();
         }
 

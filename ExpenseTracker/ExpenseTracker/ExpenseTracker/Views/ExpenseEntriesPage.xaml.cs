@@ -39,6 +39,13 @@ namespace ExpenseTracker.Views
             viewModel.ItemListE = null;
             viewModel.ItemListE = new ObservableCollection<ExpenseEntry>(tempList);
          }
+
+         var amount = 0.0;
+         foreach (ExpenseEntry exp in listView.ItemsSource)
+         {
+            amount += exp.ExpenseAmount;
+         }
+         this.Title = this.Title.Remove(this.Title.IndexOf("$") + 1) + amount.ToString("0.00");
       }
 
       async public void OnAddClick(object sender, EventArgs e)

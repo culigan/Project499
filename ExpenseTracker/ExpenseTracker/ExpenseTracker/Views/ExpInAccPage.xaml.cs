@@ -38,6 +38,12 @@ namespace ExpenseTracker.Views
               
          }
          base.Appearing += ExpIncAccPage_Appearing;
+         
+      }
+
+      private void ExpIncAccPage_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+      {
+         throw new NotImplementedException();
       }
 
       public ExpIncAccPage(int accountID)
@@ -58,8 +64,11 @@ namespace ExpenseTracker.Views
 
       private void ExpIncAccPage_Appearing(object sender, EventArgs e)
       {
-         if (focusFlag)
+         var parent = this.Parent as AccountsPage;
+         
+         if (focusFlag || parent.pageChanged)
          {
+            parent.pageChanged = false;
             focusFlag = false;
             List<Account> tempList = viewModel.ItemListA.ToList();
             viewModel.ItemListA = null;
@@ -76,7 +85,10 @@ namespace ExpenseTracker.Views
 
       async public void OnAccountTap(object sender, EventArgs e)
       {
-         var grid = sender as Grid;      
+         var grid = sender as Grid;
+         var cell = (grid.Parent.Parent.Parent as ViewCell).ContextActions[0] as MenuItem;
+         
+         var tap = (TapGestureRecognizer)grid.GestureRecognizers[0];
          var account = (Account)((TapGestureRecognizer)grid.GestureRecognizers[0]).CommandParameter;
 
          focusFlag = true;
@@ -84,9 +96,9 @@ namespace ExpenseTracker.Views
          if (account.AccountType_ID == 1)
          {
             var parent = this.Parent.Parent as NavigationPage;
-            
+
             await parent.PushAsync(new IncomeEntriesPage(account.ID)
-            { Title = account.AccountName + " $" + account.AccountBalance.ToString("0.00") });
+            { Title = account.AccountName + " $" + account.AccountBalance.ToString("0.00") }) ;
             //await Navigation.PushModalAsync(new NavigationPage(new IncomeEntriesPage(account.ID, account.AccountName, account.AccountBalance)));
          }
          else if (account.AccountType_ID == 2)
@@ -100,7 +112,7 @@ namespace ExpenseTracker.Views
          {
             var parent = this.Parent.Parent as NavigationPage;
 
-            await parent.PushAsync(new ExpenseEntriesPage(0) { Title = "ERROR" });
+            await parent.PushAsync(new ExpenseEntriesPage(account.ID) { Title = "ERROR" });
          }
          
       }

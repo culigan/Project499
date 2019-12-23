@@ -107,12 +107,10 @@ namespace ExpenseTracker
       async void OnSaveButtonClicked(object sender, EventArgs e)
       {
 
-
-         int AccountSelect = 0;
          DateTime myDateTime = DateTime.Now;
          string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
-
          
+
          try
          {
 
@@ -121,7 +119,6 @@ namespace ExpenseTracker
             {
                if (viewModel.AccountType == "Income")
                {
-                  AccountSelect = 1;
                   viewModel.DataQuery.expenseSelect = "INSERT INTO " + viewModel.AccountType + " ([User_ID],[Account_ID],[IncomeAmount]," +
                      "[IncomeDate],[IncomeCategory_ID],[Repeat],[RepeatPeriod_ID],[IncomeName]) VALUES (" + viewModel.User_ID + ", " +
                      "(select id from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = " + viewModel.User_ID + "), " +
@@ -130,7 +127,6 @@ namespace ExpenseTracker
                }
                else if (viewModel.AccountType == "Expense")
                {
-                  AccountSelect = 2;
                   viewModel.DataQuery.expenseSelect = "INSERT INTO " + viewModel.AccountType + " ([User_ID],[IncomeAccount_ID],[Account_ID],[ExpenseAmount]," +
                      "[ExpenseDate],[ExpenseCategory_ID],[Repeat],[RepeatPeriod_ID],[ExpenseName]) VALUES (" + viewModel.User_ID + ", (select id from Account where AccountName = '"
                      + viewModel.IncomeAccount + "' and user_id = " + viewModel.User_ID + "), (select id from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = " + viewModel.User_ID + "), " +
@@ -144,8 +140,10 @@ namespace ExpenseTracker
             }
             else if (saveButton.Text == "Update")
             {
+
                if (viewModel.AccountType == "Expense")
                {
+
                   viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Expense] SET [IncomeAccount_ID] = (select Account_ID from Account where user_id = " + viewModel.User_ID + 
                      " and AccountName = '" + viewModel.IncomeAccount + "'), [ExpenseAmount] = '" + viewModel.TransAmount + "', [ExpenseCategory_ID] = " +
                      "(select ID from ExpenseCategory where (user_id = " + viewModel.User_ID + " or user_id = 40) and CategoryName = '" + viewModel.Category + "'), [ExpenseName] = '" + viewModel.TransName + "'"; 
@@ -153,6 +151,7 @@ namespace ExpenseTracker
                }
                else if (viewModel.AccountType == "Income")
                {
+
                   viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Income] SET [IncomeAmount] = " + viewModel.TransAmount + ", [IncomeCategory_ID] = " +
                      "(select ID from IncomeCategory where (user_id = " + viewModel.User_ID + " or user_id = 40) and CategoryName = '" + viewModel.Category + "'), [IncomeName] = '" + viewModel.TransName + "'";
                   viewModel.DataQuery.expenseWhere = " Where ID = " + viewModel.Account_ID;

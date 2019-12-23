@@ -22,9 +22,9 @@
             <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="White">               
                 <ListView.ItemTemplate> 
                     <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.ContextActions>
-                                <MenuItem Text="Edit" Clicked="OnEditClick" CommandParameter="{Binding .}"/>
+                        <ViewCell >
+                            <ViewCell.ContextActions >
+                                <MenuItem Text="Edit" Clicked="OnEditClick" CommandParameter="{Binding .}" />
                                 <MenuItem Text="Delete" Clicked="OnDeleteClick" CommandParameter="{Binding .}"/>
                             </ViewCell.ContextActions>
                             <Grid>

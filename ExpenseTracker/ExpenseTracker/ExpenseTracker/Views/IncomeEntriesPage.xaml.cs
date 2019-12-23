@@ -16,12 +16,14 @@ namespace ExpenseTracker.Views
    public partial class IncomeEntriesPage : ContentPage
    {
       bool focusFlag = false;
+      double balance = 0.0;
       ViewModels.IncomeEntriesViewModel viewModel;
       
       public IncomeEntriesPage(int accountID)
       {
          InitializeComponent();
          BindingContext = viewModel = new ViewModels.IncomeEntriesViewModel(accountID);
+         this.balance = balance;
 
          this.ToolbarItems.Add(new ToolbarItem("LogOut", "menu-button.png", () =>
          {
@@ -39,6 +41,13 @@ namespace ExpenseTracker.Views
             List<IncomeEntry> tempList = viewModel.ItemListE.ToList();
             viewModel.ItemListE = null;
             viewModel.ItemListE = new ObservableCollection<IncomeEntry>(tempList);
+
+            var amount = 0.0;
+            foreach(IncomeEntry inc in listView.ItemsSource)
+            {
+               amount += inc.IncomeAmount;
+            }
+            this.Title = this.Title.Remove(this.Title.IndexOf("$") + 1) + amount.ToString("0.00");
          }
       }
 
