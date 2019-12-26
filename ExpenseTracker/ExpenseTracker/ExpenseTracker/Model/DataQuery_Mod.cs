@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.Net.Http;
+using System.Net;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -16,19 +17,28 @@ namespace ExpenseTracker.Model
    {
       protected string connectionString;
       private bool _IsConnected;
+      private string IPAddress = "";
       public bool IsConnected
       {
          get { return _IsConnected; }
          set { _IsConnected = value; }
       }
 
+      private bool _IsIP;
+      public bool IsIP
+      {
+         get { return _IsIP; }
+         set { _IsIP = value; }
+      }
+
       public string expenseWhere = "";
       public string expenseSelect = "";
-     
+
       public DataQuery_Mod()
       {
          connectionString = Resource1.ResourceManager.GetString("connections") + "User ID=" + Resource1.ResourceManager.GetString("value1") +
             "; Password=\"" + Resource1.ResourceManager.GetString("value2") + "\";";
+
       }
 
       private ObservableCollection<T> DataReaderMapToList<T>(IDataReader dr)
@@ -63,17 +73,17 @@ namespace ExpenseTracker.Model
                SqlCommand command = new SqlCommand(queryString, connection);
                SqlDataReader reader = command.ExecuteReader();
                ObservableCollection<T> expenseEntries = DataReaderMapToList<T>(reader);
-               
+
                reader.Close();
                connection.Close();
 
                return expenseEntries;
             }
-            
+
          }
          catch (Exception ex)
          {
-            DependencyService.Get<IToast>().Show(ex.Message);
+            SendEmailNotification(ex.Message);
             throw new Exception(ex.Message);
          }
       }
@@ -105,6 +115,7 @@ namespace ExpenseTracker.Model
          }
          catch (Exception ex)
          {
+            SendEmailNotification(ex.Message);
             throw new Exception(ex.Message);
          }
       }
@@ -131,9 +142,69 @@ namespace ExpenseTracker.Model
          }
          catch (Exception ex)
          {
+            SendEmailNotification(ex.Message);
             throw new Exception(ex.Message);
          }
       }
+
+      private void GetIPAddress()
+      {
+         try
+         {
+            HttpClient httpClient = new HttpClient();
+            var stringContent = new StringContent("Testing");
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.ipify.org?format=json");
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            var stream = response.GetResponseStream();
+            string responseString = "";
+            using (var reader = new System.IO.StreamReader(stream))
+            {
+               responseString = reader.ReadToEnd();
+            }
+            
+            IPAddress = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseString)["ip"];
+            
+         }
+         catch (Exception ex)
+         {
+            throw new Exception(ex.Message);
+         }
+
+      }
+
+      private void SendEmailNotification(string message)
+      {
+         DateTime now = DateTime.Now;
+         TimeSpan timeSpan = new TimeSpan();
+         timeSpan = DateTime.Now - now;
+
+         GetIPAddress();
+         while (IPAddress == "")
+         {
+            timeSpan = DateTime.Now - now;
+            if (timeSpan.TotalSeconds > 15)
+               break;
+         }
+
+         if (Preferences.Get(IPAddress, "NotSet") == "NotSet")
+         {
+            List<string> recipients = new List<string>();
+            recipients.Add("culigan@gmail.com");
+
+            var emailMessage = new EmailMessage
+            {
+               Subject = "New IP Address",
+               Body = "In order to validate your account we must add your IP address to our database. Please send this email to the proceed. You account will be validated and an email will be sent back to you. " +
+               "The new IP address being requested is: " + IPAddress + Environment.NewLine + message,
+               To = recipients
+            };
+            
+            Email.ComposeAsync(emailMessage).Wait();
+            Preferences.Set("IPAddress", "Set");
+         }
+      }
+      
 
    }
 }

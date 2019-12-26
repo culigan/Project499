@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http;
+using System.Data;
+using System.Data.SqlClient;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
@@ -9,10 +12,13 @@ namespace ExpenseTracker
 {
    public partial class App : Application
    {
+      private Model.DataQuery_Mod DataQuery;
         public static string FolderPath { get; private set; }
       public App()
       {
          InitializeComponent();
+         DataQuery = new Model.DataQuery_Mod();
+
          FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
 
          if (Preferences.Get("ExpenseT_UserID", "NotFound") != "NotFound")
@@ -28,9 +34,9 @@ namespace ExpenseTracker
             MainPage = accountsPage;
          }
 
-         
       }
 
+      
       protected override void OnStart()
       {
          // Handle when your app starts
