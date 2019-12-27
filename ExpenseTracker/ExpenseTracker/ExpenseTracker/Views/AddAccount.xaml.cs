@@ -87,8 +87,6 @@ namespace ExpenseTracker
 
 
             int AccountSelect = 0;
-            DateTime myDateTime = DateTime.Now;
-            string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
 
             if (viewModel.AccountTypePicker == "Income")
             {
@@ -107,7 +105,7 @@ namespace ExpenseTracker
             if (saveButton.Text == "Save")
             {
                viewModel.DataQuery.expenseSelect = "INSERT INTO account VALUES ";
-               viewModel.DataQuery.expenseWhere = "(" + AccountSelect + ", '" + viewModel.AccountName + "', '" + viewModel.AccountDesc + "', '" + sqlFormattedDate + "', " + userID + ")";
+               viewModel.DataQuery.expenseWhere = "(" + AccountSelect + ", '" + viewModel.AccountName + "', '" + viewModel.AccountDesc + "', '" + DateTime.Now + "', " + userID + ")";
                viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Account>();
 
             }

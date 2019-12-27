@@ -106,11 +106,6 @@ namespace ExpenseTracker
       }
       async void OnSaveButtonClicked(object sender, EventArgs e)
       {
-
-         DateTime myDateTime = DateTime.Now;
-         string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
-         
-
          try
          {
 

@@ -40,8 +40,8 @@
                                     <Label Text="{Binding IncomeName}" Grid.Row="0" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
                                     <Label Text="{Binding IncomeDate}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
                                     <StackLayout Orientation="Horizontal" Grid.Row="1">
-                                        <Label Text="Total:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
-                                        <Label Grid.Row="1" Text="{Binding IncomeAmount}" TextColor="Red" FontAttributes="Bold"/>
+                                        <Label Text="Amount:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
+                                        <Label Grid.Row="1" Text="{Binding IncomeAmount, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold"/>
                                     </StackLayout>
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnIncomeTap" CommandParameter="{Binding .}"/>
