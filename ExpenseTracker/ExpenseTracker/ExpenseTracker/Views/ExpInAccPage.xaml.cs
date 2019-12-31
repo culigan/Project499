@@ -25,10 +25,14 @@ namespace ExpenseTracker.Views
          BindingContext = viewModel = new ViewModels.ExpIncAccViewModel(accountType);
          this.accountType = accountType;
 
-         this.ToolbarItems.Add(new ToolbarItem("LogOut", "", () =>
+         this.ToolbarItems.Add(new ToolbarItem()
          {
-            OnLogOut();
-         }));
+            IconImageSource = "hamburger.png",
+            Command = new Command(() =>
+            {
+               DisplayMenu();
+            })
+         });
          DataQuery = new Model.DataQuery_Mod();
 
          this.Title = "Accounts";
@@ -51,10 +55,10 @@ namespace ExpenseTracker.Views
          InitializeComponent();
          BindingContext = viewModel = new ViewModels.ExpIncAccViewModel(accountID);
 
-         this.ToolbarItems.Add(new ToolbarItem("LogOut", "menu-button.png", () =>
+         /*this.ToolbarItems.Add(new ToolbarItem("LogOut", "menu-button.png", () =>
          {
             OnLogOut();
-         }));
+         }));*/
          DataQuery = new Model.DataQuery_Mod();
 
          this.Title = "Accounts";
@@ -117,7 +121,19 @@ namespace ExpenseTracker.Views
          
       }
 
-      public void OnLogOut()
+      public void DisplayMenu()
+      {
+         if (viewModel.MenuVisible)
+            viewModel.MenuVisible = false;
+         else
+            viewModel.MenuVisible = true;
+      }
+      public void OnSettings(object sender, EventArgs e)
+      {
+         viewModel.MenuVisible = false;
+      }
+
+      public void OnLogOut(object sender, EventArgs e)
       {
          Preferences.Clear();
          var accountsPage = new NavigationPage(new LoginPage() { Title = "Login" });

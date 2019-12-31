@@ -9,51 +9,52 @@
               >
     <ContentPage.Content>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="30"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="30"/>
-            </Grid.ColumnDefinitions>
-            <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListE}" HasUnevenRows="True" BackgroundColor="White">
-                <ListView.ItemTemplate> 
-                    <DataTemplate>
-                        <ViewCell>
-                            <Frame BorderColor="black" HasShadow="True" Margin="5,3,5,3" BackgroundColor="White">
-                                <Grid >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackLayout Orientation="Horizontal" Grid.Row="0">
-                                        <Label Text="Account: " FontAttributes="Bold" TextColor="Black"/>
-                                        <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
-                                    </StackLayout>
-                                    <Label Text="{Binding ExpenseName}" Grid.Row="0" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
-                                    <Label Text="{Binding ExpenseDate}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
-                                    <StackLayout Orientation="Horizontal" Grid.Row="1">
-                                        <Label Text="Amount:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
-                                        <Label Grid.Row="1" Text="{Binding ExpenseAmount, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold"/>
-                                    </StackLayout>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnExpenseTap" CommandParameter="{Binding .}"/>
-                                    </Grid.GestureRecognizers>
-                               </Grid>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button Grid.Column="1" Grid.Row="1" CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
-                    WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />            
-        </Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListE}" HasUnevenRows="True" BackgroundColor="White">
+                    <ListView.ItemTemplate> 
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame BorderColor="black" HasShadow="True" Margin="5,3,5,3" BackgroundColor="White">
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout Orientation="Horizontal" Grid.Row="0">
+                                            <Label Text="Account: " FontAttributes="Bold" TextColor="Black"/>
+                                            <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
+                                        </StackLayout>
+                                        <Label Text="{Binding ExpenseName}" Grid.Row="0" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
+                                        <Label Text="{Binding ExpenseDate}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
+                                        <StackLayout Orientation="Horizontal" Grid.Row="1">
+                                            <Label Text="Amount:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
+                                            <Label Grid.Row="1" Text="{Binding ExpenseAmount, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold"/>
+                                        </StackLayout>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnExpenseTap" CommandParameter="{Binding .}"/>
+                                        </Grid.GestureRecognizers>
+                                   </Grid>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Grid.Column="1" Grid.Row="1" CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
+                        WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />            
+            </Grid>
+        
     </ContentPage.Content>
 </ContentPage>

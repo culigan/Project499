@@ -22,10 +22,10 @@ namespace ExpenseTracker.Views
          InitializeComponent();
          BindingContext = viewModel = new ViewModels.ExpenseEntriesViewModel(accountID);
          
-         this.ToolbarItems.Add(new ToolbarItem("LogOut", "", () =>
+         /*this.ToolbarItems.Add(new ToolbarItem("LogOut", "hamburger.png", () =>
          {
             OnLogOut();
-         }));
+         }));*/
 
          base.Appearing += ExpenseEntriesPage_Appearing; ;
       }

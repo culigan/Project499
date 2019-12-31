@@ -16,6 +16,18 @@ namespace ExpenseTracker.ViewModels
       Model.DataQuery_Mod DataQuery;
       ObservableCollection<Account> incomeSum = new ObservableCollection<Account>();
 
+      private bool _MenuVisible = false;
+      public bool MenuVisible 
+      {
+         get
+         {
+            return _MenuVisible;
+         }
+         set 
+         {
+            _MenuVisible = value; OnPropertyChanged(nameof(MenuVisible));
+         } 
+      }
       public bool EditVisible { get; set; } = false;
       public bool DeleteVisible { get; set; } = false;
 
