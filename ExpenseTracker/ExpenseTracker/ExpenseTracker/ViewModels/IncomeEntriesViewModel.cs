@@ -46,6 +46,18 @@ namespace ExpenseTracker.ViewModels
       }
       string accountType;
       int accountID = 0;
+      private bool _MenuVisible = false;
+      public bool MenuVisible
+      {
+         get
+         {
+            return _MenuVisible;
+         }
+         set
+         {
+            _MenuVisible = value; OnPropertyChanged(nameof(MenuVisible));
+         }
+      }
       public IncomeEntriesViewModel(int accountID)
       {
          DataQuery = new Model.DataQuery_Mod();

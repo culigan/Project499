@@ -55,10 +55,14 @@ namespace ExpenseTracker.Views
          InitializeComponent();
          BindingContext = viewModel = new ViewModels.ExpIncAccViewModel(accountID);
 
-         /*this.ToolbarItems.Add(new ToolbarItem("LogOut", "menu-button.png", () =>
+         this.ToolbarItems.Add(new ToolbarItem()
          {
-            OnLogOut();
-         }));*/
+            IconImageSource = "hamburger.png",
+            Command = new Command(() =>
+            {
+               DisplayMenu();
+            })
+         });
          DataQuery = new Model.DataQuery_Mod();
 
          this.Title = "Accounts";
@@ -128,9 +132,11 @@ namespace ExpenseTracker.Views
          else
             viewModel.MenuVisible = true;
       }
-      public void OnSettings(object sender, EventArgs e)
+      async public void OnSettings(object sender, EventArgs e)
       {
          viewModel.MenuVisible = false;
+         var parent = this.Parent.Parent as NavigationPage;
+         await parent.PushAsync(new SettingsPage() { Title = "Settings" });
       }
 
       public void OnLogOut(object sender, EventArgs e)

@@ -23,12 +23,15 @@ namespace ExpenseTracker.Views
       {
          InitializeComponent();
          BindingContext = viewModel = new ViewModels.IncomeEntriesViewModel(accountID);
-         this.balance = balance;
-
-         this.ToolbarItems.Add(new ToolbarItem("LogOut", "menu-button.png", () =>
+         
+         this.ToolbarItems.Add(new ToolbarItem()
          {
-            OnLogOut();
-         }));
+            IconImageSource = "hamburger.png",
+            Command = new Command(() =>
+            {
+               DisplayMenu();
+            })
+         });
 
          base.Appearing += IncomeEntriesPage_Appearing;
       }
@@ -51,7 +54,15 @@ namespace ExpenseTracker.Views
          }
       }
 
-         async public void OnAddClick(object sender, EventArgs e)
+      public void DisplayMenu()
+      {
+         if (viewModel.MenuVisible)
+            viewModel.MenuVisible = false;
+         else
+            viewModel.MenuVisible = true;
+      }
+
+      async public void OnAddClick(object sender, EventArgs e)
       {
             var parent = this.Parent as NavigationPage;
          focusFlag = true;
@@ -68,7 +79,14 @@ namespace ExpenseTracker.Views
 
       }
 
-      public void OnLogOut()
+      async public void OnSettings(object sender, EventArgs e)
+      {
+         viewModel.MenuVisible = false;
+         var parent = this.Parent as NavigationPage;
+         await parent.PushAsync(new SettingsPage() { Title = "Settings" });
+      }
+
+      public void OnLogOut(object sender, EventArgs e)
       {
          Preferences.Clear();
          var accountsPage = new NavigationPage(new LoginPage() { Title = "Login" });

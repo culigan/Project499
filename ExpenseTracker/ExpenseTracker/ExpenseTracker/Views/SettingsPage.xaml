@@ -6,10 +6,29 @@
              mc:Ignorable="d"
              x:Class="ExpenseTracker.Views.SettingsPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Orientation="Vertical">
+            <DatePicker Date="{ Binding PickerStartDate}" />
+            <Label Text="Transaction Start Date" />
+            <DatePicker Date="{ Binding PickerEndDate}" />
+            <Label Text="Transaction End Date" />
+            <ListView ItemsSource="{Binding Categories}" HasUnevenRows="True" SelectedItem="{Binding CatSelected}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="{Binding CategoryName}"/>
+                                <Label Text="{Binding CategoryDesc}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Add Category" Clicked="OnAdd"/>
+            <Button Text="Delete Category" Clicked="OnDelete"/>
+            <Label Text="Number of Transactions Displayed"/>
+            <Entry Placeholder="100" Text="{Binding NumberTrans, Mode=TwoWay}" Keyboard="Numeric"/>
+            <Button Text="Save Settings" Clicked="OnSave"/>
+            <Button Text="Cancel" Clicked="OnCancel"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -19,5 +19,25 @@ namespace ExpenseTracker.Views
          InitializeComponent();
          this.BindingContext = viewModel = new ViewModels.SettingsViewModel();
       }
+
+      private void OnAdd(object sender, EventArgs e)
+      {
+
+      }
+
+      private void OnDelete(object sender, EventArgs e)
+      {
+
+      }
+
+      private void OnSave(object sender, EventArgs e)
+      {
+
+      }
+
+      private void OnCancel(object sender, EventArgs e)
+      {
+         Navigation.PopAsync();
+      }
    }
 }

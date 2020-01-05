@@ -8,7 +8,14 @@
              NavigationPage.HasNavigationBar="True" NavigationPage.BackButtonTitle="Accounts" NavigationPage.HasBackButton="True"          
               >
     <ContentPage.Content>
-        <Grid>
+        <StackLayout>
+            <AbsoluteLayout IsVisible="{Binding MenuVisible}" VerticalOptions="Start" HorizontalOptions="End">
+                <StackLayout>
+                    <Button BackgroundColor="Transparent" Clicked="OnLogOut" HorizontalOptions="Start" Text="LogOut"/>
+                    <Button BackgroundColor="Transparent" Clicked="OnSettings" HorizontalOptions="Start" Text="Settings"/>
+                </StackLayout>
+            </AbsoluteLayout>
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="60"/>
@@ -20,7 +27,7 @@
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
                 <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListE}" HasUnevenRows="True" BackgroundColor="White">
-                    <ListView.ItemTemplate> 
+                    <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <Frame BorderColor="black" HasShadow="True" Margin="5,3,5,3" BackgroundColor="White">
@@ -46,15 +53,15 @@
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnExpenseTap" CommandParameter="{Binding .}"/>
                                         </Grid.GestureRecognizers>
-                                   </Grid>
+                                    </Grid>
                                 </Frame>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
                 <Button Grid.Column="1" Grid.Row="1" CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
-                        WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />            
+                        WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />
             </Grid>
-        
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
