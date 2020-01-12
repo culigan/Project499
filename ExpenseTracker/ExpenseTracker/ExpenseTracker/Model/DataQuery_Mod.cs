@@ -83,7 +83,8 @@ namespace ExpenseTracker.Model
          }
          catch (Exception ex)
          {
-            SendEmailNotification(ex.Message);
+            if(Device.RuntimePlatform != Device.UWP)
+               SendEmailNotification(ex.Message);
             throw new Exception(ex.Message);
          }
       }
@@ -115,7 +116,8 @@ namespace ExpenseTracker.Model
          }
          catch (Exception ex)
          {
-            SendEmailNotification(ex.Message);
+            if (Device.RuntimePlatform != Device.UWP)
+               SendEmailNotification(ex.Message);
             throw new Exception(ex.Message);
          }
       }
@@ -142,7 +144,8 @@ namespace ExpenseTracker.Model
          }
          catch (Exception ex)
          {
-            SendEmailNotification(ex.Message);
+            if (Device.RuntimePlatform != Device.UWP)
+               SendEmailNotification(ex.Message); 
             throw new Exception(ex.Message);
          }
       }

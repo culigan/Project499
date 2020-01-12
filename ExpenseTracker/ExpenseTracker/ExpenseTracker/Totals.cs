@@ -8,6 +8,6 @@ namespace ExpenseTracker
    {
       public int ID { get; set; }
       public int Account_ID { get; set; }
-      public float Total { get; set; }
+      public double Total { get; set; }
    }
 }

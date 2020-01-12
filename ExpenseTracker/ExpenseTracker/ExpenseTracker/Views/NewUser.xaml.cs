@@ -138,8 +138,8 @@ namespace ExpenseTracker
                     viewModel.DataQuery.expenseSelect = "INSERT INTO users VALUES ";
                     viewModel.DataQuery.expenseWhere = "('" + viewModel.Username + "', '" + viewModel.Firstname + "', '" + viewModel.Lastname + "', '" + viewModel.SecondPasswordHash + "', '" + sqlFormattedDate + "')";
                     viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
-                    DependencyService.Get<IToast>().Show("New User " + viewModel.Username + " Created");
-                    await Navigation.PopAsync();
+                    DependencyService.Get<IToast>().Show("New User " + viewModel.Username + " Created");                     
+                     await Navigation.PopAsync();
                 }
 
                 else if (viewModel.FirstPasswordHash != viewModel.SecondPasswordHash)

@@ -107,6 +107,11 @@ namespace ExpenseTracker
                viewModel.DataQuery.expenseSelect = "INSERT INTO account VALUES ";
                viewModel.DataQuery.expenseWhere = "(" + AccountSelect + ", '" + viewModel.AccountName + "', '" + viewModel.AccountDesc + "', '" + DateTime.Now + "', " + userID + ")";
                viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Account>();
+               viewModel.DataQuery.expenseSelect = "INSERT INTO [Totals] ([Account_ID], [Total]) VALUES " + 
+                  "((Select ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" + userID + "'), 0.00) ";
+               viewModel.DataQuery.expenseWhere = "";
+               int count = viewModel.DataQuery.AlterDataQuery();
+
 
             }
             else if(saveButton.Text == "Update")

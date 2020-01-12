@@ -56,9 +56,25 @@ namespace ExpenseTracker.ViewModels
 
                   for (int i = 0; i < _ItemListA.Count; i++)
                   {
-                     DataQuery.expenseWhere = "Where user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and Account_id = " + _ItemListA[i].ID;
-                     DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense ";
-                     string accountB = DataQuery.ExecuteAQuery();
+                     string accountB = "";
+                     DataQuery.expenseSelect = "Select * From Totals ";
+                     DataQuery.expenseWhere = "Where Account_id = " + _ItemListA[i].ID;
+                     ObservableCollection<Totals> totals = DataQuery.ExecuteAQuery<Totals>();
+                     if (totals.Count == 0)
+                     {
+                        DataQuery.expenseWhere = "Where user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and Account_id = " + _ItemListA[i].ID;
+                        DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense ";
+                        accountB = DataQuery.ExecuteAQuery();
+                        if (accountB == "")
+                           accountB = "0.00";
+                        DataQuery.expenseSelect = "INSERT INTO [Totals] ([Account_ID], [Total]) VALUES (" + _ItemListA[i].ID + ", " + float.Parse(accountB) + ") ";
+                        DataQuery.expenseWhere = "";
+                        int count = DataQuery.AlterDataQuery();
+
+                     }
+                     else
+                        accountB = totals[0].Total.ToString("0.00");
+
                      _ItemListA[i].AccountBalance = accountB == "" ? 0.00 : (double.Parse(accountB));
                   }
                }
@@ -69,13 +85,28 @@ namespace ExpenseTracker.ViewModels
 
                   for (int i = 0; i < _ItemListA.Count; i++)
                   {
-                     DataQuery.expenseWhere = "Where user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and IncomeAccount_id = " + _ItemListA[i].ID;
-                     DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense ";
-                     string accountB = DataQuery.ExecuteAQuery();
-                     double expenseSum = accountB == "" ? 0.00 : (double.Parse(accountB));
-                     DataQuery.expenseWhere = "Where user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and Account_id = " + _ItemListA[i].ID;
-                     DataQuery.expenseSelect = "Select SUM(IncomeAmount) From Income ";
-                     accountB = DataQuery.ExecuteAQuery();
+                     string accountB = "";
+                     double expenseSum = 0.00;
+                     DataQuery.expenseSelect = "Select * From Totals ";
+                     DataQuery.expenseWhere = "Where Account_id = " + _ItemListA[i].ID;
+                     ObservableCollection<Totals> totals = DataQuery.ExecuteAQuery<Totals>();
+                     if (totals.Count == 0)
+                     {
+                        DataQuery.expenseWhere = "Where user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and IncomeAccount_id = " + _ItemListA[i].ID;
+                        DataQuery.expenseSelect = "Select SUM(ExpenseAmount) From Expense ";
+                        accountB = DataQuery.ExecuteAQuery();
+                        expenseSum = accountB == "" ? 0.00 : (double.Parse(accountB));
+                        DataQuery.expenseWhere = "Where user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and Account_id = " + _ItemListA[i].ID;
+                        DataQuery.expenseSelect = "Select SUM(IncomeAmount) From Income ";
+                        accountB = DataQuery.ExecuteAQuery();
+                        if (accountB == "")
+                           accountB = "0.00"; DataQuery.expenseSelect = "INSERT INTO [Totals] ([Account_ID], [Total]) VALUES (" + _ItemListA[i].ID + ", " + float.Parse(accountB) + ") ";
+                        DataQuery.expenseWhere = "";
+                        int count = DataQuery.AlterDataQuery();
+                     }
+                     else
+                        accountB = totals[0].Total.ToString("0.00");
+
                      _ItemListA[i].AccountBalance = accountB == "" ? 0.00 : (double.Parse(accountB) - expenseSum);
                   }
                }

@@ -26,7 +26,7 @@
                     <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
-                <ListView x:Name="listView" Grid.RowSpan="3" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="White">
+                <ListView x:Name="listView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="White" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell >
@@ -73,8 +73,10 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Grid.Column="1" Grid.Row="1" CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
+                <AbsoluteLayout Grid.Column="1" Grid.Row="1" BackgroundColor="Transparent">
+                    <Button Grid.Column="1" Grid.Row="1" CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
                         WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />
+                </AbsoluteLayout>
             </Grid>
         </StackLayout>
     </ContentPage.Content>
