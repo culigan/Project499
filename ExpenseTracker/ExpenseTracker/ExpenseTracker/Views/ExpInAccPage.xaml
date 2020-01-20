@@ -15,7 +15,8 @@
                     <Button BackgroundColor="Transparent" Clicked="OnSettings" HorizontalOptions="Start" Text="Settings"/>
                 </StackLayout>
             </AbsoluteLayout>
-            <Grid>
+            <ScrollView>
+                <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="60"/>
@@ -78,6 +79,9 @@
                         WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />
                 </AbsoluteLayout>
             </Grid>
+        </ScrollView>
+            <Button CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
+                        WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
