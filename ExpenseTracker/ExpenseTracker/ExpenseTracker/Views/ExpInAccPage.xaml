@@ -27,58 +27,54 @@
                     <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
-                <ListView x:Name="listView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="White" >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell >
-                                <ViewCell.ContextActions >
-                                    <MenuItem Text="Edit" Clicked="OnEditClick" CommandParameter="{Binding .}" />
-                                    <MenuItem Text="Delete" Clicked="OnDeleteClick" CommandParameter="{Binding .}"/>
-                                </ViewCell.ContextActions>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Frame Grid.Column="0" Grid.ColumnSpan="2" BorderColor="black" HasShadow="True" Margin="10,3,0,3" BackgroundColor="White" Padding="0">
-                                        <Grid Padding="0">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto"/>
-                                                <ColumnDefinition Width="auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackLayout Orientation="Horizontal" Grid.Row="0" Padding="5,10,0,0">
-                                                <Label Text="Account: " FontAttributes="Bold" TextColor="Black" Padding="0"/>
-                                                <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black" Padding="0"/>
-                                            </StackLayout>
-                                            <Label Text="{Binding DateCreated}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
-                                            <StackLayout Orientation="Horizontal" Grid.Row="1" Padding="5,0,0,10">
-                                                <Label Text="Total:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
-                                                <Label Grid.Row="1" Text="{Binding AccountBalance, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold"/>
-                                            </StackLayout>
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnAccountTap" CommandParameter="{Binding .}"/>
-                                                <!--SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
+                    <ListView x:Name="listView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding ItemListA}" HasUnevenRows="True" BackgroundColor="White" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell >
+                                    <ViewCell.ContextActions >
+                                        <MenuItem Text="Edit" Clicked="OnEditClick" CommandParameter="{Binding .}" />
+                                        <MenuItem Text="Delete" Clicked="OnDeleteClick" CommandParameter="{Binding .}"/>
+                                    </ViewCell.ContextActions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Frame Grid.Column="0" Grid.ColumnSpan="2" BorderColor="black" HasShadow="True" Margin="10,3,0,3" BackgroundColor="White" Padding="0">
+                                            <Grid Padding="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackLayout Orientation="Horizontal" Grid.Row="0" Padding="5,10,0,0">
+                                                    <Label Text="Account: " FontAttributes="Bold" TextColor="Black" Padding="0"/>
+                                                    <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black" Padding="0"/>
+                                                </StackLayout>
+                                                <Label Text="{Binding DateCreated}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
+                                                <StackLayout Orientation="Horizontal" Grid.Row="1" Padding="5,0,0,10">
+                                                    <Label Text="Total:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
+                                                    <Label Grid.Row="1" Text="{Binding AccountBalance, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold"/>
+                                                </StackLayout>
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnAccountTap" CommandParameter="{Binding .}"/>
+                                                    <!--SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
                                                 <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" CommandParameter="{Binding .}"/-->
-                                            </Grid.GestureRecognizers>
-                                        </Grid>
-                                    </Frame>
+                                                </Grid.GestureRecognizers>
+                                            </Grid>
+                                        </Frame>
 
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <AbsoluteLayout Grid.Column="1" Grid.Row="1" BackgroundColor="Transparent">
-                    <Button Grid.Column="1" Grid.Row="1" CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
-                        WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />
-                </AbsoluteLayout>
-            </Grid>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
         </ScrollView>
             <Button CornerRadius="30" HeightRequest="60" Clicked="OnAddClick" Text="+" FontSize="Large" FontAttributes="Bold"
                         WidthRequest="60"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Yellow" />
