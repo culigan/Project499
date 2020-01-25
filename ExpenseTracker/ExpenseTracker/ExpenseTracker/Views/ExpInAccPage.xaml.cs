@@ -163,6 +163,9 @@ namespace ExpenseTracker.Views
                   DataQuery.expenseSelect = "Delete From Income";
                   DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
                   results = DataQuery.AlterDataQuery();
+                  DataQuery.expenseSelect = "Delete From totals";
+                  DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
+                  results = DataQuery.AlterDataQuery();
                   DataQuery.expenseSelect = "Delete From Account";
                   DataQuery.expenseWhere = "where id = " + deleteID.ID;
                   results = DataQuery.AlterDataQuery();
@@ -172,6 +175,9 @@ namespace ExpenseTracker.Views
                   DataQuery.expenseSelect = "Delete From Expense";
                   DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
                   int results = DataQuery.AlterDataQuery();
+                  DataQuery.expenseSelect = "Delete From totals";
+                  DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
+                  results = DataQuery.AlterDataQuery();
                   DataQuery.expenseSelect = "Delete From Account";
                   DataQuery.expenseWhere = "where id = " + deleteID.ID;
                   results = DataQuery.AlterDataQuery();

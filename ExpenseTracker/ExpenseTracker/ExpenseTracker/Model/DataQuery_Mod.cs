@@ -50,7 +50,7 @@ namespace ExpenseTracker.Model
             obj = Activator.CreateInstance<T>();
             foreach (PropertyInfo prop in obj.GetType().GetProperties())
             {
-               if (prop.Name != "AccountBalance" && !object.Equals(dr[prop.Name], DBNull.Value))
+               if (prop.Name != "AccountBalance" && !prop.Name.Contains("Editable") && !object.Equals(dr[prop.Name], DBNull.Value))
                {
                   prop.SetValue(obj, dr[prop.Name], null);
                }

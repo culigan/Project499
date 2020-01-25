@@ -10,5 +10,6 @@ namespace ExpenseTracker
       public string CategoryName { get; set; }
       public string CategoryDesc { get; set; }
       public int User_ID { get; set; }
+     
    }
 }
