@@ -27,14 +27,12 @@ namespace ExpenseTracker.Views
 
       private void OnSelect(object sender, EventArgs e)
       {
-         viewModel.AddEditName = viewModel.CatSelected.CategoryName;
-         viewModel.AddEditDesc = viewModel.CatSelected.CategoryDesc;
+         
       }
 
       private void OnSelectI(object sender, EventArgs e)
       {
-         viewModel.AddEditNameI = viewModel.CatSelectedI.CategoryName;
-         viewModel.AddEditDescI = viewModel.CatSelectedI.CategoryDesc;
+         
       }
 
       private void OnDelete(object sender, EventArgs e)
@@ -44,7 +42,7 @@ namespace ExpenseTracker.Views
 
       private void OnSave(object sender, EventArgs e)
       {
-         viewModel.CatSelected = null;
+         
       }
 
       private void OnCancel(object sender, EventArgs e)

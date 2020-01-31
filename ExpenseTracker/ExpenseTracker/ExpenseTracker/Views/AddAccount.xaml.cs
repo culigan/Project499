@@ -120,6 +120,7 @@ namespace ExpenseTracker
                   + viewModel.AccountDesc + "', [AccountType_ID] = " + AccountSelect;
                viewModel.DataQuery.expenseWhere = " Where ID = " + accountID;
                 int result = viewModel.DataQuery.AlterDataQuery();
+
                if(result == 1)
                   DependencyService.Get<IToast>().Show(viewModel.AccountName + " was successfully updated.");
 

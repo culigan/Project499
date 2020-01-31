@@ -11,63 +11,7 @@
             <Label Text="Transaction Start Date" />
             <DatePicker Date="{ Binding PickerStartDate}" HorizontalOptions="Start"/>
             <Label Text="Transaction End Date" />
-            <DatePicker Date="{ Binding PickerEndDate}" HorizontalOptions="Start" />
-            <Label Text="Expense Categories" />
-            <ListView ItemsSource="{Binding Categories, Mode=TwoWay}" HasUnevenRows="True" SelectedItem="{Binding CatSelected, Mode=TwoWay}" ItemSelected="OnSelect" BackgroundColor="White">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell Height="35">
-                            <Frame BorderColor="Black" Margin="2,2,2,2" Padding="2,2,2,2">
-                                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                    <Label Text="{Binding CategoryName}" WidthRequest="100"/>
-                                    <Label Text="{Binding CategoryDesc}" WidthRequest="300"/>
-                                </StackLayout>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Name" WidthRequest="100"/>
-                <Entry Text="{Binding AddEditName}" />
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Name" WidthRequest="100"/>
-                <Entry Text="{Binding AddEditDesc}" />
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Add New Category" Clicked="OnAdd"/>
-                <Button Text="Save Edited Category" Clicked="OnAdd"/>
-                <Button Text="Delete Selected Category" Clicked="OnDelete"/>
-            </StackLayout>
-            <Label Text="Income Categories" />
-            <ListView ItemsSource="{Binding CategoriesI}" HasUnevenRows="True" SelectedItem="{Binding CatSelectedI}" ItemSelected="OnSelectI" BackgroundColor="White">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Frame Padding="0" BorderColor="Black" >
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding CategoryName}" WidthRequest="100"/>
-                                    <Label Text="{Binding CategoryDesc}" WidthRequest="300"/>
-                                </StackLayout>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Name" WidthRequest="100"/>
-                <Entry Text="{Binding AddEditNameI}" />
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Name" WidthRequest="100"/>
-                <Entry Text="{Binding AddEditDescI}" />
-            </StackLayout>
-            <StackLayout Orientation="Horizontal" Padding="0">
-                <Button Text="Add Category" Clicked="OnAdd" />
-                <Button Text="Save Edited Category" Clicked="OnAdd"/>
-                <Button Text="Delete Selected Category" Clicked="OnDelete"/>
-            </StackLayout>
+            <DatePicker Date="{ Binding PickerEndDate}" HorizontalOptions="Start" />            
             <Label Text="Number of Transactions Displayed"/>
             <Entry Placeholder="100" Text="{Binding NumberTrans, Mode=TwoWay}" Keyboard="Numeric"/>
             <Button Text="Save Settings" Clicked="OnSave"/>

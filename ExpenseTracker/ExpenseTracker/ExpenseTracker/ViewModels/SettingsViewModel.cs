@@ -41,39 +41,38 @@ namespace ExpenseTracker.ViewModels
       }
 
 
-      private DateTime _StartDate;
-      public DateTime StartDate { get { return _StartDate; } set { _StartDate = value; OnPropertyChanged(nameof(StartDate)); } }
+      public DateTime StartDate { 
+         get 
+         { 
+            var dat = DateTime.Now;
+            dat = dat.AddMonths(-1);
+            return Preferences.Get("start_date", dat); 
+         } 
+         set 
+         {
+            Preferences.Set("start_date", value); 
+            OnPropertyChanged(nameof(StartDate)); 
+         } 
+      }
 
       private DateTime _EndDate;
-      public DateTime EndDate { get { return _EndDate; } set { _EndDate = value; OnPropertyChanged(nameof(EndDate)); } }
+      public DateTime EndDate
+      {
+         get
+         {
+            var dat = DateTime.Now;
+            return Preferences.Get("end_date", dat);
+         }
+         set
+         {
+            Preferences.Set("end_date", value);
+            OnPropertyChanged(nameof(EndDate));
+         }
+      }
 
-      private string _CategoryName;
-      public string CategoryName { get { return _CategoryName; } set { _CategoryName = value; OnPropertyChanged(nameof(CategoryName)); } }
+public int NumberTrans { get { return Preferences.Get("trans_num", 1000); } set { Preferences.Set("trans_num", value); OnPropertyChanged(nameof(NumberTrans)); } }
 
-      private string _CategoryDesc;
-      public string CategoryDesc { get { return _CategoryDesc; } set { _CategoryDesc = value; OnPropertyChanged(nameof(CategoryDesc)); } }
-
-      private int _NumberTrans;
-      public int NumberTrans { get { return _NumberTrans; } set { _NumberTrans = value; OnPropertyChanged(nameof(NumberTrans)); } }
-
-      private Exp_Inc_Category _CatSelected;
-      public Exp_Inc_Category CatSelected { get { return _CatSelected; } set { _CatSelected = value; OnPropertyChanged(nameof(CatSelected)); } }
-
-      private Exp_Inc_Category _CatSelectedI;
-      public Exp_Inc_Category CatSelectedI { get { return _CatSelectedI; } set { _CatSelectedI = value; OnPropertyChanged(nameof(CatSelectedI)); } }
-
-      private string _AddEditName = "";
-      public string AddEditName { get { return _AddEditName; } set { _AddEditName = value; OnPropertyChanged(nameof(AddEditName)); } }
-
-      private string _AddEditNameI = "";
-      public string AddEditNameI { get { return _AddEditNameI; } set { _AddEditNameI = value; OnPropertyChanged(nameof(AddEditNameI)); } }
-
-      private string _AddEditDesc = "";
-      public string AddEditDesc { get { return _AddEditDesc; } set { _AddEditDesc = value; OnPropertyChanged(nameof(AddEditDesc)); } }
-
-      private string _AddEditDescI = "";
-      public string AddEditDescI { get { return _AddEditDescI; } set { _AddEditDescI = value; OnPropertyChanged(nameof(AddEditDescI)); } }
-
+      
       public SettingsViewModel()
       {
          DataQuery = new Model.DataQuery_Mod();
