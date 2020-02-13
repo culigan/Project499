@@ -29,24 +29,30 @@ namespace ExpenseTracker
       {
          try
          {
-            viewModel.IsBusy = true;
-            viewModel.DataQuery.expenseSelect = "Select * From Users ";
-            viewModel.DataQuery.expenseWhere = "where Username = '" + viewModel.Username + "' and Password = '" + viewModel.PasswordHash + "'";
-            viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
-            if (viewModel.UsersInfo.Count == 1)
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-               Preferences.Set("ExpenseT_UserID", viewModel.UsersInfo[0].ID.ToString());
-               viewModel.User_ID = viewModel.UsersInfo[0].ID;
-               var accountsPage = new NavigationPage(new Views.AccountsPage() { Title = "Accounts Page" });
-               NavigationPage.SetHasBackButton(accountsPage, true);
-               App.Current.MainPage = accountsPage;
+               viewModel.IsBusy = true;
+               viewModel.DataQuery.expenseSelect = "Select * From Users ";
+               viewModel.DataQuery.expenseWhere = "where Username = '" + viewModel.Username + "' and Password = '" + viewModel.PasswordHash + "'";
+               viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
+               if (viewModel.UsersInfo.Count == 1)
+               {
+                  Preferences.Set("ExpenseT_UserID", viewModel.UsersInfo[0].ID.ToString());
+                  viewModel.User_ID = viewModel.UsersInfo[0].ID;
+                  var accountsPage = new NavigationPage(new Views.AccountsPage() { Title = "Accounts Page" });
+                  NavigationPage.SetHasBackButton(accountsPage, true);
+                  App.Current.MainPage = accountsPage;
+               }
+               else
+               {
+                  DependencyService.Get<IToast>().Show("Username with that password not found.");
+               }
+               viewModel.IsBusy = false;
             }
             else
             {
-               DependencyService.Get<IToast>().Show("Username with that password not found.");
+               DependencyService.Get<IToast>().Show("No Internet Connection.");
             }
-            viewModel.IsBusy = false;
-
          }
          catch (Exception ex)
          {

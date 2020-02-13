@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,29 +21,11 @@ namespace ExpenseTracker.Views
          this.BindingContext = viewModel = new ViewModels.SettingsViewModel();
       }
 
-      private void OnAdd(object sender, EventArgs e)
-      {
-
-      }
-
-      private void OnSelect(object sender, EventArgs e)
-      {
-         
-      }
-
-      private void OnSelectI(object sender, EventArgs e)
-      {
-         
-      }
-
-      private void OnDelete(object sender, EventArgs e)
-      {
-
-      }
-
       private void OnSave(object sender, EventArgs e)
       {
-         
+         Preferences.Set("start_date", viewModel.PickerStartDate);
+         Preferences.Set("end_date", viewModel.PickerEndDate);
+         Navigation.PopAsync();
       }
 
       private void OnCancel(object sender, EventArgs e)

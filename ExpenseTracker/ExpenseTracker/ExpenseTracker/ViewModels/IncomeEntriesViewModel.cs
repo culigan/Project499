@@ -22,29 +22,35 @@ namespace ExpenseTracker.ViewModels
          {
             try
             {
-               var dat = DateTime.Now;
-               dat = dat.AddMonths(-1);
-               string startDateString = "";
-               string endDateString = "";
-               if (Preferences.Get("start_date", dat) == dat)
-                  startDateString = dat.ToString();
-               else
-                  startDateString = Preferences.Get("start_date", dat).ToString();
-               if (Preferences.Get("end_date", DateTime.Now) == DateTime.Now)
-                  endDateString = DateTime.Now.ToString();
-               else
-                  endDateString = Preferences.Get("end_date", DateTime.Now).ToString();
+               if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+               {
+                  var dat = DateTime.Now;
+                  dat = dat.AddMonths(-1);
+                  string startDateString = "";
+                  string endDateString = "";
+                  if (Preferences.Get("start_date", dat) == dat)
+                     startDateString = dat.ToString();
+                  else
+                     startDateString = Preferences.Get("start_date", dat).ToString();
+                  if (Preferences.Get("end_date", DateTime.Now) == DateTime.Now)
+                     endDateString = DateTime.Now.ToString();
+                  else
+                     endDateString = Preferences.Get("end_date", DateTime.Now).ToString();
 
-               DataQuery.expenseSelect = "SELECT ex.[ID], ex.[User_ID], acc1.AccountName, ex.[IncomeAmount], ex.[IncomeDate]"
-                     + " ,ec.CategoryName as IncomeCategory, ex.[Repeat], rp.RepeatPeriod, ex.[IncomeName] FROM [dbo].[Income] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
-                     + " inner join IncomeCategory ec on ex.IncomeCategory_ID = ec.ID"
-                     + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
+                  DataQuery.expenseSelect = "SELECT ex.[ID], ex.[User_ID], acc1.AccountName, ex.[IncomeAmount], ex.[IncomeDate]"
+                        + " ,ec.CategoryName as IncomeCategory, ex.[Repeat], rp.RepeatPeriod, ex.[IncomeName] FROM [dbo].[Income] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
+                        + " inner join IncomeCategory ec on ex.IncomeCategory_ID = ec.ID"
+                        + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
 
 
                   DataQuery.expenseWhere = " where ex.user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and (IncomeDate between '" + startDateString + "' and '" + endDateString + "') and ex.Account_ID = " + accountID;
                   _ItemListE = DataQuery.ExecuteAQuery<IncomeEntry>();
-
-               
+               }
+               else
+               {
+                  DependencyService.Get<IToast>().Show("No Internet Connection.");
+                  _ItemListE = new ObservableCollection<IncomeEntry>();
+               }
                return _ItemListE;
             }
             catch (Exception ex)

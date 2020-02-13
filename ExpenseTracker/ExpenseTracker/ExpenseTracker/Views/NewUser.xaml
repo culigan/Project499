@@ -71,6 +71,7 @@
                 HorizontalOptions="Center"
                 WidthRequest="250"
                 IsPassword="true"
+                Completed="OnSubmitButtonClicked"
                 Text="{Binding SecondPassword}">
                     <Entry.Behaviors>
                         

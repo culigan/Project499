@@ -103,7 +103,8 @@
                     HorizontalOptions="Center"
                     WidthRequest="250"
                     Placeholder="Transaction Name"
-                    Text="{Binding TransName}"/>
+                    Text="{Binding TransName}"
+                    Completed="OnSaveButtonClicked"/>
                 <Grid Grid.Row="12" Margin="20,20,20,20">
                     <Button Grid.Column="0" Margin="20" 
                             x:Name="saveButton"

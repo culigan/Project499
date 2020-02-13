@@ -23,29 +23,36 @@ namespace ExpenseTracker.ViewModels
          {
             try
             {
-               var dat = DateTime.Now;
-               dat = dat.AddMonths(-1);
-               string startDateString = "";
-               string endDateString = "";
-               if (Preferences.Get("start_date", dat) == dat)
-                  startDateString = dat.ToString();
-               else
-                  startDateString = Preferences.Get("start_date", dat).ToString();
-               if (Preferences.Get("end_date", DateTime.Now) == DateTime.Now)
-                  endDateString = DateTime.Now.ToString();
-               else
-                  endDateString = Preferences.Get("end_date", DateTime.Now).ToString();
-               DataQuery.expenseSelect = "SELECT ex.[ID], ex.[User_ID], acc1.AccountName, ex.[ExpenseAmount], acc2.AccountName as IncomeAccountName, ex.[ExpenseDate]"
-                     + " ,ec.CategoryName as ExpenseCategory, ex.[Repeat], rp.RepeatPeriod, ex.expenseName FROM [dbo].[Expense] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
-                     + " inner join Account acc2 on ex.IncomeAccount_ID = acc2.ID inner join ExpenseCategory ec on ex.ExpenseCategory_ID = ec.ID"
-                     + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
+               if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+               {
+                  var dat = DateTime.Now;
+                  dat = dat.AddMonths(-1);
+                  string startDateString = "";
+                  string endDateString = "";
+                  if (Preferences.Get("start_date", dat) == dat)
+                     startDateString = dat.ToString();
+                  else
+                     startDateString = Preferences.Get("start_date", dat).ToString();
+                  if (Preferences.Get("end_date", DateTime.Now) == DateTime.Now)
+                     endDateString = DateTime.Now.ToString();
+                  else
+                     endDateString = Preferences.Get("end_date", DateTime.Now).ToString();
+                  DataQuery.expenseSelect = "SELECT ex.[ID], ex.[User_ID], acc1.AccountName, ex.[ExpenseAmount], acc2.AccountName as IncomeAccountName, ex.[ExpenseDate]"
+                        + " ,ec.CategoryName as ExpenseCategory, ex.[Repeat], rp.RepeatPeriod, ex.expenseName FROM [dbo].[Expense] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
+                        + " inner join Account acc2 on ex.IncomeAccount_ID = acc2.ID inner join ExpenseCategory ec on ex.ExpenseCategory_ID = ec.ID"
+                        + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
 
 
-                  
-               DataQuery.expenseWhere = " where ex.user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and (ExpenseDate between '" + startDateString + "' and '" + endDateString + "') and ex.Account_ID = " + accountID;
+
+                  DataQuery.expenseWhere = " where ex.user_id = " + Preferences.Get("ExpenseT_UserID", "0") + " and (ExpenseDate between '" + startDateString + "' and '" + endDateString + "') and ex.Account_ID = " + accountID;
                   _ItemListE = DataQuery.ExecuteAQuery<ExpenseEntry>();
+               }
+               else
+               {
+                  DependencyService.Get<IToast>().Show("No Internet Connection.");
+                  _ItemListE = new ObservableCollection<ExpenseEntry>();
+               }
 
-               
                return _ItemListE;
             }
             catch (Exception ex)
@@ -70,6 +77,19 @@ namespace ExpenseTracker.ViewModels
          set
          {
             _MenuVisible = value; OnPropertyChanged(nameof(MenuVisible));
+         }
+      }
+
+      private int _Span = 3;
+      public int Span
+      {
+         get
+         {
+            return _Span;
+         }
+         set
+         {
+            _Span = value; OnPropertyChanged(nameof(Span));
          }
       }
       public ExpenseEntriesViewModel(int accountID)

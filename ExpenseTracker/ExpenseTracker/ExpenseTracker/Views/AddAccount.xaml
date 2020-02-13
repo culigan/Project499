@@ -59,7 +59,8 @@
                     Margin="20,0,20,0"
                     HorizontalOptions="Center"
                     WidthRequest="250"
-                    Text="{Binding AccountDesc, Mode=TwoWay}"/>
+                    Text="{Binding AccountDesc, Mode=TwoWay}"
+                    Completed="OnSaveAccountButtonClicked"/>
                 <Grid Grid.Row="7" Margin="20,20,20,20">
                     <Button x:Name="saveButton" Grid.Column="0" Margin="20"               
                     HorizontalOptions="End"

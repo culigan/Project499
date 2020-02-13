@@ -151,40 +151,47 @@ namespace ExpenseTracker.Views
       {
          try
          {
-            bool choice = await DisplayAlert("ALERT", "This will delete all entries for this account. Are you sure you want to delete?", "Delete", "Cancel");
-            if (choice)
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-               var deleteID = (Account)((sender as MenuItem).CommandParameter);
-               if (deleteID.AccountType_ID == 1)
+               bool choice = await DisplayAlert("ALERT", "This will delete all entries for this account. Are you sure you want to delete?", "Delete", "Cancel");
+               if (choice)
                {
-                  DataQuery.expenseSelect = "Delete From Expense";
-                  DataQuery.expenseWhere = "where incomeaccount_id = " + deleteID.ID;
-                  int results = DataQuery.AlterDataQuery();
-                  DataQuery.expenseSelect = "Delete From Income";
-                  DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
-                  results = DataQuery.AlterDataQuery();
-                  DataQuery.expenseSelect = "Delete From totals";
-                  DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
-                  results = DataQuery.AlterDataQuery();
-                  DataQuery.expenseSelect = "Delete From Account";
-                  DataQuery.expenseWhere = "where id = " + deleteID.ID;
-                  results = DataQuery.AlterDataQuery();
-               }
-               else if (deleteID.AccountType_ID == 2)
-               {
-                  DataQuery.expenseSelect = "Delete From Expense";
-                  DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
-                  int results = DataQuery.AlterDataQuery();
-                  DataQuery.expenseSelect = "Delete From totals";
-                  DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
-                  results = DataQuery.AlterDataQuery();
-                  DataQuery.expenseSelect = "Delete From Account";
-                  DataQuery.expenseWhere = "where id = " + deleteID.ID;
-                  results = DataQuery.AlterDataQuery();
-               }
+                  var deleteID = (Account)((sender as MenuItem).CommandParameter);
+                  if (deleteID.AccountType_ID == 1)
+                  {
+                     DataQuery.expenseSelect = "Delete From Expense";
+                     DataQuery.expenseWhere = "where incomeaccount_id = " + deleteID.ID;
+                     int results = DataQuery.AlterDataQuery();
+                     DataQuery.expenseSelect = "Delete From Income";
+                     DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
+                     results = DataQuery.AlterDataQuery();
+                     DataQuery.expenseSelect = "Delete From totals";
+                     DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
+                     results = DataQuery.AlterDataQuery();
+                     DataQuery.expenseSelect = "Delete From Account";
+                     DataQuery.expenseWhere = "where id = " + deleteID.ID;
+                     results = DataQuery.AlterDataQuery();
+                  }
+                  else if (deleteID.AccountType_ID == 2)
+                  {
+                     DataQuery.expenseSelect = "Delete From Expense";
+                     DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
+                     int results = DataQuery.AlterDataQuery();
+                     DataQuery.expenseSelect = "Delete From totals";
+                     DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
+                     results = DataQuery.AlterDataQuery();
+                     DataQuery.expenseSelect = "Delete From Account";
+                     DataQuery.expenseWhere = "where id = " + deleteID.ID;
+                     results = DataQuery.AlterDataQuery();
+                  }
 
-               focusFlag = true;
-               ExpIncAccPage_Appearing(sender, e);
+                  focusFlag = true;
+                  ExpIncAccPage_Appearing(sender, e);
+               }
+            }
+            else
+            {
+               DependencyService.Get<IToast>().Show("No Internet Connection.");
             }
          }
          catch (Exception ex)
@@ -214,10 +221,10 @@ namespace ExpenseTracker.Views
 
       public void OnSwipeLeft(object sender, SwipedEventArgs e)
       {
-         var grid = sender as Grid;
+         var grid = (sender as Grid).Children[0] as StackLayout;
          grid.Children[1].IsVisible = false;
 
-         var slide = grid.Parent.Parent as Grid;
+         var slide = grid.Parent.Parent as StackLayout;
          var button1 = slide.Children[1] as Button;
          button1.IsVisible = true;
          var button2 = slide.Children[2] as Button;

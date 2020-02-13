@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ExpenseTracker.ViewModels;
@@ -115,72 +116,78 @@ namespace ExpenseTracker
             DateTime myDateTime = DateTime.Now;
             string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
 
-            try
+         try
+         {
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                UserEntry.BackgroundColor = Color.Transparent;
-                FirstNameEntry.BackgroundColor = Color.Transparent;
-                LastNameEntry.BackgroundColor = Color.Transparent;
-                FirstPasswordEntry.BackgroundColor = Color.Transparent;
-                SecondPasswordEntry.BackgroundColor = Color.Transparent;
+               UserEntry.BackgroundColor = Color.Transparent;
+               FirstNameEntry.BackgroundColor = Color.Transparent;
+               LastNameEntry.BackgroundColor = Color.Transparent;
+               FirstPasswordEntry.BackgroundColor = Color.Transparent;
+               SecondPasswordEntry.BackgroundColor = Color.Transparent;
 
-                viewModel.IsBusy = true;
-                viewModel.DataQuery.expenseSelect = "SELECT * FROM Users ";
-                viewModel.DataQuery.expenseWhere = "WHERE Username = '" + viewModel.Username + "'";
-                viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
+               viewModel.IsBusy = true;
+               viewModel.DataQuery.expenseSelect = "SELECT * FROM Users ";
+               viewModel.DataQuery.expenseWhere = "WHERE Username = '" + viewModel.Username + "'";
+               viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
 
-                if (viewModel.UsersInfo.Count >= 1)
-                {
-                    UserEntry.BackgroundColor = Color.Red;
-                    DependencyService.Get<IToast>().Show("Username is not unique");
-                }
-                else if ((viewModel.FirstPasswordHash == viewModel.SecondPasswordHash) && (viewModel.Username != null) && (viewModel.Firstname != null) && (viewModel.Lastname != null)  && (viewModel.FirstPassword != null))
-                {
-                    viewModel.DataQuery.expenseSelect = "INSERT INTO users VALUES ";
-                    viewModel.DataQuery.expenseWhere = "('" + viewModel.Username + "', '" + viewModel.Firstname + "', '" + viewModel.Lastname + "', '" + viewModel.SecondPasswordHash + "', '" + sqlFormattedDate + "')";
-                    viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
-                    DependencyService.Get<IToast>().Show("New User " + viewModel.Username + " Created");                     
-                     await Navigation.PopAsync();
-                }
+               if (viewModel.UsersInfo.Count >= 1)
+               {
+                  UserEntry.BackgroundColor = Color.Red;
+                  DependencyService.Get<IToast>().Show("Username is not unique");
+               }
+               else if ((viewModel.FirstPasswordHash == viewModel.SecondPasswordHash) && (viewModel.Username != null) && (viewModel.Firstname != null) && (viewModel.Lastname != null) && (viewModel.FirstPassword != null))
+               {
+                  viewModel.DataQuery.expenseSelect = "INSERT INTO users VALUES ";
+                  viewModel.DataQuery.expenseWhere = "('" + viewModel.Username + "', '" + viewModel.Firstname + "', '" + viewModel.Lastname + "', '" + viewModel.SecondPasswordHash + "', '" + sqlFormattedDate + "')";
+                  viewModel.UsersInfo = viewModel.DataQuery.ExecuteAQuery<Users>();
+                  DependencyService.Get<IToast>().Show("New User " + viewModel.Username + " Created");
+                  await Navigation.PopAsync();
+               }
 
-                else if (viewModel.FirstPasswordHash != viewModel.SecondPasswordHash)
-                {
-                    SecondPasswordEntry.BackgroundColor = Color.Red;
-                    DependencyService.Get<IToast>().Show("Passwords do not match");
-                }
+               else if (viewModel.FirstPasswordHash != viewModel.SecondPasswordHash)
+               {
+                  SecondPasswordEntry.BackgroundColor = Color.Red;
+                  DependencyService.Get<IToast>().Show("Passwords do not match");
+               }
 
-                else if (viewModel.Username == null)
-                {
-                    UserEntry.BackgroundColor = Color.Red;
-                    DependencyService.Get<IToast>().Show("Username cannot be blank");
-                }
+               else if (viewModel.Username == null)
+               {
+                  UserEntry.BackgroundColor = Color.Red;
+                  DependencyService.Get<IToast>().Show("Username cannot be blank");
+               }
 
-                else if (viewModel.Firstname == null)
-                {
-                    FirstNameEntry.BackgroundColor = Color.Red;
-                    DependencyService.Get<IToast>().Show("First name cannot be blank");
-                }
+               else if (viewModel.Firstname == null)
+               {
+                  FirstNameEntry.BackgroundColor = Color.Red;
+                  DependencyService.Get<IToast>().Show("First name cannot be blank");
+               }
 
-                else if (viewModel.Lastname == null)
-                {
-                    LastNameEntry.BackgroundColor = Color.Red;
-                    DependencyService.Get<IToast>().Show("Last name cannot be blank");
-                }
+               else if (viewModel.Lastname == null)
+               {
+                  LastNameEntry.BackgroundColor = Color.Red;
+                  DependencyService.Get<IToast>().Show("Last name cannot be blank");
+               }
 
-                else if (viewModel.FirstPassword == null)
-                {
-                    FirstPasswordEntry.BackgroundColor = Color.Red;
-                    SecondPasswordEntry.BackgroundColor = Color.Red;
-                    DependencyService.Get<IToast>().Show("Password cannot be blank");
-                }
+               else if (viewModel.FirstPassword == null)
+               {
+                  FirstPasswordEntry.BackgroundColor = Color.Red;
+                  SecondPasswordEntry.BackgroundColor = Color.Red;
+                  DependencyService.Get<IToast>().Show("Password cannot be blank");
+               }
 
-                viewModel.IsBusy = false;
-
+               viewModel.IsBusy = false;
             }
-            catch (Exception ex)
+            else
             {
-                await DisplayAlert("Unsuccessful user creation", ex.Message, "OK");
-                viewModel.IsBusy = false;
+               DependencyService.Get<IToast>().Show("No Internet Connection.");
             }
+         }
+         catch (Exception ex)
+         {
+            await DisplayAlert("Unsuccessful user creation", ex.Message, "OK");
+            viewModel.IsBusy = false;
+         }
         }
 
         async void OnCancelButtonClicked(object sender, EventArgs e)

@@ -75,33 +75,47 @@ namespace ExpenseTracker
 
       private void PopulateCategoryPicker()
       {
-         viewModel.IsBusy = true;
-         viewModel.DataQuery.expenseSelect = "Select * From " + viewModel.AccountType + "Category ";
-         viewModel.DataQuery.expenseWhere = " where user_Id = 40 or user_id = " + viewModel.User_ID;
-         ObservableCollection<Exp_Inc_Category> picker = viewModel.DataQuery.ExecuteAQuery<Exp_Inc_Category>();
-         ObservableCollection<string> pickerList = new ObservableCollection<string>();
-         foreach (Exp_Inc_Category cat in picker)
+         if (Connectivity.NetworkAccess == NetworkAccess.Internet)
          {
-            pickerList.Add(cat.CategoryName);
+            viewModel.IsBusy = true;
+            viewModel.DataQuery.expenseSelect = "Select * From " + viewModel.AccountType + "Category ";
+            viewModel.DataQuery.expenseWhere = " where user_Id = 40 or user_id = " + viewModel.User_ID;
+            ObservableCollection<Exp_Inc_Category> picker = viewModel.DataQuery.ExecuteAQuery<Exp_Inc_Category>();
+            ObservableCollection<string> pickerList = new ObservableCollection<string>();
+            foreach (Exp_Inc_Category cat in picker)
+            {
+               pickerList.Add(cat.CategoryName);
+            }
+            viewModel.CategoryList = pickerList;
+            viewModel.Category = catPick;
+            viewModel.IsBusy = false;
          }
-         viewModel.CategoryList = pickerList;
-         viewModel.Category = catPick;
-         viewModel.IsBusy = false;
+         else
+         {
+            DependencyService.Get<IToast>().Show("No Internet Connection.");
+         }
       }
       private void PopulateIncomeAccountPicker()
       {
-         viewModel.IsBusy = true;
-         viewModel.DataQuery.expenseSelect = "Select * From Account ";
-         viewModel.DataQuery.expenseWhere = " where (user_id = " + viewModel.User_ID + " or user_id = 40) and AccountType_ID = 1";
-         ObservableCollection<Account> picker = viewModel.DataQuery.ExecuteAQuery<Account>();
-         ObservableCollection<string> pickerList = new ObservableCollection<string>();
-         foreach (Account acc in picker)
+         if (Connectivity.NetworkAccess == NetworkAccess.Internet)
          {
-            pickerList.Add(acc.AccountName);
+            viewModel.IsBusy = true;
+            viewModel.DataQuery.expenseSelect = "Select * From Account ";
+            viewModel.DataQuery.expenseWhere = " where (user_id = " + viewModel.User_ID + " or user_id = 40) and AccountType_ID = 1";
+            ObservableCollection<Account> picker = viewModel.DataQuery.ExecuteAQuery<Account>();
+            ObservableCollection<string> pickerList = new ObservableCollection<string>();
+            foreach (Account acc in picker)
+            {
+               pickerList.Add(acc.AccountName);
+            }
+            viewModel.IncomeAccountList = pickerList;
+            viewModel.IncomeAccount = incPick;
+            viewModel.IsBusy = false;
          }
-         viewModel.IncomeAccountList = pickerList;
-         viewModel.IncomeAccount = incPick;
-         viewModel.IsBusy = false;
+         else
+         {
+            DependencyService.Get<IToast>().Show("No Internet Connection.");
+         }
       }
       async void OnSaveButtonClicked(object sender, EventArgs e)
       {
@@ -109,131 +123,139 @@ namespace ExpenseTracker
          {
 
             viewModel.IsBusy = true;
-            if (saveButton.Text == "Save")
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-               if (viewModel.AccountType == "Income")
+               if (saveButton.Text == "Save")
                {
-                  viewModel.DataQuery.expenseSelect = "INSERT INTO " + viewModel.AccountType + " ([User_ID],[Account_ID],[IncomeAmount]," +
-                     "[IncomeDate],[IncomeCategory_ID],[Repeat],[RepeatPeriod_ID],[IncomeName]) VALUES (" + viewModel.User_ID + ", " +
-                     "(select id from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = " + viewModel.User_ID + "), " +
-                        viewModel.TransAmount + ", '" + DateTime.Now + "', " + "(select ID from IncomeCategory where CategoryName = '" + viewModel.Category + "')," +
-                       " 0, 4, '" + viewModel.TransName + "')";
-                  viewModel.DataQuery.expenseWhere = "";
-                  int result = viewModel.DataQuery.AlterDataQuery();
+                  if (viewModel.AccountType == "Income")
+                  {
+                     viewModel.DataQuery.expenseSelect = "INSERT INTO " + viewModel.AccountType + " ([User_ID],[Account_ID],[IncomeAmount]," +
+                        "[IncomeDate],[IncomeCategory_ID],[Repeat],[RepeatPeriod_ID],[IncomeName]) VALUES (" + viewModel.User_ID + ", " +
+                        "(select id from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = " + viewModel.User_ID + "), " +
+                           viewModel.TransAmount + ", '" + DateTime.Now + "', " + "(select ID from IncomeCategory where CategoryName = '" + viewModel.Category + "')," +
+                          " 0, 4, '" + viewModel.TransName + "')";
+                     viewModel.DataQuery.expenseWhere = "";
+                     int result = viewModel.DataQuery.AlterDataQuery();
 
-                  viewModel.DataQuery.expenseSelect = "Select * From Totals ";
-                  viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" + viewModel.User_ID + "')";
-                  ObservableCollection<Totals> totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
+                     viewModel.DataQuery.expenseSelect = "Select * From Totals ";
+                     viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" + viewModel.User_ID + "')";
+                     ObservableCollection<Totals> totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
 
-                  viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + (totals[0].Total + float.Parse(viewModel.TransAmount)).ToString("0.00"); 
-                  viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" + 
-                     viewModel.User_ID + "')";
-                  int count = viewModel.DataQuery.AlterDataQuery();
+                     viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + (totals[0].Total + float.Parse(viewModel.TransAmount)).ToString("0.00");
+                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" +
+                        viewModel.User_ID + "')";
+                     int count = viewModel.DataQuery.AlterDataQuery();
+                  }
+                  else if (viewModel.AccountType == "Expense")
+                  {
+                     viewModel.DataQuery.expenseSelect = "INSERT INTO " + viewModel.AccountType + " ([User_ID],[IncomeAccount_ID],[Account_ID],[ExpenseAmount]," +
+                        "[ExpenseDate],[ExpenseCategory_ID],[Repeat],[RepeatPeriod_ID],[ExpenseName]) VALUES (" + viewModel.User_ID + ", (select id from Account where AccountName = '"
+                        + viewModel.IncomeAccount + "' and user_id = " + viewModel.User_ID + "), (select id from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = " + viewModel.User_ID + "), " +
+                           viewModel.TransAmount + ", '" + DateTime.Now + "', " + "(select ID from ExpenseCategory where (user_id = " + viewModel.User_ID + " or user_id = 40) and  CategoryName = '" +
+                           viewModel.Category + "'), 0, 4, '" + viewModel.TransName + "')";
+
+                     viewModel.DataQuery.expenseWhere = "";
+                     int result = viewModel.DataQuery.AlterDataQuery();
+
+                     viewModel.DataQuery.expenseSelect = "Select * From Totals ";
+                     viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" + viewModel.User_ID + "')";
+                     ObservableCollection<Totals> totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
+
+                     viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + (totals[0].Total + float.Parse(viewModel.TransAmount)).ToString("0.00");
+                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" +
+                        viewModel.User_ID + "')";
+                     int count = viewModel.DataQuery.AlterDataQuery();
+
+                     viewModel.DataQuery.expenseSelect = "Select * From Totals ";
+                     viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + viewModel.IncomeAccount + "' and User_ID = '" + viewModel.User_ID + "')";
+                     totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
+
+                     viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + (totals[0].Total - float.Parse(viewModel.TransAmount)).ToString("0.00");
+                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + viewModel.IncomeAccount + "' and User_ID = '" +
+                        viewModel.User_ID + "')";
+                     count = viewModel.DataQuery.AlterDataQuery();
+                  }
+
+
+                  viewModel.IsBusy = false;
                }
-               else if (viewModel.AccountType == "Expense")
+               else if (saveButton.Text == "Update")
                {
-                  viewModel.DataQuery.expenseSelect = "INSERT INTO " + viewModel.AccountType + " ([User_ID],[IncomeAccount_ID],[Account_ID],[ExpenseAmount]," +
-                     "[ExpenseDate],[ExpenseCategory_ID],[Repeat],[RepeatPeriod_ID],[ExpenseName]) VALUES (" + viewModel.User_ID + ", (select id from Account where AccountName = '"
-                     + viewModel.IncomeAccount + "' and user_id = " + viewModel.User_ID + "), (select id from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = " + viewModel.User_ID + "), " +
-                        viewModel.TransAmount + ", '" + DateTime.Now + "', " + "(select ID from ExpenseCategory where (user_id = " + viewModel.User_ID + " or user_id = 40) and  CategoryName = '" + 
-                        viewModel.Category + "'), 0, 4, '" + viewModel.TransName + "')";
-                  
-                  viewModel.DataQuery.expenseWhere = "";
+
+                  if (viewModel.AccountType == "Expense")
+                  {
+                     viewModel.DataQuery.expenseSelect = "Select  ex.[ID], ex.[User_ID], acc1.AccountName, ex.[IncomeAmount], ex.[IncomeDate]"
+                        + " ,ec.CategoryName as IncomeCategory, ex.[Repeat], rp.RepeatPeriod, ex.[IncomeName] FROM[dbo].[Income] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
+                        + " inner join IncomeCategory ec on ex.IncomeCategory_ID = ec.ID"
+                        + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
+                     viewModel.DataQuery.expenseWhere = "Where account_id = (Select top (1) ID from Account where AccountName = '" + viewModel.IncomeAccount + "' and User_ID = '" + viewModel.User_ID + "')";
+                     ObservableCollection<IncomeEntry> incomeEntry = viewModel.DataQuery.ExecuteAQuery<IncomeEntry>();
+
+                     viewModel.DataQuery.expenseSelect = "SELECT ex.[ID], ex.[User_ID], acc1.AccountName, ex.[ExpenseAmount], acc2.AccountName as IncomeAccountName, ex.[ExpenseDate]"
+                        + " ,ec.CategoryName as ExpenseCategory, ex.[Repeat], rp.RepeatPeriod, ex.expenseName FROM [dbo].[Expense] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
+                        + " inner join Account acc2 on ex.IncomeAccount_ID = acc2.ID inner join ExpenseCategory ec on ex.ExpenseCategory_ID = ec.ID"
+                        + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
+                     viewModel.DataQuery.expenseWhere = "Where ex.id = " + viewModel.ID;
+                     ObservableCollection<ExpenseEntry> entry = viewModel.DataQuery.ExecuteAQuery<ExpenseEntry>();
+
+                     viewModel.DataQuery.expenseSelect = "Select * From Totals ";
+                     viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + incomeEntry[0].AccountName + "' and User_ID = '" + incomeEntry[0].User_ID + "')";
+                     ObservableCollection<Totals> incTotals = viewModel.DataQuery.ExecuteAQuery<Totals>();
+                     incTotals[0].Total -= (float)entry[0].ExpenseAmount;
+                     incTotals[0].Total += float.Parse(viewModel.TransAmount);
+
+                     viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + incTotals[0].Total.ToString("0.00");
+                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + incomeEntry[0].AccountName + "' and User_ID = '" + incomeEntry[0].User_ID + "')";
+                     int count = viewModel.DataQuery.AlterDataQuery();
+                     
+
+                     viewModel.DataQuery.expenseSelect = "Select * From Totals ";
+                     viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + entry[0].AccountName + "' and User_ID = '" + entry[0].User_ID + "')";
+                     ObservableCollection<Totals> totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
+                     totals[0].Total -= (float)entry[0].ExpenseAmount;
+                     totals[0].Total += float.Parse(viewModel.TransAmount);
+
+                     viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + totals[0].Total.ToString("0.00");
+                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + entry[0].AccountName + "' and User_ID = '" + entry[0].User_ID + "')";
+                     count = viewModel.DataQuery.AlterDataQuery();
+
+                     viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Expense] SET [IncomeAccount_ID] = (select Account_ID from Account where user_id = " + viewModel.User_ID +
+                        " and AccountName = '" + viewModel.IncomeAccount + "'), [ExpenseAmount] = '" + viewModel.TransAmount + "', [ExpenseCategory_ID] = " +
+                        "(select ID from ExpenseCategory where (user_id = " + viewModel.User_ID + " or user_id = 40) and CategoryName = '" + viewModel.Category + "'), [ExpenseName] = '" + viewModel.TransName + "'";
+                     viewModel.DataQuery.expenseWhere = " Where ID = " + viewModel.ID;
+                  }
+                  else if (viewModel.AccountType == "Income")
+                  {
+                     viewModel.DataQuery.expenseSelect = "Select  ex.[ID], ex.[User_ID], acc1.AccountName, ex.[IncomeAmount], ex.[IncomeDate]"
+                        + " ,ec.CategoryName as IncomeCategory, ex.[Repeat], rp.RepeatPeriod, ex.[IncomeName] FROM[dbo].[Income] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
+                        + " inner join IncomeCategory ec on ex.IncomeCategory_ID = ec.ID"
+                        + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
+                     viewModel.DataQuery.expenseWhere = "Where id = (Select top (1) ID from Account where AccountName = '" + viewModel.IncomeAccount + "' and User_ID = '" + viewModel.User_ID + "')";
+                     ObservableCollection<IncomeEntry> incomeEntry = viewModel.DataQuery.ExecuteAQuery<IncomeEntry>();
+
+                     viewModel.DataQuery.expenseSelect = "Select * From Totals ";
+                     viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + incomeEntry[0].AccountName + "' and User_ID = '" + incomeEntry[0].User_ID + "')";
+                     ObservableCollection<Totals> incTotals = viewModel.DataQuery.ExecuteAQuery<Totals>();
+                     incTotals[0].Total += (float)incomeEntry[0].IncomeAmount;
+                     incTotals[0].Total -= float.Parse(viewModel.TransAmount);
+
+                     viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + incTotals[0].Total.ToString("0.00");
+                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + incomeEntry[0].AccountName + "' and User_ID = '" + incomeEntry[0].User_ID + "')";
+                     int count = viewModel.DataQuery.AlterDataQuery();
+
+                     viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Income] SET [IncomeAmount] = " + viewModel.TransAmount + ", [IncomeCategory_ID] = " +
+                        "(select ID from IncomeCategory where (user_id = " + viewModel.User_ID + " or user_id = 40) and CategoryName = '" + viewModel.Category + "'), [IncomeName] = '" + viewModel.TransName + "'";
+                     viewModel.DataQuery.expenseWhere = " Where ID = " + viewModel.ID;
+                  }
                   int result = viewModel.DataQuery.AlterDataQuery();
-                  
-                  viewModel.DataQuery.expenseSelect = "Select * From Totals ";
-                  viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" + viewModel.User_ID + "')";
-                  ObservableCollection<Totals> totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
+                  if (result == 1)
+                     DependencyService.Get<IToast>().Show(viewModel.AccountName + " was successfully updated.");
 
-                  viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + (totals[0].Total + float.Parse(viewModel.TransAmount)).ToString("0.00");
-                  viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" +
-                     viewModel.User_ID + "')";
-                  int count = viewModel.DataQuery.AlterDataQuery();
-
-                  viewModel.DataQuery.expenseSelect = "Select * From Totals ";
-                  viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + viewModel.IncomeAccount + "' and User_ID = '" + viewModel.User_ID + "')";
-                  totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
-
-                  viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + (totals[0].Total - float.Parse(viewModel.TransAmount)).ToString("0.00");
-                  viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + viewModel.IncomeAccount + "' and User_ID = '" +
-                     viewModel.User_ID + "')";
-                  count = viewModel.DataQuery.AlterDataQuery();
                }
-               
-
-               viewModel.IsBusy = false;
             }
-            else if (saveButton.Text == "Update")
+            else
             {
-
-               if (viewModel.AccountType == "Expense")
-               {
-                  viewModel.DataQuery.expenseSelect = "Select  ex.[ID], ex.[User_ID], acc1.AccountName, ex.[IncomeAmount], ex.[IncomeDate]"
-                     + " ,ec.CategoryName as IncomeCategory, ex.[Repeat], rp.RepeatPeriod, ex.[IncomeName] FROM[dbo].[Income] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
-                     + " inner join IncomeCategory ec on ex.IncomeCategory_ID = ec.ID"
-                     + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
-                  viewModel.DataQuery.expenseWhere = "Where account_id = (Select top (1) ID from Account where AccountName = '" + viewModel.IncomeAccount + "' and User_ID = '" + viewModel.User_ID + "')";
-                  ObservableCollection<IncomeEntry> incomeEntry = viewModel.DataQuery.ExecuteAQuery<IncomeEntry>();
-
-                  viewModel.DataQuery.expenseSelect = "Select * From Totals ";
-                  viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + incomeEntry[0].AccountName + "' and User_ID = '" + incomeEntry[0].User_ID + "')";
-                  ObservableCollection<Totals> incTotals = viewModel.DataQuery.ExecuteAQuery<Totals>();
-                  incTotals[0].Total += (float)incomeEntry[0].IncomeAmount;
-                  incTotals[0].Total -= float.Parse(viewModel.TransAmount);
-
-                  viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + incTotals[0].Total.ToString("0.00");
-                  viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + incomeEntry[0].AccountName + "' and User_ID = '" + incomeEntry[0].User_ID + "')";
-                  int count = viewModel.DataQuery.AlterDataQuery();
-
-                  viewModel.DataQuery.expenseSelect = "SELECT ex.[ID], ex.[User_ID], acc1.AccountName, ex.[ExpenseAmount], acc2.AccountName as IncomeAccountName, ex.[ExpenseDate]"
-                     + " ,ec.CategoryName as ExpenseCategory, ex.[Repeat], rp.RepeatPeriod, ex.expenseName FROM [dbo].[Expense] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
-                     + " inner join Account acc2 on ex.IncomeAccount_ID = acc2.ID inner join ExpenseCategory ec on ex.ExpenseCategory_ID = ec.ID"
-                     + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
-                  viewModel.DataQuery.expenseWhere = "Where ex.id = " + viewModel.ID;
-                  ObservableCollection<ExpenseEntry> entry = viewModel.DataQuery.ExecuteAQuery<ExpenseEntry>();
-
-                  viewModel.DataQuery.expenseSelect = "Select * From Totals ";
-                  viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + entry[0].AccountName + "' and User_ID = '" + entry[0].User_ID + "')";
-                  ObservableCollection<Totals> totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
-                  totals[0].Total -= (float)entry[0].ExpenseAmount;
-                  totals[0].Total += float.Parse(viewModel.TransAmount);
-
-                  viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + totals[0].Total.ToString("0.00");
-                  viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + entry[0].AccountName + "' and User_ID = '" + entry[0].User_ID + "')";
-                  count = viewModel.DataQuery.AlterDataQuery();
-
-                  viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Expense] SET [IncomeAccount_ID] = (select Account_ID from Account where user_id = " + viewModel.User_ID + 
-                     " and AccountName = '" + viewModel.IncomeAccount + "'), [ExpenseAmount] = '" + viewModel.TransAmount + "', [ExpenseCategory_ID] = " +
-                     "(select ID from ExpenseCategory where (user_id = " + viewModel.User_ID + " or user_id = 40) and CategoryName = '" + viewModel.Category + "'), [ExpenseName] = '" + viewModel.TransName + "'"; 
-                  viewModel.DataQuery.expenseWhere = " Where ID = " + viewModel.ID;
-               }
-               else if (viewModel.AccountType == "Income")
-               {
-                  viewModel.DataQuery.expenseSelect = "Select  ex.[ID], ex.[User_ID], acc1.AccountName, ex.[IncomeAmount], ex.[IncomeDate]"
-                     + " ,ec.CategoryName as IncomeCategory, ex.[Repeat], rp.RepeatPeriod, ex.[IncomeName] FROM[dbo].[Income] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
-                     + " inner join IncomeCategory ec on ex.IncomeCategory_ID = ec.ID"
-                     + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
-                  viewModel.DataQuery.expenseWhere = "Where id = (Select top (1) ID from Account where AccountName = '" + viewModel.IncomeAccount + "' and User_ID = '" + viewModel.User_ID + "')";
-                  ObservableCollection<IncomeEntry> incomeEntry = viewModel.DataQuery.ExecuteAQuery<IncomeEntry>();
-
-                  viewModel.DataQuery.expenseSelect = "Select * From Totals ";
-                  viewModel.DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + incomeEntry[0].AccountName + "' and User_ID = '" + incomeEntry[0].User_ID + "')";
-                  ObservableCollection<Totals> incTotals = viewModel.DataQuery.ExecuteAQuery<Totals>();
-                  incTotals[0].Total += (float)incomeEntry[0].IncomeAmount;
-                  incTotals[0].Total -= float.Parse(viewModel.TransAmount);
-
-                  viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + incTotals[0].Total.ToString("0.00");
-                  viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + incomeEntry[0].AccountName + "' and User_ID = '" + incomeEntry[0].User_ID + "')";
-                  int count = viewModel.DataQuery.AlterDataQuery();
-
-                  viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Income] SET [IncomeAmount] = " + viewModel.TransAmount + ", [IncomeCategory_ID] = " +
-                     "(select ID from IncomeCategory where (user_id = " + viewModel.User_ID + " or user_id = 40) and CategoryName = '" + viewModel.Category + "'), [IncomeName] = '" + viewModel.TransName + "'";
-                  viewModel.DataQuery.expenseWhere = " Where ID = " + viewModel.ID;
-               }
-               int result = viewModel.DataQuery.AlterDataQuery();
-               if (result == 1)
-                  DependencyService.Get<IToast>().Show(viewModel.AccountName + " was successfully updated.");
-
+               DependencyService.Get<IToast>().Show("No Internet Connection.");
             }
          }
          catch (Exception ex)

@@ -31,31 +31,43 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <Frame BorderColor="black" HasShadow="True" Margin="5,3,5,3" BackgroundColor="White">
-                                        <Grid >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1*"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackLayout Orientation="Horizontal" Grid.Row="0">
-                                                <Label Text="Account: " FontAttributes="Bold" TextColor="Black"/>
-                                                <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
-                                            </StackLayout>
-                                            <Label Text="{Binding ExpenseName}" Grid.Row="0" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
-                                            <Label Text="{Binding ExpenseDate}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
-                                            <StackLayout Orientation="Horizontal" Grid.Row="1">
-                                                <Label Text="Amount:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
-                                                <Label Grid.Row="1" Text="{Binding ExpenseAmount, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold"/>
-                                            </StackLayout>
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnExpenseTap" CommandParameter="{Binding .}"/>
-                                            </Grid.GestureRecognizers>
-                                        </Grid>
-                                    </Frame>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width=".3*"/>
+                                            <ColumnDefinition Width=".3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Frame Grid.ColumnSpan="{Binding DataContext.Span}" BorderColor="black" HasShadow="True" Margin="5,3,5,3" BackgroundColor="White">
+                                            <Grid >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width=".3*"/>
+                                                    <ColumnDefinition Width=".3*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackLayout Orientation="Horizontal" Grid.Row="0">
+                                                    <Label Text="Account: " FontAttributes="Bold" TextColor="Black"/>
+                                                    <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
+                                                </StackLayout>
+                                                <Label Text="{Binding ExpenseName}" Grid.Row="0" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
+                                                <Label Text="{Binding ExpenseDate}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
+                                                <StackLayout Orientation="Horizontal" Grid.Row="1">
+                                                    <Label Text="Amount:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
+                                                    <Label Grid.Row="1" Text="{Binding ExpenseAmount, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold"/>
+                                                </StackLayout>
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnExpenseTap" CommandParameter="{Binding .}"/>
+                                                    <SwipeGestureRecognizer CommandParameter="{Binding .}" Swiped="OnSwipeLeft" Direction="Left" />
+                                                    <SwipeGestureRecognizer CommandParameter="{Binding .}" Swiped="OnSwipeRight" Direction="Right"/>
+                                                </Grid.GestureRecognizers>
+                                            </Grid>
+                                        </Frame>
+                                        <Button Grid.Row="0" Grid.Column="1" Text="Edit" Clicked="OnEditClick" IsVisible="False"/>
+                                        <Button Grid.Row="0" Grid.Column="2" Text="Delete" Clicked="OnDeleteClick" IsVisible="False"/>
+                                    </Grid>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>

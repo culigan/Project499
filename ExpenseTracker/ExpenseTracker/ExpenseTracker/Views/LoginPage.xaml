@@ -32,7 +32,8 @@
                 HorizontalOptions="Center"
                 WidthRequest="250"
                 IsPassword="true"
-                Text="{Binding Password}"/>
+                Text="{Binding Password}"
+                Completed="OnLoginButtonClicked"/>
             <Grid Grid.Row="4" Margin="20,30,20,20">
                 <Button Grid.Column="0" Margin="20"
                     Clicked="OnLoginButtonClicked"

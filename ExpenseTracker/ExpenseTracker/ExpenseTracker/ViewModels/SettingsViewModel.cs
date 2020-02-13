@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace ExpenseTracker.ViewModels
 {
@@ -16,11 +17,18 @@ namespace ExpenseTracker.ViewModels
       { 
          get 
          {
-            DataQuery.expenseSelect = "SELECT * FROM [dbo].[ExpenseCategory]";
-            DataQuery.expenseWhere = "WHere User_ID = 40 or User_ID = " + Preferences.Get("ExpenseT_UserID", " -1");
-            
-            _Categories = DataQuery.ExecuteAQuery<Exp_Inc_Category>();
-            
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+               DataQuery.expenseSelect = "SELECT * FROM [dbo].[ExpenseCategory]";
+               DataQuery.expenseWhere = "WHere User_ID = 40 or User_ID = " + Preferences.Get("ExpenseT_UserID", " -1");
+
+               _Categories = DataQuery.ExecuteAQuery<Exp_Inc_Category>();
+            }
+            else
+            {
+               DependencyService.Get<IToast>().Show("No Internet Connection.");
+               _Categories = new ObservableCollection<Exp_Inc_Category>();
+            }
             return _Categories; 
          }
          set { _Categories = value; }
@@ -30,18 +38,25 @@ namespace ExpenseTracker.ViewModels
       {
          get
          {
-            DataQuery.expenseSelect = "SELECT * FROM [dbo].[IncomeCategory]";
-            DataQuery.expenseWhere = "WHere User_ID = 40 or User_ID = " + Preferences.Get("ExpenseT_UserID", " -1");
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+               DataQuery.expenseSelect = "SELECT * FROM [dbo].[IncomeCategory]";
+               DataQuery.expenseWhere = "WHere User_ID = 40 or User_ID = " + Preferences.Get("ExpenseT_UserID", " -1");
 
-            _Categories = DataQuery.ExecuteAQuery<Exp_Inc_Category>();
-
+               _Categories = DataQuery.ExecuteAQuery<Exp_Inc_Category>();
+            }
+            else
+            {
+               DependencyService.Get<IToast>().Show("No Internet Connection.");
+               _CategoriesI = new ObservableCollection<Exp_Inc_Category>();
+            }
             return _CategoriesI;
          }
          set { _CategoriesI = value; }
       }
 
 
-      public DateTime StartDate { 
+      public DateTime PickerStartDate { 
          get 
          { 
             var dat = DateTime.Now;
@@ -51,12 +66,12 @@ namespace ExpenseTracker.ViewModels
          set 
          {
             Preferences.Set("start_date", value); 
-            OnPropertyChanged(nameof(StartDate)); 
+            OnPropertyChanged(nameof(PickerStartDate)); 
          } 
       }
 
       private DateTime _EndDate;
-      public DateTime EndDate
+      public DateTime PickerEndDate
       {
          get
          {
@@ -66,7 +81,7 @@ namespace ExpenseTracker.ViewModels
          set
          {
             Preferences.Set("end_date", value);
-            OnPropertyChanged(nameof(EndDate));
+            OnPropertyChanged(nameof(PickerEndDate));
          }
       }
 

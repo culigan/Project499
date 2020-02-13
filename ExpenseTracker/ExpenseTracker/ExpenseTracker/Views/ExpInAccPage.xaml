@@ -63,8 +63,8 @@
                                                 </StackLayout>
                                                 <Grid.GestureRecognizers>
                                                     <TapGestureRecognizer Tapped="OnAccountTap" CommandParameter="{Binding .}"/>
-                                                    <!--SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
-                                                <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" CommandParameter="{Binding .}"/-->
+                                                    <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
+                                                    <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" CommandParameter="{Binding .}"/>
                                                 </Grid.GestureRecognizers>
                                             </Grid>
                                         </Frame>
