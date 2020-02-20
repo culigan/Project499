@@ -142,8 +142,7 @@ namespace ExpenseTracker
                      ObservableCollection<Totals> totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
 
                      viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + (totals[0].Total + float.Parse(viewModel.TransAmount)).ToString("0.00");
-                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" +
-                        viewModel.User_ID + "')";
+                     viewModel.DataQuery.expenseWhere = " Where ID = " + totals[0].ID;
                      int count = viewModel.DataQuery.AlterDataQuery();
                   }
                   else if (viewModel.AccountType == "Expense")
@@ -162,8 +161,7 @@ namespace ExpenseTracker
                      ObservableCollection<Totals> totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
 
                      viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + (totals[0].Total + float.Parse(viewModel.TransAmount)).ToString("0.00");
-                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + viewModel.AccountName + "' and User_ID = '" +
-                        viewModel.User_ID + "')";
+                     viewModel.DataQuery.expenseWhere = " Where ID = " + totals[0].ID;
                      int count = viewModel.DataQuery.AlterDataQuery();
 
                      viewModel.DataQuery.expenseSelect = "Select * From Totals ";
@@ -171,8 +169,7 @@ namespace ExpenseTracker
                      totals = viewModel.DataQuery.ExecuteAQuery<Totals>();
 
                      viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + (totals[0].Total - float.Parse(viewModel.TransAmount)).ToString("0.00");
-                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + viewModel.IncomeAccount + "' and User_ID = '" +
-                        viewModel.User_ID + "')";
+                     viewModel.DataQuery.expenseWhere = " Where ID = " + totals[0].ID;
                      count = viewModel.DataQuery.AlterDataQuery();
                   }
 
@@ -184,9 +181,9 @@ namespace ExpenseTracker
 
                   if (viewModel.AccountType == "Expense")
                   {
-                     viewModel.DataQuery.expenseSelect = "Select  ex.[ID], ex.[User_ID], acc1.AccountName, ex.[IncomeAmount], ex.[IncomeDate]"
-                        + " ,ec.CategoryName as IncomeCategory, ex.[Repeat], rp.RepeatPeriod, ex.[IncomeName] FROM[dbo].[Income] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
-                        + " inner join IncomeCategory ec on ex.IncomeCategory_ID = ec.ID"
+                     viewModel.DataQuery.expenseSelect = "Select  inc.[ID], inc.[User_ID], acc1.AccountName, inc.[IncomeAmount], inc.[IncomeDate]"
+                        + " ,ec.CategoryName as IncomeCategory, inc.[Repeat], rp.RepeatPeriod, inc.[IncomeName] FROM[dbo].[Income] inc inner join Account acc1 on inc.Account_ID = acc1.ID"
+                        + " inner join IncomeCategory ec on inc.IncomeCategory_ID = ec.ID"
                         + " inner join RepeatPeriod rp on ex.RepeatPeriod_ID = rp.ID";
                      viewModel.DataQuery.expenseWhere = "Where account_id = (Select top (1) ID from Account where AccountName = '" + viewModel.IncomeAccount + "' and User_ID = '" + viewModel.User_ID + "')";
                      ObservableCollection<IncomeEntry> incomeEntry = viewModel.DataQuery.ExecuteAQuery<IncomeEntry>();
@@ -205,7 +202,7 @@ namespace ExpenseTracker
                      incTotals[0].Total += float.Parse(viewModel.TransAmount);
 
                      viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + incTotals[0].Total.ToString("0.00");
-                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + incomeEntry[0].AccountName + "' and User_ID = '" + incomeEntry[0].User_ID + "')";
+                     viewModel.DataQuery.expenseWhere = " Where ID = " + incTotals[0].ID;
                      int count = viewModel.DataQuery.AlterDataQuery();
                      
 
@@ -216,7 +213,7 @@ namespace ExpenseTracker
                      totals[0].Total += float.Parse(viewModel.TransAmount);
 
                      viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + totals[0].Total.ToString("0.00");
-                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + entry[0].AccountName + "' and User_ID = '" + entry[0].User_ID + "')";
+                     viewModel.DataQuery.expenseWhere = " Where ID = " + totals[0].ID;
                      count = viewModel.DataQuery.AlterDataQuery();
 
                      viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Expense] SET [IncomeAccount_ID] = (select Account_ID from Account where user_id = " + viewModel.User_ID +
@@ -240,7 +237,7 @@ namespace ExpenseTracker
                      incTotals[0].Total -= float.Parse(viewModel.TransAmount);
 
                      viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + incTotals[0].Total.ToString("0.00");
-                     viewModel.DataQuery.expenseWhere = " Where Account_ID = (Select Top (1) ID from Account where AccountName = '" + incomeEntry[0].AccountName + "' and User_ID = '" + incomeEntry[0].User_ID + "')";
+                     viewModel.DataQuery.expenseWhere = " Where ID = " + incTotals[0].ID;
                      int count = viewModel.DataQuery.AlterDataQuery();
 
                      viewModel.DataQuery.expenseSelect = "UPDATE [dbo].[Income] SET [IncomeAmount] = " + viewModel.TransAmount + ", [IncomeCategory_ID] = " +

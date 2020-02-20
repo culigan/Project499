@@ -16,7 +16,7 @@ namespace ExpenseTracker.Views
    public partial class IncomeEntriesPage : ContentPage
    {
       bool focusFlag = false;
-      double balance = 0.0;
+      Model.DataQuery_Mod DataQuery;
       ViewModels.IncomeEntriesViewModel viewModel;
       
       public IncomeEntriesPage(int accountID)
@@ -24,6 +24,7 @@ namespace ExpenseTracker.Views
          InitializeComponent();
          BindingContext = viewModel = new ViewModels.IncomeEntriesViewModel(accountID);
          
+         DataQuery = new Model.DataQuery_Mod();
          this.ToolbarItems.Add(new ToolbarItem()
          {
             IconImageSource = "hamburger.png",
@@ -61,6 +62,40 @@ namespace ExpenseTracker.Views
          else
             viewModel.MenuVisible = true;
       }
+      public void OnSwipeLeft(object sender, SwipedEventArgs e)
+      {
+         var frame = ((sender as Grid).Parent as Frame);
+         var grid = sender as Grid;
+         /*var stack1 = grid.Children[1];
+         stack1.IsVisible = false;
+         stack1 = grid.Children[2];
+         stack1.IsVisible = false;*/
+         Grid.SetColumnSpan(frame, 1);
+
+
+         var button = ((sender as Grid).Parent.Parent as Grid).Children[1];
+         var button1 = ((sender as Grid).Parent.Parent as Grid).Children[2];
+         button.IsVisible = true;
+         button1.IsVisible = true;
+
+
+      }
+
+      public void OnSwipeRight(object sender, SwipedEventArgs e)
+      {
+         var frame = ((sender as Grid).Parent as Frame);
+         var grid = sender as Grid;
+         /*var stack1 = grid.Children[1];
+         stack1.IsVisible = true;
+         stack1 = grid.Children[2];
+         stack1.IsVisible = true;*/
+         Grid.SetColumnSpan(frame, 3);
+
+         var button = ((sender as Grid).Parent.Parent as Grid).Children[1];
+         var button1 = ((sender as Grid).Parent.Parent as Grid).Children[2];
+         button.IsVisible = false;
+         button1.IsVisible = false;
+      }
 
       async public void OnAddClick(object sender, EventArgs e)
       {
@@ -79,6 +114,64 @@ namespace ExpenseTracker.Views
 
       }
 
+      async public void OnDeleteClick(object sender, EventArgs e)
+      {
+         try
+         {
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+               bool choice = await DisplayAlert("ALERT", "Are you sure you want to delete?", "Delete", "Cancel");
+               if (choice)
+               {
+                  var deleteID = (IncomeEntry)((sender as Button).CommandParameter);
+
+                  DataQuery.expenseSelect = "Select * From Totals ";
+                  DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + deleteID.AccountName + "' and User_ID = '" + int.Parse(Preferences.Get("ExpenseT_UserID", "")) + "')";
+                  ObservableCollection<Totals> totals = DataQuery.ExecuteAQuery<Totals>();
+                  totals[0].Total += (float)deleteID.IncomeAmount;
+
+                  DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + totals[0].Total.ToString("0.00");
+                  DataQuery.expenseWhere = " Where ID = " + totals[0].ID;
+                  int count = DataQuery.AlterDataQuery();                 
+
+                  DataQuery.expenseSelect = "Delete From income ";
+                  DataQuery.expenseWhere = "where id = " + deleteID.ID;
+                  int results = DataQuery.AlterDataQuery();
+
+
+                  focusFlag = true;
+               }
+            }
+            else
+            {
+               DependencyService.Get<IToast>().Show("No Internet Connection.");
+            }
+         }
+         catch (Exception ex)
+         {
+            DependencyService.Get<IToast>().Show(ex.Message);
+         }
+      }
+
+      public void OnEditClick(object sender, EventArgs e)
+      {
+         try
+         {
+            IncomeEntry deleteID = null;
+            if (sender is MenuItem)
+               deleteID = (IncomeEntry)((sender as Button).CommandParameter);
+            else if (sender is Button)
+               deleteID = (IncomeEntry)((sender as Button).CommandParameter);
+            Navigation.PushAsync(new AddItem(null, deleteID) { Title = "Edit " + deleteID.AccountName + " Account" });
+            focusFlag = true;
+         }
+         catch (Exception ex)
+         {
+            DependencyService.Get<IToast>().Show(ex.Message);
+         }
+      }
+
+
       async public void OnSettings(object sender, EventArgs e)
       {
          viewModel.MenuVisible = false;
@@ -93,5 +186,9 @@ namespace ExpenseTracker.Views
          NavigationPage.SetHasBackButton(accountsPage, true);
          App.Current.MainPage = accountsPage;
       }
+
+      
+
+
    }
 }

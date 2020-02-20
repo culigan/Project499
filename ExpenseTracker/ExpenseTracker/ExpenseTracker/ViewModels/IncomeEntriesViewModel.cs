@@ -25,17 +25,17 @@ namespace ExpenseTracker.ViewModels
                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                {
                   var dat = DateTime.Now;
-                  dat = dat.AddMonths(-1);
+                  var datstart = dat.AddMonths(-1);
                   string startDateString = "";
                   string endDateString = "";
-                  if (Preferences.Get("start_date", dat) == dat)
-                     startDateString = dat.ToString();
+                  if (Preferences.Get("start_date", datstart).ToString("d") == datstart.ToString("d"))
+                     startDateString = datstart.ToString("d") + " 12:00:00 AM";
                   else
-                     startDateString = Preferences.Get("start_date", dat).ToString();
-                  if (Preferences.Get("end_date", DateTime.Now) == DateTime.Now)
-                     endDateString = DateTime.Now.ToString();
+                     startDateString = Preferences.Get("start_date", dat).ToString("d") + " 12:00:00 AM";
+                  if (Preferences.Get("end_date", DateTime.Now).ToString("d") == DateTime.Now.ToString("d"))
+                     endDateString = DateTime.Now.ToString("d") + " 11:59:59 PM";
                   else
-                     endDateString = Preferences.Get("end_date", DateTime.Now).ToString();
+                     endDateString = Preferences.Get("end_date", DateTime.Now).ToString("d") + " 11:59:59 PM";
 
                   DataQuery.expenseSelect = "SELECT ex.[ID], ex.[User_ID], acc1.AccountName, ex.[IncomeAmount], ex.[IncomeDate]"
                         + " ,ec.CategoryName as IncomeCategory, ex.[Repeat], rp.RepeatPeriod, ex.[IncomeName] FROM [dbo].[Income] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
@@ -63,7 +63,7 @@ namespace ExpenseTracker.ViewModels
          }
          set { _ItemListE = value; OnPropertyChanged(nameof(ItemListE)); }
       }
-      string accountType;
+      
       int accountID = 0;
       private bool _MenuVisible = false;
       public bool MenuVisible

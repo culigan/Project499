@@ -66,18 +66,33 @@ namespace ExpenseTracker.Views
       public void OnSwipeLeft(object sender, SwipedEventArgs e)
       {
          var frame = ((sender as Grid).Parent as Frame);
-         viewModel.Span = 1;
+         var grid = sender as Grid;
+         /*var stack1 = grid.Children[1];
+         stack1.IsVisible = false;
+         stack1 = grid.Children[2];
+         stack1.IsVisible = false;*/
+         Grid.SetColumnSpan(frame, 1);
+         
+
          var button = ((sender as Grid).Parent.Parent as Grid).Children[1];
          var button1 = ((sender as Grid).Parent.Parent as Grid).Children[2];
          button.IsVisible = true;
          button1.IsVisible = true;
-
+         
          
       }
       public void OnSwipeRight(object sender, SwipedEventArgs e)
       {
-         var button = (sender as Grid).Children[4];
-         var button1 = (sender as Grid).Children[5];
+         var frame = ((sender as Grid).Parent as Frame);
+         var grid = sender as Grid;
+         /*var stack1 = grid.Children[1];
+         stack1.IsVisible = true;
+         stack1 = grid.Children[2];
+         stack1.IsVisible = true;*/
+         Grid.SetColumnSpan(frame, 3);
+
+         var button = ((sender as Grid).Parent.Parent as Grid).Children[1];
+         var button1 = ((sender as Grid).Parent.Parent as Grid).Children[2];
          button.IsVisible = false;
          button1.IsVisible = false;
       }
@@ -108,37 +123,33 @@ namespace ExpenseTracker.Views
          {
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-               bool choice = await DisplayAlert("ALERT", "This will delete all entries for this account. Are you sure you want to delete?", "Delete", "Cancel");
+               bool choice = await DisplayAlert("ALERT", "Are you sure you want to delete?", "Delete", "Cancel");
                if (choice)
                {
-                  var deleteID = (Account)((sender as MenuItem).CommandParameter);
-                  if (deleteID.AccountType_ID == 1)
-                  {
-                     DataQuery.expenseSelect = "Delete From Expense";
-                     DataQuery.expenseWhere = "where incomeaccount_id = " + deleteID.ID;
-                     int results = DataQuery.AlterDataQuery();
-                     DataQuery.expenseSelect = "Delete From Income";
-                     DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
-                     results = DataQuery.AlterDataQuery();
-                     DataQuery.expenseSelect = "Delete From totals";
-                     DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
-                     results = DataQuery.AlterDataQuery();
-                     DataQuery.expenseSelect = "Delete From Account";
-                     DataQuery.expenseWhere = "where id = " + deleteID.ID;
-                     results = DataQuery.AlterDataQuery();
-                  }
-                  else if (deleteID.AccountType_ID == 2)
-                  {
-                     DataQuery.expenseSelect = "Delete From Expense";
-                     DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
-                     int results = DataQuery.AlterDataQuery();
-                     DataQuery.expenseSelect = "Delete From totals";
-                     DataQuery.expenseWhere = "where account_id = " + deleteID.ID;
-                     results = DataQuery.AlterDataQuery();
-                     DataQuery.expenseSelect = "Delete From Account";
-                     DataQuery.expenseWhere = "where id = " + deleteID.ID;
-                     results = DataQuery.AlterDataQuery();
-                  }
+                  var deleteID = (ExpenseEntry)((sender as Button).CommandParameter);
+
+                  DataQuery.expenseSelect = "Select * From Totals ";
+                  DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + deleteID.AccountName + "' and User_ID = '" + int.Parse(Preferences.Get("ExpenseT_UserID", "")) + "')";
+                  ObservableCollection<Totals> totals = DataQuery.ExecuteAQuery<Totals>();
+                  totals[0].Total -= (float)deleteID.ExpenseAmount;
+
+                  DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + totals[0].Total.ToString("0.00");
+                  DataQuery.expenseWhere = " Where ID = " + totals[0].ID;
+                  int count = DataQuery.AlterDataQuery();
+
+                  DataQuery.expenseSelect = "Select * From Totals ";
+                  DataQuery.expenseWhere = "Where Account_id = (Select top (1) ID from Account where AccountName = '" + deleteID.IncomeAccountName + "' and User_ID = '" + int.Parse(Preferences.Get("ExpenseT_UserID", "")) + "')";
+                  totals = DataQuery.ExecuteAQuery<Totals>();
+                  totals[0].Total -= (float)deleteID.ExpenseAmount;
+
+                  DataQuery.expenseSelect = "UPDATE [dbo].[Totals] SET [Total] = " + totals[0].Total.ToString("0.00");
+                  DataQuery.expenseWhere = " Where ID = " + totals[0].ID;
+                  count = DataQuery.AlterDataQuery();
+
+                  DataQuery.expenseSelect = "Delete From Expense";
+                  DataQuery.expenseWhere = "where id = " + deleteID.ID;
+                  int results = DataQuery.AlterDataQuery();
+                                         
 
                   focusFlag = true;
                }
@@ -158,13 +169,12 @@ namespace ExpenseTracker.Views
       {
          try
          {
-
-            Account deleteID = null;
+            ExpenseEntry deleteID = null;
             if (sender is MenuItem)
-               deleteID = (Account)((sender as MenuItem).CommandParameter);
+               deleteID = (ExpenseEntry)((sender as Button).CommandParameter);
             else if (sender is Button)
-               deleteID = (Account)((sender as Button).CommandParameter);
-            Navigation.PushAsync(new AddAccount(deleteID.ID) { Title = "Edit " + deleteID.AccountName + " Account" });
+               deleteID = (ExpenseEntry)((sender as Button).CommandParameter);
+            Navigation.PushAsync(new AddItem(deleteID, null) { Title = "Edit " + deleteID.AccountName + " Account" });
             focusFlag = true;
          }
          catch (Exception ex)

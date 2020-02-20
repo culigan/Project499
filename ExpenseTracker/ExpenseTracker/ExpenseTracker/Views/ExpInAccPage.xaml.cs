@@ -170,6 +170,8 @@ namespace ExpenseTracker.Views
                      results = DataQuery.AlterDataQuery();
                      DataQuery.expenseSelect = "Delete From Account";
                      DataQuery.expenseWhere = "where id = " + deleteID.ID;
+                     results = DataQuery.AlterDataQuery(); DataQuery.expenseSelect = "Delete From Account";
+                     DataQuery.expenseWhere = "where id = " + deleteID.ID;
                      results = DataQuery.AlterDataQuery();
                   }
                   else if (deleteID.AccountType_ID == 2)
@@ -221,25 +223,37 @@ namespace ExpenseTracker.Views
 
       public void OnSwipeLeft(object sender, SwipedEventArgs e)
       {
-         var grid = (sender as Grid).Children[0] as StackLayout;
-         grid.Children[1].IsVisible = false;
+         var frame = ((sender as Grid).Parent as Frame);
+         var grid = sender as Grid;
+         /*var stack1 = grid.Children[1];
+         stack1.IsVisible = false;
+         stack1 = grid.Children[2];
+         stack1.IsVisible = false;*/
+         Grid.SetColumnSpan(frame, 1);
 
-         var slide = grid.Parent.Parent as StackLayout;
-         var button1 = slide.Children[1] as Button;
+
+         var button = ((sender as Grid).Parent.Parent as Grid).Children[1];
+         var button1 = ((sender as Grid).Parent.Parent as Grid).Children[2];
+         button.IsVisible = true;
          button1.IsVisible = true;
-         var button2 = slide.Children[2] as Button;
-         button2.IsVisible = true;
+
+
       }
+
       public void OnSwipeRight(object sender, SwipedEventArgs e)
       {
+         var frame = ((sender as Grid).Parent as Frame);
          var grid = sender as Grid;
-         grid.Children[1].IsVisible = true;
+         /*var stack1 = grid.Children[1];
+         stack1.IsVisible = true;
+         stack1 = grid.Children[2];
+         stack1.IsVisible = true;*/
+         Grid.SetColumnSpan(frame, 3);
 
-         var slide = grid.Parent.Parent as Grid;
-         var button1 = slide.Children[1] as Button;
+         var button = ((sender as Grid).Parent.Parent as Grid).Children[1];
+         var button1 = ((sender as Grid).Parent.Parent as Grid).Children[2];
+         button.IsVisible = false;
          button1.IsVisible = false;
-         var button2 = slide.Children[2] as Button;
-         button2.IsVisible = false;
       }
    }
 }

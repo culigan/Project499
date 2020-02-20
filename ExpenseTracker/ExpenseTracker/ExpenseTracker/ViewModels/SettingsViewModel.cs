@@ -60,17 +60,20 @@ namespace ExpenseTracker.ViewModels
          get 
          { 
             var dat = DateTime.Now;
-            dat = dat.AddMonths(-1);
+            dat = dat.AddMonths(-1);            
             return Preferences.Get("start_date", dat); 
          } 
          set 
          {
-            Preferences.Set("start_date", value); 
+            if (value.ToString("d") == DateTime.Now.ToString("d"))
+               Preferences.Remove("start_date");
+            else
+               Preferences.Set("start_date", value); 
             OnPropertyChanged(nameof(PickerStartDate)); 
          } 
       }
 
-      private DateTime _EndDate;
+      
       public DateTime PickerEndDate
       {
          get
@@ -80,12 +83,16 @@ namespace ExpenseTracker.ViewModels
          }
          set
          {
-            Preferences.Set("end_date", value);
+            if (value.ToString("d") == DateTime.Now.ToString("d"))
+               Preferences.Remove("end_date");
+            else
+               Preferences.Set("end_date", value);
             OnPropertyChanged(nameof(PickerEndDate));
          }
       }
 
-public int NumberTrans { get { return Preferences.Get("trans_num", 1000); } set { Preferences.Set("trans_num", value); OnPropertyChanged(nameof(NumberTrans)); } }
+      
+      public int NumberTrans { get { return Preferences.Get("trans_num", 1000); } set { Preferences.Set("trans_num", value); OnPropertyChanged(nameof(NumberTrans)); } }
 
       
       public SettingsViewModel()

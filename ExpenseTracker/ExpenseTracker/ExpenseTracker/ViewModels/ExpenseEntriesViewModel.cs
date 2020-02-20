@@ -26,17 +26,18 @@ namespace ExpenseTracker.ViewModels
                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                {
                   var dat = DateTime.Now;
-                  dat = dat.AddMonths(-1);
+                  var datstart = dat.AddMonths(-1);
                   string startDateString = "";
                   string endDateString = "";
-                  if (Preferences.Get("start_date", dat) == dat)
-                     startDateString = dat.ToString();
+                  if (Preferences.Get("start_date", datstart).ToString("d") == datstart.ToString("d"))
+                     startDateString = datstart.ToString("d") + " 12:00:00 AM";
                   else
-                     startDateString = Preferences.Get("start_date", dat).ToString();
-                  if (Preferences.Get("end_date", DateTime.Now) == DateTime.Now)
-                     endDateString = DateTime.Now.ToString();
+                     startDateString = Preferences.Get("start_date", dat).ToString("d") + " 12:00:00 AM";
+                  if (Preferences.Get("end_date", DateTime.Now).ToString("d") == DateTime.Now.ToString("d"))
+                     endDateString = DateTime.Now.ToString("d") + " 11:59:59 PM";
                   else
-                     endDateString = Preferences.Get("end_date", DateTime.Now).ToString();
+                     endDateString = Preferences.Get("end_date", DateTime.Now).ToString("d") + " 11:59:59 PM";
+
                   DataQuery.expenseSelect = "SELECT ex.[ID], ex.[User_ID], acc1.AccountName, ex.[ExpenseAmount], acc2.AccountName as IncomeAccountName, ex.[ExpenseDate]"
                         + " ,ec.CategoryName as ExpenseCategory, ex.[Repeat], rp.RepeatPeriod, ex.expenseName FROM [dbo].[Expense] ex inner join Account acc1 on ex.Account_ID = acc1.ID"
                         + " inner join Account acc2 on ex.IncomeAccount_ID = acc2.ID inner join ExpenseCategory ec on ex.ExpenseCategory_ID = ec.ID"
@@ -77,6 +78,19 @@ namespace ExpenseTracker.ViewModels
          set
          {
             _MenuVisible = value; OnPropertyChanged(nameof(MenuVisible));
+         }
+      }
+
+      private bool _NameDate = true;
+      public bool NameDate
+      {
+         get
+         {
+            return _NameDate;
+         }
+         set
+         {
+            _NameDate = value; OnPropertyChanged(nameof(NameDate));
          }
       }
 

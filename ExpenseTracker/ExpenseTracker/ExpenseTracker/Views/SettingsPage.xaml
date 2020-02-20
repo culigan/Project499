@@ -11,7 +11,7 @@
             <Label Text="Transaction Start Date" />
             <DatePicker Date="{ Binding PickerStartDate}" HorizontalOptions="Start"/>
             <Label Text="Transaction End Date" />
-            <DatePicker Date="{ Binding PickerEndDate}" HorizontalOptions="Start" />            
+            <DatePicker Date="{ Binding PickerEndDate}" HorizontalOptions="Start" />
             <Label Text="Number of Transactions Displayed"/>
             <Entry Placeholder="100" Text="{Binding NumberTrans, Mode=TwoWay}" Keyboard="Numeric"/>
             <Button Text="Save Settings" Clicked="OnSave"/>

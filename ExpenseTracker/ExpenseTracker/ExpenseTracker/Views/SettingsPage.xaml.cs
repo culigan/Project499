@@ -24,7 +24,13 @@ namespace ExpenseTracker.Views
       private void OnSave(object sender, EventArgs e)
       {
          Preferences.Set("start_date", viewModel.PickerStartDate);
-         Preferences.Set("end_date", viewModel.PickerEndDate);
+         if (viewModel.PickerEndDate != DateTime.Now)
+            Preferences.Set("end_date", viewModel.PickerEndDate);
+         else
+         {
+            Preferences.Remove("end_date");
+            
+         }
          Navigation.PopAsync();
       }
 
