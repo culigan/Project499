@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="ExpenseTracker.Views.IncomeEntriesPage"
+             x:Name="income"
              NavigationPage.HasNavigationBar="True" NavigationPage.BackButtonTitle="Accounts" NavigationPage.HasBackButton="True"          
               >
     <ContentPage.Content>
@@ -33,35 +34,29 @@
                                     <Grid VerticalOptions="FillAndExpand">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width=".15*"/>
-                                            <ColumnDefinition Width=".15*"/>
+                                            <ColumnDefinition Width=".25*"/>
+                                            <ColumnDefinition Width=".25*"/>
                                         </Grid.ColumnDefinitions>
                                         <Frame Grid.Column="0" Grid.ColumnSpan="3" BorderColor="black" HasShadow="True" Margin="10,3,10,3"
-                                           BackgroundColor="White" Padding="0">
+                                           BackgroundColor="White" Padding="0,5,0,5">
                                             <Grid Padding="0">
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height=".5*"/>
+                                                    <RowDefinition Height=".5*"/>
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width=".45*"/>
-                                                    <ColumnDefinition Width=".05*"/>
-                                                    <ColumnDefinition Width=".45*"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width=".20*"/>
+                                                    <ColumnDefinition Width=".35*"/>
+                                                    <ColumnDefinition Width=".10*"/>
+                                                    <ColumnDefinition Width=".25*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <StackLayout Orientation="Horizontal" Grid.Row="0" Padding="5,10,0,0">
-                                                    <Label Text="Account: " FontAttributes="Bold" TextColor="Black"/>
-                                                    <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
-                                                </StackLayout>
-                                                <StackLayout Grid.Row="0" Grid.Column="2" Padding="5,10,0,0">
-                                                    <Label Text="{Binding IncomeName}" FontAttributes="Bold" TextColor="Black"/>
-                                                </StackLayout>
-                                                <StackLayout Grid.Row="1" Grid.Column="2" Padding="5,0,0,10">
-                                                    <Label Text="{Binding IncomeDate}" FontAttributes="Bold" TextColor="Black"/>
-                                                </StackLayout>
-                                                <StackLayout Orientation="Horizontal" Grid.Row="1" Padding="5,0,0,10">
-                                                    <Label Text="Amount:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
-                                                    <Label Grid.Row="1" Text="{Binding IncomeAmount, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold"/>
-                                                </StackLayout>
+                                            <Label FontSize="{Binding Source={x:Reference income}, Path=BindingContext.ChangeFont}" Grid.Row="0" Grid.Column="1" LineBreakMode="NoWrap" Text="Account: " FontAttributes="Bold" TextColor="Black"/>
+                                            <Label FontSize="{Binding Source={x:Reference income}, Path=BindingContext.ChangeFont}" Grid.Row="0" Grid.Column="2" LineBreakMode="NoWrap" Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black"/>
+                                            <Label FontSize="{Binding Source={x:Reference income}, Path=BindingContext.ChangeFont}" Grid.Row="0" Grid.Column="4" LineBreakMode="NoWrap" Text="{Binding IncomeName}" FontAttributes="Bold" TextColor="Black"/>
+                                            <Label FontSize="{Binding Source={x:Reference income}, Path=BindingContext.ChangeFont}" Grid.Row="1" Grid.Column="4" LineBreakMode="NoWrap" Text="{Binding IncomeDate}" FontAttributes="Bold" TextColor="Black"/>
+                                            <Label FontSize="{Binding Source={x:Reference income}, Path=BindingContext.ChangeFont}" Grid.Row="1" Grid.Column="1" LineBreakMode="NoWrap" Text="Amount:" FontAttributes="Bold" TextColor="Black"/>
+                                            <Label FontSize="{Binding Source={x:Reference income}, Path=BindingContext.ChangeFont}" Grid.Row="1" Grid.Column="2" LineBreakMode="NoWrap" Text="{Binding IncomeAmount, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold"/>
                                                 <Grid.GestureRecognizers>
                                                     <TapGestureRecognizer Tapped="OnIncomeTap" CommandParameter="{Binding .}"/>
                                                     <SwipeGestureRecognizer CommandParameter="{Binding .}" Swiped="OnSwipeLeft" Direction="Left" />
@@ -69,9 +64,11 @@
                                                 </Grid.GestureRecognizers>
                                             </Grid>
                                         </Frame>
-                                        <Button Grid.Row="0" Grid.Column="1" Text="Edit" Clicked="OnEditClick" IsVisible="False" CommandParameter="{Binding .}" BackgroundColor="Lime"/>
-                                        <Button Grid.Row="0" Grid.Column="2" Text="Delete" Clicked="OnDeleteClick" IsVisible="False" CommandParameter="{Binding .}" BackgroundColor="Red"/>
-                                    </Grid>
+                                    <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,3,10,3" IsVisible="False" HorizontalOptions="FillAndExpand">
+                                        <Button FontSize="{Binding Source={x:Reference income}, Path=BindingContext.ChangeFont}" Text="Edit" Clicked="OnEditClick" CommandParameter="{Binding .}" BackgroundColor="Lime" HorizontalOptions="FillAndExpand"/>
+                                        <Button FontSize="{Binding Source={x:Reference income}, Path=BindingContext.ChangeFont}" Text="Delete" Clicked="OnDeleteClick" CommandParameter="{Binding .}" BackgroundColor="Red" HorizontalOptions="FillAndExpand"/>
+                                    </StackLayout>
+                                </Grid>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>

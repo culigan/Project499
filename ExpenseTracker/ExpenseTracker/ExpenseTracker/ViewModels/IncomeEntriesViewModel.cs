@@ -14,7 +14,13 @@ namespace ExpenseTracker.ViewModels
    public class IncomeEntriesViewModel : INotifyPropertyChanged
    {
       Model.DataQuery_Mod DataQuery;
-      
+
+      private double _ChangeFont = 12;
+      public double ChangeFont
+      {
+         get { return _ChangeFont; }
+         set { _ChangeFont = value; OnPropertyChanged(nameof(ChangeFont)); }
+      }
       private ObservableCollection<IncomeEntry> _ItemListE;
       public ObservableCollection<IncomeEntry> ItemListE
       {

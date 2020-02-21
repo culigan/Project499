@@ -45,7 +45,7 @@
                     IsSpellCheckEnabled="false" 
                     HorizontalOptions="Center"
                     WidthRequest="250"
-                    Text="{Binding AccountName, Mode=TwoWay}"
+                    Text="{Binding AccountName, Mode=TwoWay}"                    
                     />
                 <Label Grid.Row="5"
                     Margin="20,20,20,0"

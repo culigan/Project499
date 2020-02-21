@@ -23,7 +23,9 @@ namespace ExpenseTracker.Views
       {
          InitializeComponent();
          BindingContext = viewModel = new ViewModels.IncomeEntriesViewModel(accountID);
-         
+         if (Device.RuntimePlatform == Device.UWP || DeviceDisplay.MainDisplayInfo.Density <= 2)
+            viewModel.ChangeFont = 20.0;
+
          DataQuery = new Model.DataQuery_Mod();
          this.ToolbarItems.Add(new ToolbarItem()
          {
@@ -45,14 +47,14 @@ namespace ExpenseTracker.Views
             List<IncomeEntry> tempList = viewModel.ItemListE.ToList();
             viewModel.ItemListE = null;
             viewModel.ItemListE = new ObservableCollection<IncomeEntry>(tempList);
-
-            var amount = 0.0;
-            foreach(IncomeEntry inc in listView.ItemsSource)
-            {
-               amount += inc.IncomeAmount;
-            }
-            this.Title = this.Title.Remove(this.Title.IndexOf("$") + 1) + amount.ToString("0.00");
          }
+         var amount = 0.0;
+         foreach (IncomeEntry inc in listView.ItemsSource)
+         {
+            amount += inc.IncomeAmount;
+         }
+         this.Title = this.Title.Remove(this.Title.IndexOf("$") + 1) + amount.ToString("0.00");
+
       }
 
       public void DisplayMenu()
@@ -64,44 +66,62 @@ namespace ExpenseTracker.Views
       }
       public void OnSwipeLeft(object sender, SwipedEventArgs e)
       {
+         var stack = (((sender as Grid).Parent.Parent as Grid).Children[1] as StackLayout);
+         stack.IsVisible = true;
+
          var frame = ((sender as Grid).Parent as Frame);
          var grid = sender as Grid;
-         /*var stack1 = grid.Children[1];
-         stack1.IsVisible = false;
-         stack1 = grid.Children[2];
-         stack1.IsVisible = false;*/
-         Grid.SetColumnSpan(frame, 1);
-
-
-         var button = ((sender as Grid).Parent.Parent as Grid).Children[1];
-         var button1 = ((sender as Grid).Parent.Parent as Grid).Children[2];
-         button.IsVisible = true;
-         button1.IsVisible = true;
+         if (Device.RuntimePlatform == Device.UWP || DeviceDisplay.MainDisplayInfo.Density <= 2)
+         {
+            Grid.SetColumnSpan(frame, 4);
+            Grid.SetColumnSpan(stack, 1);
+            Grid.SetColumn(stack, 4);
+         }
+         else
+         {
+            grid.ColumnDefinitions[1].Width = new GridLength(.4, GridUnitType.Star);
+            grid.ColumnDefinitions[2].Width = new GridLength(.5, GridUnitType.Star);
+            grid.ColumnDefinitions[3].Width = new GridLength(0, GridUnitType.Absolute);
+            grid.ColumnDefinitions[4].Width = new GridLength(0, GridUnitType.Absolute);
+            Grid.SetColumnSpan(frame, 1);
+            var label = grid.Children[2];
+            label.IsVisible = false;
+         }
 
 
       }
 
       public void OnSwipeRight(object sender, SwipedEventArgs e)
       {
+         var stack = (((sender as Grid).Parent.Parent as Grid).Children[1] as StackLayout);
+         stack.IsVisible = false;
+
+         var displayInfo = DeviceDisplay.MainDisplayInfo;
          var frame = ((sender as Grid).Parent as Frame);
          var grid = sender as Grid;
-         /*var stack1 = grid.Children[1];
-         stack1.IsVisible = true;
-         stack1 = grid.Children[2];
-         stack1.IsVisible = true;*/
-         Grid.SetColumnSpan(frame, 3);
+         if (Device.RuntimePlatform != Device.UWP)
+         {
+            grid.ColumnDefinitions[1].Width = new GridLength(.20, GridUnitType.Star);
+            grid.ColumnDefinitions[2].Width = new GridLength(.35, GridUnitType.Star);
+            grid.ColumnDefinitions[3].Width = new GridLength(.1, GridUnitType.Star);
+            grid.ColumnDefinitions[4].Width = new GridLength(.25, GridUnitType.Star);
+         }
+         var label = grid.Children[2];
+         label.IsVisible = true;
 
-         var button = ((sender as Grid).Parent.Parent as Grid).Children[1];
-         var button1 = ((sender as Grid).Parent.Parent as Grid).Children[2];
-         button.IsVisible = false;
-         button1.IsVisible = false;
+         Grid.SetColumnSpan(frame, 3);
+         if (Device.RuntimePlatform == Device.UWP || DeviceDisplay.MainDisplayInfo.Density <= 2)
+         {
+            Grid.SetColumnSpan(stack, 2);
+            Grid.SetColumn(stack, 1);
+         }
       }
 
       async public void OnAddClick(object sender, EventArgs e)
       {
             var parent = this.Parent as NavigationPage;
          focusFlag = true;
-            await parent.PushAsync(new AddItem("Income", this.Title.Remove(this.Title.IndexOf("$") - 1)) { Title = "Add Income" });
+            await parent.PushAsync(new AddItem("Income", this.Title.Remove(this.Title.IndexOf("$") - 1)) { Title = "Add Income Transaction" });
         }
 
       async public void OnIncomeTap(object sender, EventArgs e)
@@ -110,7 +130,7 @@ namespace ExpenseTracker.Views
          var grid = (sender as Grid);
          var account = (IncomeEntry)((TapGestureRecognizer)grid.GestureRecognizers[0]).CommandParameter;
          focusFlag = true;
-         await parent.PushAsync(new AddItem(null, account) { Title = "Edit Income" });
+         await parent.PushAsync(new AddItem(null, account) { Title = "Edit Income Transaction" });
 
       }
 

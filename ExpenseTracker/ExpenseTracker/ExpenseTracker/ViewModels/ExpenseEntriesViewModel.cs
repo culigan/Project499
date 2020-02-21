@@ -15,6 +15,13 @@ namespace ExpenseTracker.ViewModels
    {
       Model.DataQuery_Mod DataQuery;
 
+      private double _ChangeFont = 12;
+      public double ChangeFont
+      {
+         get { return _ChangeFont; }
+         set { _ChangeFont = value; OnPropertyChanged(nameof(ChangeFont)); }
+      }
+      private bool _MenuVisible = false;
       public double AccountBalance { get; set; }
       private ObservableCollection<ExpenseEntry> _ItemListE;
       public ObservableCollection<ExpenseEntry> ItemListE
@@ -68,7 +75,6 @@ namespace ExpenseTracker.ViewModels
       }
       string accountType;
       int accountID = 0;
-      private bool _MenuVisible = false;
       public bool MenuVisible
       {
          get

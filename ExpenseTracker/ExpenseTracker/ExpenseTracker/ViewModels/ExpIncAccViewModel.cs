@@ -16,6 +16,12 @@ namespace ExpenseTracker.ViewModels
       Model.DataQuery_Mod DataQuery;
       ObservableCollection<Account> incomeSum = new ObservableCollection<Account>();
 
+      private double _ChangeFont = 12;
+      public double ChangeFont
+      {
+         get { return _ChangeFont; }
+         set { _ChangeFont = value; OnPropertyChanged(nameof(ChangeFont)); }
+      }
       private bool _MenuVisible = false;
       public bool MenuVisible 
       {

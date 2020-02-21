@@ -28,8 +28,8 @@ namespace ExpenseTracker.Views
          NavigationPage navigationPage1 = new NavigationPage();
          navigationPage1.Title = "Income";
          */
-         Children.Add(new ExpIncAccPage("ExpenseAccount") { Title = "Expenses" });
-         Children.Add(new ExpIncAccPage("IncomeAccount") { Title = "Income" });
+         Children.Add(new ExpIncAccPage("ExpenseAccount") { Title = "Expenses Account" });
+         Children.Add(new ExpIncAccPage("IncomeAccount") { Title = "Income Account" });
          this.On<Android>().DisableSwipePaging();
 
          this.CurrentPageChanged += AccountsPage_CurrentPageChanged;

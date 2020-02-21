@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="ExpenseTracker.Views.ExpIncAccPage"
+             x:Name="account"
              NavigationPage.HasNavigationBar="False"             
               >
     <ContentPage.Content>
@@ -29,40 +30,36 @@
                               HasUnevenRows="True" BackgroundColor="White" SelectionMode="Single" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
+                            <ViewCell >
                                 <ViewCell.ContextActions >
                                     <MenuItem Text="Edit" Clicked="OnEditClick" CommandParameter="{Binding .}" />
                                     <MenuItem Text="Delete" Clicked="OnDeleteClick" CommandParameter="{Binding .}"/>
                                 </ViewCell.ContextActions>
                                 <Grid VerticalOptions="FillAndExpand">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width=".15*"/>
-                                        <ColumnDefinition Width=".15*"/>
+                                        <ColumnDefinition Width=".5*"/>
+                                        <ColumnDefinition Width=".3*"/>
+                                        <ColumnDefinition Width=".3*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Frame Grid.Column="0" Grid.ColumnSpan="3" BorderColor="black" Margin="10,3,0,3" 
-                                               BackgroundColor="White" Padding="0">
+                                    <Frame Grid.Column="0" Grid.ColumnSpan="3" BorderColor="black" Margin="10,3,10,3" 
+                                               BackgroundColor="White" Padding="0,5,0,5">
                                         <Grid Padding="0">
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height=".5*"/>
+                                                <RowDefinition Height=".5*"/>
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width=".45*"/>
-                                                <ColumnDefinition Width=".05*"/>
-                                                <ColumnDefinition Width=".45*"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width=".20*"/>
+                                                <ColumnDefinition Width=".30*"/>
+                                                <ColumnDefinition Width=".10*"/>
+                                                <ColumnDefinition Width=".30*"/>
                                             </Grid.ColumnDefinitions>
-                                            <StackLayout Orientation="Horizontal" Grid.Row="0" Padding="5,10,0,0">
-                                                <Label Text="Account: " FontAttributes="Bold" TextColor="Black" Padding="0"/>
-                                                <Label Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black" Padding="0"/>
-                                            </StackLayout>
-                                            <StackLayout Grid.Row="0" Grid.Column="2" Padding="5,10,0,0">
-                                                <Label Text="{Binding DateCreated}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" TextColor="Black"/>
-                                            </StackLayout>
-                                            <StackLayout Orientation="Horizontal" Grid.Row="1" Padding="5,0,0,10">
-                                                <Label Text="Total:" Grid.Row="1" FontAttributes="Bold" TextColor="Black"/>
-                                                <Label Grid.Row="1" Text="{Binding AccountBalance, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold"/>
-                                            </StackLayout>
+                                            <Label Grid.Row="0" Grid.Column="1" LineBreakMode="NoWrap" FontSize="{Binding Source={x:Reference account}, Path=BindingContext.ChangeFont}" Text="Account: " FontAttributes="Bold" TextColor="Black" Padding="0" VerticalOptions="Center"/>
+                                            <Label Grid.Row="0" Grid.Column="2" LineBreakMode="NoWrap" FontSize="{Binding Source={x:Reference account}, Path=BindingContext.ChangeFont}" Text="{Binding AccountName}" FontAttributes="Bold" TextColor="Black" Padding="0" VerticalOptions="Center"/>
+                                            <Label Grid.Row="0" Grid.Column="4" LineBreakMode="NoWrap" FontSize="{Binding Source={x:Reference account}, Path=BindingContext.ChangeFont}" Text="{Binding DateCreated}" FontAttributes="Bold" TextColor="Black" Padding="0" VerticalOptions="Center"/>
+                                            <Label Grid.Row="1" Grid.Column="1" LineBreakMode="NoWrap" FontSize="{Binding Source={x:Reference account}, Path=BindingContext.ChangeFont}" Text="Total:" FontAttributes="Bold" TextColor="Black" Padding="0" VerticalOptions="Center"/>
+                                            <Label  Grid.Row="1" Grid.Column="2" LineBreakMode="NoWrap" FontSize="{Binding Source={x:Reference account}, Path=BindingContext.ChangeFont}" Text="{Binding AccountBalance, StringFormat='{0:C2}'}" TextColor="Red" FontAttributes="Bold" Padding="0" VerticalOptions="Center"/>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Tapped="OnAccountTap" CommandParameter="{Binding .}"/>
                                                 <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
@@ -70,8 +67,10 @@
                                             </Grid.GestureRecognizers>
                                         </Grid>
                                     </Frame>
-                                    <Button Grid.Row="0" Grid.Column="1" Text="Edit" Clicked="OnEditClick" IsVisible="False" CommandParameter="{Binding .}" BackgroundColor="Lime"/>
-                                    <Button Grid.Row="0" Grid.Column="2" Text="Delete" Clicked="OnDeleteClick" IsVisible="False" CommandParameter="{Binding .}" BackgroundColor="Red"/>
+                                    <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,3,10,3" IsVisible="False" HorizontalOptions="FillAndExpand">
+                                        <Button Text="Edit" Clicked="OnEditClick" FontSize="{Binding Source={x:Reference account}, Path=BindingContext.ChangeFont}" CommandParameter="{Binding .}" BackgroundColor="Lime" HorizontalOptions="FillAndExpand"/>
+                                        <Button Text="Delete" Clicked="OnDeleteClick" FontSize="{Binding Source={x:Reference account}, Path=BindingContext.ChangeFont}" CommandParameter="{Binding .}" BackgroundColor="Red" HorizontalOptions="FillAndExpand"/>
+                                    </StackLayout>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
