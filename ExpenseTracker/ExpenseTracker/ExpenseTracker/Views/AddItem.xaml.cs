@@ -134,6 +134,10 @@ namespace ExpenseTracker
 
                if (saveButton.Text == "Save")
                {
+                  if (viewModel.TransName.Contains("'"))
+                      {
+                            viewModel.TransName = viewModel.TransName.Replace("'", "''");
+                      }
                   if (viewModel.AccountType == "Income")
                   {
                      viewModel.DataQuery.expenseSelect = "INSERT INTO " + viewModel.AccountType + " ([User_ID],[Account_ID],[IncomeAmount]," +

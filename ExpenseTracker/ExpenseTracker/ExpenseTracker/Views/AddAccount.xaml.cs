@@ -131,11 +131,21 @@ namespace ExpenseTracker
          {
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
+
+               if (viewModel.AccountName.Contains("'"))
+               {
+                   viewModel.AccountName = viewModel.AccountName.Replace("'", "''");
+               }
+
+               if (viewModel.AccountDesc.Contains("'"))
+               {
+                   viewModel.AccountDesc = viewModel.AccountDesc.Replace("'", "''");
+               }
+
                viewModel.DataQuery.expenseSelect = "Select * From account  ";
                viewModel.DataQuery.expenseWhere = "where AccountName = '" + viewModel.AccountName + "' and user_ID = " + userID;
                ObservableCollection<Account> UniqueEntry = viewModel.DataQuery.ExecuteAQuery<Account>();
 
-               
                if (saveButton.Text == "Save" && UniqueEntry.Count == 0)
                {
                   viewModel.DataQuery.expenseSelect = "INSERT INTO account VALUES ";
