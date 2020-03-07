@@ -189,6 +189,10 @@ namespace ExpenseTracker
                }
                else if (saveButton.Text == "Update")
                {
+                  if (viewModel.TransName.Contains("'"))
+                  {
+                            viewModel.TransName = viewModel.TransName.Replace("'", "''");
+                  }
 
                   if (viewModel.AccountType == "Expense")
                   {
