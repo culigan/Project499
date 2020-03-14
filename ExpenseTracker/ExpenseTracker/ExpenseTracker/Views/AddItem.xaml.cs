@@ -138,7 +138,11 @@ namespace ExpenseTracker
                       {
                             viewModel.TransName = viewModel.TransName.Replace("'", "''");
                       }
-                  if (viewModel.AccountType == "Income")
+                  if (viewModel.AccountName.Contains("'"))
+                      {
+                            viewModel.AccountName = viewModel.AccountName.Replace("'", "''");
+                      }
+               if (viewModel.AccountType == "Income")
                   {
                      viewModel.DataQuery.expenseSelect = "INSERT INTO " + viewModel.AccountType + " ([User_ID],[Account_ID],[IncomeAmount]," +
                         "[IncomeDate],[IncomeCategory_ID],[Repeat],[RepeatPeriod_ID],[IncomeName]) VALUES (" + viewModel.User_ID + ", " +
@@ -192,6 +196,10 @@ namespace ExpenseTracker
                   if (viewModel.TransName.Contains("'"))
                   {
                             viewModel.TransName = viewModel.TransName.Replace("'", "''");
+                  }
+                  if (viewModel.AccountName.Contains("'"))
+                  {
+                            viewModel.AccountName = viewModel.AccountName.Replace("'", "''");
                   }
 
                   if (viewModel.AccountType == "Expense")
