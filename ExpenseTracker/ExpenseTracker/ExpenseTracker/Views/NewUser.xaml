@@ -64,7 +64,7 @@
                 </Entry>
             <Entry Grid.Row="6"
                 x:Name="SecondPasswordEntry"
-                Placeholder="Verify Password"
+                Placeholder="Confirm Password"
                 MaxLength="30"
                 IsSpellCheckEnabled="false"
                 IsTextPredictionEnabled="false"
