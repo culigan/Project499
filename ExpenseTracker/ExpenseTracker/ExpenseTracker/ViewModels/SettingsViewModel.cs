@@ -129,6 +129,18 @@ namespace ExpenseTracker.ViewModels
             }
         }
 
+        private string _CategoryPicker;
+        public string CategoryPicker
+        {
+            get { return _CategoryPicker; }
+            set
+            {
+                _CategoryPicker = value;
+
+                OnPropertyChanged(nameof(CategoryPicker));
+            }
+        }
+
 
         public int NumberTrans { get { return Preferences.Get("trans_num", 1000); } set { Preferences.Set("trans_num", value); OnPropertyChanged(nameof(NumberTrans)); } }
 

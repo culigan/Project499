@@ -27,12 +27,25 @@ namespace ExpenseTracker.Views
             viewModel.IsBusy = true;
             try
             {
-                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                if (viewModel.CategoryPicker == "Expense")
                 {
-                    viewModel.DataQuery.expenseSelect = "INSERT INTO ExpenseCategory VALUES ";
-                    viewModel.DataQuery.expenseWhere = "('" + viewModel.CategoryName + "', 'New User Category', '" + userID + "')";
-                    viewModel.ExpenseCategoryInfo = viewModel.DataQuery.ExecuteAQuery<Exp_Inc_Category>();
-                    DependencyService.Get<IToast>().Show("New Category " + viewModel.CategoryName + " Created");
+                    if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                    {
+                        viewModel.DataQuery.expenseSelect = "INSERT INTO ExpenseCategory VALUES ";
+                        viewModel.DataQuery.expenseWhere = "('" + viewModel.CategoryName + "', 'New User Category', '" + userID + "')";
+                        viewModel.ExpenseCategoryInfo = viewModel.DataQuery.ExecuteAQuery<Exp_Inc_Category>();
+                        DependencyService.Get<IToast>().Show("New Category " + viewModel.CategoryName + " Created");
+                    }
+                }
+                else if (viewModel.CategoryPicker == "Income")
+                {
+                    if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                    {
+                        viewModel.DataQuery.expenseSelect = "INSERT INTO IncomeCategory VALUES ";
+                        viewModel.DataQuery.expenseWhere = "('" + viewModel.CategoryName + "', 'New User Category', '" + userID + "')";
+                        viewModel.ExpenseCategoryInfo = viewModel.DataQuery.ExecuteAQuery<Exp_Inc_Category>();
+                        DependencyService.Get<IToast>().Show("New Category " + viewModel.CategoryName + " Created");
+                    }
                 }
             }
             catch (Exception ex)

@@ -19,6 +19,9 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="1" Text="Transaction Start Date" />
                 <DatePicker Grid.Row="2" Date="{ Binding PickerStartDate}" HorizontalOptions="Start"/>
@@ -26,11 +29,17 @@
                 <DatePicker Grid.Row="4" Date="{ Binding PickerEndDate}" HorizontalOptions="Start" />
                 <Label Grid.Row="5" Text="Number of Transactions Displayed"/>
                 <Entry Grid.Row="6" Placeholder="100" Text="{Binding NumberTrans, Mode=TwoWay}" Keyboard="Numeric" WidthRequest="250"/>
-                <Label Grid.Row="7" Text="Add a New Category"/>
-                <Entry Grid.Row="8" Placeholder="My Category" Text="{Binding CategoryName}" />
-                <Button Grid.Row="8" Grid.Column="1" Text="Add" Clicked="OnAdd"/>
-                <Button Grid.Row="9" Grid.Column="0" Text="Save Settings" WidthRequest="100" Clicked="OnSave" />
-                <Button Grid.Row="9" Grid.Column="1" Text="Cancel" WidthRequest="100" Clicked="OnCancel" />
+                <Button Grid.Row="7" Grid.Column="0" Text="Save Settings" WidthRequest="100" Clicked="OnSave" />
+                <Button Grid.Row="7" Grid.Column="1" Text="Cancel" WidthRequest="100" Clicked="OnCancel" />
+                <Picker Grid.Row="11" Title="Add a New Income or Expense Category" x:Name="picker" SelectedItem="{Binding CategoryPicker}">
+                    <Picker.Items>
+                        <x:String>Income</x:String>
+                        <x:String>Expenses</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>1</Picker.SelectedIndex>
+                </Picker>
+                <Entry Grid.Row="12" Placeholder="My Category" Text="{Binding CategoryName}" />
+                <Button Grid.Row="12" Grid.Column="1" Text="Add" Clicked="OnAdd"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>
