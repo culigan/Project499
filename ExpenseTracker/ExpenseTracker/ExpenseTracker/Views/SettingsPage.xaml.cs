@@ -21,6 +21,27 @@ namespace ExpenseTracker.Views
          this.BindingContext = viewModel = new ViewModels.SettingsViewModel();
       }
 
+        async void OnAdd(object sender, EventArgs e)
+        {
+            String userID = Preferences.Get("ExpenseT_UserID", "NULL");
+            viewModel.IsBusy = true;
+            try
+            {
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                {
+                    viewModel.DataQuery.expenseSelect = "INSERT INTO ExpenseCategory VALUES ";
+                    viewModel.DataQuery.expenseWhere = "('" + viewModel.CategoryName + "', 'New User Category', '" + userID + "')";
+                    viewModel.ExpenseCategoryInfo = viewModel.DataQuery.ExecuteAQuery<Exp_Inc_Category>();
+                    DependencyService.Get<IToast>().Show("New Category " + viewModel.CategoryName + " Created");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Adding account failed", ex.Message, "OK");
+                viewModel.IsBusy = false;
+            }
+        }
+
       private void OnSave(object sender, EventArgs e)
       {
          Preferences.Set("start_date", viewModel.PickerStartDate);

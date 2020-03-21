@@ -8,14 +8,30 @@
              x:Name="Settings">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Padding="15,0,15,0">
-            <Label Text="Transaction Start Date" />
-            <DatePicker Date="{ Binding PickerStartDate}" HorizontalOptions="Start"/>
-            <Label Text="Transaction End Date" />
-            <DatePicker Date="{ Binding PickerEndDate}" HorizontalOptions="Start" />
-            <Label Text="Number of Transactions Displayed"/>
-            <Entry Placeholder="100" Text="{Binding NumberTrans, Mode=TwoWay}" Keyboard="Numeric"/>
-            <Button Text="Save Settings" Clicked="OnSave"/>
-            <Button Text="Cancel" Clicked="OnCancel"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Text="Transaction Start Date" />
+                <DatePicker Grid.Row="2" Date="{ Binding PickerStartDate}" HorizontalOptions="Start"/>
+                <Label Grid.Row="3" Text="Transaction End Date" />
+                <DatePicker Grid.Row="4" Date="{ Binding PickerEndDate}" HorizontalOptions="Start" />
+                <Label Grid.Row="5" Text="Number of Transactions Displayed"/>
+                <Entry Grid.Row="6" Placeholder="100" Text="{Binding NumberTrans, Mode=TwoWay}" Keyboard="Numeric" WidthRequest="250"/>
+                <Label Grid.Row="7" Text="Add a New Category"/>
+                <Entry Grid.Row="8" Placeholder="My Category" Text="{Binding CategoryName}" />
+                <Button Grid.Row="8" Grid.Column="1" Text="Add" Clicked="OnAdd"/>
+                <Button Grid.Row="9" Grid.Column="0" Text="Save Settings" WidthRequest="100" Clicked="OnSave" />
+                <Button Grid.Row="9" Grid.Column="1" Text="Cancel" WidthRequest="100" Clicked="OnCancel" />
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

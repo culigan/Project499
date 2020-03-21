@@ -11,8 +11,34 @@ namespace ExpenseTracker.ViewModels
 {
    public class SettingsViewModel : INotifyPropertyChanged
    {
-      Model.DataQuery_Mod DataQuery;
-      private ObservableCollection<Exp_Inc_Category> _Categories;
+        // Model.DataQuery_Mod DataQuery;
+        public Model.DataQuery_Mod DataQuery;
+        private bool _IsBusy = false;
+      public bool IsBusy { get { return _IsBusy; } set { _IsBusy = value; OnPropertyChanged(nameof(IsBusy)); } }
+
+      private ObservableCollection<Users> _UsersInfo;
+      public ObservableCollection<Users> UsersInfo
+      {
+            get { return _UsersInfo; }
+            set
+            {
+                _UsersInfo = value;
+                OnPropertyChanged(nameof(UsersInfo));
+            }
+      }
+
+        private ObservableCollection<Exp_Inc_Category> _ExpenseCategoryInfo;
+        public ObservableCollection<Exp_Inc_Category> ExpenseCategoryInfo
+        {
+            get { return _ExpenseCategoryInfo; }
+            set
+            {
+                _ExpenseCategoryInfo = value;
+                OnPropertyChanged(nameof(ExpenseCategoryInfo));
+            }
+        }
+
+        private ObservableCollection<Exp_Inc_Category> _Categories;
       public ObservableCollection<Exp_Inc_Category> Categories 
       { 
          get 
@@ -91,8 +117,20 @@ namespace ExpenseTracker.ViewModels
          }
       }
 
-      
-      public int NumberTrans { get { return Preferences.Get("trans_num", 1000); } set { Preferences.Set("trans_num", value); OnPropertyChanged(nameof(NumberTrans)); } }
+        private string _CategoryName;
+        public string CategoryName
+        {
+            get { return _CategoryName; }
+            set
+            {
+                _CategoryName = value;
+
+                OnPropertyChanged(nameof(CategoryName));
+            }
+        }
+
+
+        public int NumberTrans { get { return Preferences.Get("trans_num", 1000); } set { Preferences.Set("trans_num", value); OnPropertyChanged(nameof(NumberTrans)); } }
 
       
       public SettingsViewModel()
